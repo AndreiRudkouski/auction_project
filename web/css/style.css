@@ -1,0 +1,1006 @@
+@font-face {
+    font-family: PT_Mono;
+    src: url(../fonts/PTM55FT.ttf);
+}
+
+input, textarea, body, button, input, select {
+    font: normal 14px PT_Mono, Arial, sans-serif;
+}
+
+form {
+    margin: 0 0;
+    padding: 0 0;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+body {
+    padding-top: 5px;
+    margin: 0 auto;
+    max-width: 1366px;
+    min-width: 780px;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+/*------HEADER------*/
+
+header {
+    background: url(../img/site/back.png) repeat-x top left;
+    width: 100%;
+    position: relative;
+    height: 120px;
+    padding-bottom: 20px;
+}
+
+.logo {
+    float: left;
+    width: 20%;
+}
+
+.logo-inner {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.image {
+    float: left;
+    width: 50%;
+}
+
+.image-inner {
+    margin-left: 30px;
+}
+
+.find {
+    float: left;
+    width: 30%;
+}
+
+.find-other {
+    margin-top: 35px;
+    width: 95%;
+}
+
+.find-inner {
+    margin-top: 60px;
+    margin-left: 20px;
+    height: 50%;
+}
+
+.logo img {
+    width: 100%;
+}
+
+.image img {
+    width: 100%;
+}
+
+.auth {
+    float: left;
+    margin-left: 20px;
+    opacity: 0.6;
+    font-weight: bold;
+    cursor: pointer;
+    width: 20%;
+}
+
+.rule {
+    margin-left: 20px;
+    text-align: center;
+    width: 55%;
+    float: left;
+    opacity: 0.6;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.lang {
+    float: right;
+    opacity: 0.6;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.auth span {
+    position: absolute;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.auth:hover, .rule:hover, .lang:hover {
+    opacity: 1.0;
+}
+
+.find input {
+    outline: none;
+}
+
+.find input[type=text] {
+    width: 95%;
+    font-size: 1em;
+}
+
+.find input[type=submit] {
+    position: absolute;
+    margin-top: 3px;
+    margin-left: -22px;
+    opacity: 0.5;
+    background: url(../img/site/find.png) no-repeat;
+    border: none;
+    cursor: pointer;
+}
+
+.clearfix:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+/*------NAV------*/
+
+nav {
+    position: relative;
+    float: left;
+    width: 18%;
+    background-color: #f7f7f7;
+    box-shadow: 4px 4px 4px rgba(54, 169, 225, 0.2);
+}
+
+nav strong {
+    display: block;
+    border-bottom: 1px solid #d9d9d9;
+    background-color: #ededed;
+    padding: 8px 20px 8px;
+    text-decoration: none;
+}
+
+nav ul {
+    position: relative;
+    list-style-type: none;
+    padding: 9px 0 0;
+    margin: 0;
+}
+
+nav li {
+    padding: 5px 20px 10px;
+    cursor: pointer;
+}
+
+.section:hover {
+    font-weight: bold;
+    animation: shadow 0.5s linear;
+}
+
+@keyframes shadow {
+    0% {
+        text-shadow: 0 0 3px #f7f7f7;
+    }
+    50% {
+        text-shadow: 0 0 8px #36A9E1;
+    }
+    100% {
+        text-shadow: 0 0 3px #f7f7f7;
+    }
+}
+
+/*------MAIN------*/
+
+main {
+    min-height: 435px;
+    position: relative;
+    margin-left: 250px;
+}
+
+main td {
+    float: left;
+    width: 30%;
+}
+
+main td, tr {
+    display: block;
+}
+
+main td {
+    float: left;
+    margin-left: 30px;
+    margin-bottom: 25px;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid #d9d9d9;
+    box-shadow: 4px 4px 4px rgba(54, 169, 225, 0.2);
+    height: 370px;
+    width: 300px;
+    font-weight: bold;
+    display: block;
+    transition: opacity 0.5s, box-shadow 0.5s;
+}
+
+main td:hover {
+    opacity: 0.7;
+    cursor: pointer;
+    box-shadow: 10px 10px 7px rgba(54, 169, 225, 0.2);
+}
+
+.title {
+    height: 3.7em;
+}
+
+.photo {
+    height: 275px;
+    position: relative;
+    border: 1px solid #d9d9d9;
+}
+
+.photo img {
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+
+table .price {
+    margin-top: 15px;
+}
+
+/*------LOT------*/
+
+.category {
+    margin-left: 35px;
+    margin-bottom: 20px;
+}
+
+.lot {
+    margin: 0 35px;
+}
+
+.lot .title {
+    font-size: 1.2em;
+}
+
+.lot .photo {
+    width: 400px;
+    height: 400px;
+    position: relative;
+    border: 1px solid #d9d9d9;
+    float: left;
+}
+
+.lot-inner {
+    margin-top: 20px;
+    margin-left: 430px;
+    min-height: 430px;
+}
+
+.lot-inner hr {
+    margin-top: 10px;
+    color: #d9d9d9;
+}
+
+.lot-inner .price {
+    margin: 25px 0;
+}
+
+.price input {
+    margin-top: -1px;
+    margin-left: 10px;
+    padding: 3px 7px;
+    cursor: pointer;
+    background-color: #f7f7f7;
+    border: 1px solid #d9d9d9;
+    outline: none;
+    border-radius: 2px;
+}
+
+.price input:hover {
+    background-color: #ededed;
+}
+
+.bet input[type=number] {
+    width: 100px;
+    float: left;
+    outline: none;
+    padding: 7px 10px;
+    border: 1px solid #d9d9d9;
+    text-align: right;
+    font-weight: bold;
+    -moz-appearance: textfield;
+    step: 0.01;
+
+}
+
+.bet input[type=number]::-webkit-inner-spin-button {
+    display: none;
+}
+
+.bet span {
+    position: absolute;
+    margin-top: -18px;
+    font-size: 0.8em;
+}
+
+.bid input {
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding: 7px 10px;
+    cursor: pointer;
+    background-color: #b3d2ed;
+    opacity: 0.7;
+    border: 1px solid #d9d9d9;
+    outline: none;
+    border-radius: 2px;
+}
+
+.bid input:hover {
+    box-shadow: inset 0 0 40px 10px rgba(54, 169, 225, 0.2);
+}
+
+.bid input:active {
+    margin-top: 1px;
+    margin-bottom: 19px;
+}
+
+.pagination {
+    display: inline-block;
+    width: 300px;
+}
+
+#back {
+    float: left;
+    margin-right: 20px;
+}
+
+/*------FOOTER------*/
+
+footer {
+    background: url(../img/site/back.png) repeat-x top left;
+    position: relative;
+    height: 120px;
+}
+
+.copy {
+    float: left;
+    width: 80%;
+}
+
+.copy p {
+    margin-left: 20px;
+    margin-top: 55px;
+    float: left;
+}
+
+.copy p a {
+    color: #36A9E1;
+}
+
+.copy p a:hover {
+    text-decoration: underline;
+}
+
+.social ul li {
+    display: inline;
+    padding: 2px;
+}
+
+.social ul {
+    margin-top: 45px;
+    float: right;
+    margin-right: 20px;
+}
+
+.social li:hover {
+    opacity: 0.7;
+}
+
+/*------AUTHORIZATION------*/
+
+.authorization {
+    width: 100%;
+    min-height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    position: fixed;
+    top: 0px;
+    z-index: 99;
+}
+
+.authorization form {
+    position: fixed;
+    width: 360px;
+    height: 240px;
+    top: 50%;
+    left: 50%;
+    margin-top: -140px;
+    margin-left: -170px;
+    background: #f7f7f7;
+    border-radius: 3px;
+    border: 1px solid #d9d9d9;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+}
+
+.authorization label {
+    color: #555;
+    display: inline-block;
+    margin-left: 20px;
+    padding-top: 25px;
+}
+
+#fogPwd {
+    font-size: 0.8em;
+    color: #aaa;
+    float: right;
+    margin-top: 28px;
+    margin-right: 20px;
+}
+
+.authorization p #fogPwd:hover {
+    color: #555;
+}
+
+.authorization input {
+    outline: none;
+}
+
+.authorization input[type=text], input[type=password] {
+    color: #777;
+    padding-left: 10px;
+    margin-top: 12px;
+    margin-left: 18px;
+    width: 320px;
+    height: 25px;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8;
+}
+
+.authorization input[type=text]:hover, input[type=password]:hover {
+    border: 1px solid #b6bfc0;
+    box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .7), 0 0 0 5px #f5f7f8;
+}
+
+.authorization input[type=text]:focus, input[type=password]:focus {
+    border: 1px solid #a8c9e4;
+    box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #e6f2f9;
+}
+
+.lower {
+    background: #ecf2f5;
+    width: 100%;
+    height: 23%;
+    margin-top: 28px;
+    box-shadow: inset 0 1px 1px #fff;
+    border-top: 1px solid #ccc;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.lower a {
+    font-size: 1em;
+    color: #555;
+    float: left;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.lower a:hover {
+    font-weight: bold;
+    animation: shadow 0.5s linear;
+}
+
+.lower input[type=submit] {
+    font-weight: bold;
+    float: right;
+    margin-right: 20px;
+    margin-top: 12px;
+    padding: 7px 10px;
+    cursor: pointer;
+    background-color: #b3d2ed;
+    opacity: 0.7;
+    border: 1px solid #d9d9d9;
+    outline: none;
+    border-radius: 2px;
+}
+
+.lower input[type=submit]:hover {
+    box-shadow: inset 0 0 40px 10px rgba(54, 169, 225, 0.2);
+}
+
+.lower input[type=submit]:active {
+    margin-top: 13px;
+}
+
+.err {
+    visibility: hidden;
+    float: left;
+    position: absolute;
+    margin-left: 20px;
+    margin-top: 2px;
+    color: red;
+    font-size: 0.8em;
+}
+
+.errUser {
+    visibility: hidden;
+    float: left;
+    position: absolute;
+    margin-left: 60px;
+    margin-top: 2px;
+    color: red;
+    font-size: 1em;
+}
+
+#authBlock {
+    display: none;
+}
+
+/*------BET LIST------*/
+
+.betList {
+    width: 100%;
+    min-height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    position: fixed;
+    top: 0px;
+    z-index: 99;
+}
+
+.betList div {
+    position: fixed;
+    overflow-y: auto;
+    width: 750px;
+    left: 50%;
+    margin-top: 80px;
+    margin-left: -375px;
+    background: #f7f7f7;
+    border-radius: 3px;
+    border: 1px solid #d9d9d9;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+}
+
+.betList caption {
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.betList hr {
+    position: fixed;
+    margin-top: 55px;
+    margin-left: 10px;
+    width: 730px;
+    height: 0;
+    color: #d9d9d9;
+}
+
+.tableBet {
+    width: 100%;
+    padding: 5px 10px;
+}
+
+.tdUser {
+    width: 300px;
+    text-align: left;
+}
+
+.tdAmount {
+    width: 200px;
+    text-align: center;
+}
+
+.tdTime {
+    width: 250px;
+    text-align: right;
+}
+
+/*------CHANGE MESSAGE------*/
+
+.changeMessage {
+    width: 100%;
+    min-height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    position: fixed;
+    top: 0px;
+    z-index: 99;
+}
+
+.changeMessage div {
+    position: fixed;
+    width: 350px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    margin-top: -140px;
+    margin-left: -170px;
+    background: #f7f7f7;
+    border-radius: 3px;
+    border: 1px solid #d9d9d9;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+}
+
+.changeMessage span {
+    position: absolute;
+    width: 350px;
+    margin-top: 38px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/*------PROFILE------*/
+
+.profile {
+    position: relative;
+    overflow: hidden;
+    height: auto;
+    min-height: 370px;
+    margin: 0 100px 10px 100px;
+    border: 1px solid #d9d9d9;
+    box-shadow: 4px 4px 4px rgba(54, 169, 225, 0.2);
+}
+
+.choice {
+    float: left;
+    height: auto;
+    width: 150px;
+}
+
+.profile ul {
+    list-style-type: none;
+    padding: 5px 0 0;
+    margin: 0;
+}
+
+.profile li {
+    font-weight: bold;
+    padding: 20px 20px 10px;
+    cursor: pointer;
+}
+
+.nameProf {
+    font-weight: bold;
+    font-size: 1.3em;
+    margin-top: 20px;
+    margin-left: 220px;
+}
+
+.profile hr {
+    margin-left: 170px;
+    position: absolute;
+    height: 96%;
+    float: left;
+    top: 0;
+    left: 0;
+    color: #d9d9d9;
+}
+
+.dataLeft {
+    margin: 0 40px 30px 200px;
+}
+
+.dataRight {
+    margin-right: 40px;
+    margin-top: -224px;
+    float: right;
+}
+
+.dataLeft label, .dataLeft span, .dataRight label, .dataRight span {
+    display: inline-block;
+    margin-left: 20px;
+    padding-top: 25px;
+}
+
+.dataLeft input[type=text], select, .priceLot, .dataRight input[type=password], .dataRight textarea {
+    outline: none;
+    color: #777;
+    padding-left: 10px;
+    margin-top: 12px;
+    margin-left: 18px;
+    width: 300px;
+    height: 25px;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8;
+}
+
+.dataLeft input[type=text]:hover, select:hover, .priceLot:hover, .dataRight input[type=password]:hover, .dataRight textarea:hover {
+    border: 1px solid #b6bfc0;
+    box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .7), 0 0 0 5px #f5f7f8;
+}
+
+.dataLeft input[type=text]:focus, select:focus, .priceLot:focus, .dataRight input[type=password]:focus, .dataRight textarea:focus {
+    border: 1px solid #a8c9e4;
+    box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #e6f2f9;
+}
+
+.dataLeft input[type=number] {
+    width: 130px;
+}
+
+#title {
+    width: 97%;
+}
+
+#balance {
+    float: left;
+    width: 180px;
+    margin-bottom: 30px;
+}
+
+.dataLeft input[type=submit] {
+    font-weight: bold;
+    float: left;
+    width: 100px;
+    margin-left: 20px;
+    margin-top: 9px;
+    padding: 7px 10px;
+    cursor: pointer;
+    background-color: #b3d2ed;
+    opacity: 0.7;
+    border: 1px solid #d9d9d9;
+    outline: none;
+    border-radius: 2px;
+}
+
+.dataLeft input[type=submit]:hover {
+    box-shadow: inset 0 0 40px 10px rgba(54, 169, 225, 0.2);
+}
+
+.dataLeft input[type=submit]:active {
+    margin-top: 10px;
+}
+
+.dataLeft select {
+    margin-top: 10px;
+    margin-left: 20px;
+    width: 200px;
+}
+
+#save {
+    font-weight: bold;
+    font-size: 1.2em;
+    float: right;
+    width: 120px;
+    margin-top: -20px;
+    margin-right: 40px;
+    padding: 7px 10px;
+    cursor: pointer;
+    background-color: #b3d2ed;
+    opacity: 0.7;
+    border: 1px solid #d9d9d9;
+    outline: none;
+    border-radius: 2px;
+}
+
+#save:hover {
+    box-shadow: inset 0 0 40px 10px rgba(54, 169, 225, 0.2);
+}
+
+#save:active {
+    margin-top: -19px;
+}
+
+.lotList li {
+    font-weight: inherit;
+    padding: 0 0 0 20px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.lotList li:hover {
+    opacity: 0.7;
+}
+
+.newLot .dataRight {
+    margin-right: 40px;
+    margin-top: -562px;
+    float: right;
+}
+
+.dataRight textarea {
+    height: 300px;
+    width: 400px;
+    text-align: start;
+    resize: none;
+}
+
+
+
+/*------UPLOAD PHOTO------*/
+
+.fileUpload input[type=file] {
+    display: none;
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    font-weight: bold;
+    font-size: 1.2em;
+    float: right;
+    margin-top: 30px;
+    width: 200px;
+    height: 40px;
+    cursor: pointer;
+    background-color: #b3d2ed;
+    opacity: 0.7;
+    border: 1px solid #d9d9d9;
+    outline: none;
+    border-radius: 2px;
+    text-align: center;
+}
+
+.fileUpload:hover {
+    box-shadow: inset 0 0 40px 10px rgba(54, 169, 225, 0.2);
+}
+
+.fileUpload:active {
+    margin-top: 31px;
+}
+
+.fileUpload label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.fileUpload span {
+    margin-top: -40px;
+    margin-left: -30px;
+    font-weight: bold;
+}
+
+#preview {
+    position: relative;
+    height: 148px;
+    width: 148px;
+    float: right;
+    margin-right: 50px;
+    margin-top: 30px;
+    border: 1px solid #d9d9d9;
+}
+
+.preview-img {
+    position: absolute;
+    max-width: 140px;
+    max-height: 140px;
+    margin: auto;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+
+#errLot {
+    margin-left: 220px;
+}
+
+#errPhoto {
+    margin-top: 180px;
+}
+
+#errPriceStart, #errPriceStep, #errPriceBlitz {
+    width: 180px;
+    line-height: 0.9em;
+}
+
+/*------BANK CARD------*/
+
+.bankCard {
+    width: 100%;
+    min-height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    position: fixed;
+    top: 0px;
+    z-index: 99;
+}
+
+.bankCard form {
+    position: fixed;
+    width: 300px;
+    height: 240px;
+    top: 50%;
+    left: 50%;
+    margin-top: -120px;
+    margin-left: -150px;
+    background: #f7f7f7;
+    border-radius: 3px;
+    border: 1px solid #d9d9d9;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+}
+
+.bankCard label {
+    color: #555;
+    display: inline-block;
+    margin-left: 20px;
+    padding-top: 25px;
+}
+
+.bankCard span {
+    color: #555;
+}
+
+.bankCard input {
+    outline: none;
+}
+
+.bankCard input[type=number] {
+    color: #777;
+    text-align: center;
+    padding-left: 10px;
+    margin-top: 12px;
+    margin-left: 18px;
+    width: 260px;
+    height: 25px;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8;
+}
+
+.bankCard input[type=number]:hover {
+    border: 1px solid #b6bfc0;
+    box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .7), 0 0 0 5px #f5f7f8;
+}
+
+.bankCard input[type=number]:focus {
+    border: 1px solid #a8c9e4;
+    box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #e6f2f9;
+}
+
+#amount {
+    width: 100px;
+}
+
+.bankCard input[type=submit] {
+    font-weight: bold;
+    float: right;
+    width: 80px;
+    margin-top: 9px;
+    margin-right: 20px;
+    padding: 7px 10px;
+    cursor: pointer;
+    background-color: #b3d2ed;
+    opacity: 0.7;
+    border: 1px solid #d9d9d9;
+    outline: none;
+    border-radius: 2px;
+}
+
+.bankCard input[type=submit]:hover {
+    box-shadow: inset 0 0 40px 10px rgba(54, 169, 225, 0.2);
+}
+
+.bankCard input[type=submit]:active {
+    margin-top: 10px;
+}
+
+.bankCard .lower {
+    background: #ecf2f5;
+    width: 100%;
+    height: 23%;
+    margin-top: 28px;
+    box-shadow: inset 0 1px 1px #fff;
+    border-top: 1px solid #ccc;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.bankCard img {
+    width: 260px;
+    margin-top: 18px;
+    margin-left: 10px;
+}
