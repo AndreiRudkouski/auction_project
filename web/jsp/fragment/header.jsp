@@ -36,7 +36,7 @@
                                 <a href="javascript:onClick('profile')">
                                     <img src="/img/site/auth.png">
                                     <span>
-                                        <ctg:user login="${user.login}" mail="${user.mail}" balance="${user.balance}"/>
+                                        <ctg:user login="${user.login}" mail="${user.mail}" balance="${user.balance}" roleId="${user.roleId}"/>
                                     </span>
                                 </a>
                             </form>

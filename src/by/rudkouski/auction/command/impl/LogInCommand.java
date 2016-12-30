@@ -16,6 +16,8 @@ public class LogInCommand implements ICommand {
     private static final String ERROR_USER = "errorUser";
     private static final String ERROR_BAN = "errorBan";
     private static final String COMMAND = "command";
+    private static final long ADMIN_ROLE_ID = 2;
+    public static final String MAIN_PAGE = "main.jsp";
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -39,6 +41,9 @@ public class LogInCommand implements ICommand {
         if (user != null) {
             if (!user.isBan()) {
                 session.setAttribute(USER, user);
+                if (user.getRoleId() == ADMIN_ROLE_ID) {
+                    page = MAIN_PAGE;
+                }
             } else {
                 session.setAttribute(ERROR_BAN, USER);
             }

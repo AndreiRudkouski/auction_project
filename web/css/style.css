@@ -1004,3 +1004,9 @@ footer {
     margin-top: 18px;
     margin-left: 10px;
 }
+
+/*------ADMIN------*/
+
+#adminLot, #adminPwd {
+    display: none;
+}

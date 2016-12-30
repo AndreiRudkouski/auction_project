@@ -518,3 +518,10 @@ function errNewLot() {
     document.getElementById('errLot').style.visibility = 'visible';
 }
 
+function visibleAdmin(id) {
+    document.getElementById('adminUser').style.display = 'none';
+    document.getElementById('adminLot').style.display = 'none';
+    document.getElementById('adminPwd').style.display = 'none';
+    document.getElementById(id).style.display = 'block';
+}
+

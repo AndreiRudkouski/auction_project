@@ -17,7 +17,7 @@
                 <div class="err" id="errLoginLength"><fmt:message key="profile.errLength"/></div>
                 <div class="err" id="errLogin"><fmt:message key="profile.errLogin"/></div>
                 <div class="err" id="errDoubleLogin"><fmt:message key="profile.errExistLogin"/></div>
-                <label for="mail"><fmt:message key="auth.mail"/></label><br>
+                <label for="mail"><fmt:message key="profile.mail"/></label><br>
                 <input type="text" name="mail" id="mail" value="${sessionScope.user.mail}" disabled><br>
                 <label for="balance"><fmt:message key="profile.balance"/></label><br>
                 <input type="text" name="balance" id="balance"
