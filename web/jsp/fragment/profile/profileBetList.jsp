@@ -9,11 +9,11 @@
     <div>
         <div class="nameProf"><fmt:message key="profile.bet"/></div>
         <div class="dataLeft">
-            <c:if test="${betListWin != null}">
+            <c:if test="${requestScope.betListWin != null}">
                 <span><strong><fmt:message key="profileBet.win"/></strong></span>
                 <div class="lotList">
                     <ul>
-                        <c:forEach items="${betListWin}" var="bet">
+                        <c:forEach items="${requestScope.betListWin}" var="bet">
                             <li>
                                 <form id="lot${bet.lot.id}" action="Controller" method="post">
                                     <input type="hidden" name="command" value="lot_choice"/>
@@ -30,11 +30,11 @@
                     </ul>
                 </div>
             </c:if>
-            <c:if test="${betListDone != null}">
+            <c:if test="${requestScope.betListDone != null}">
                 <span><strong><fmt:message key="profileBet.done"/></strong></span>
                 <div class="lotList">
                     <ul>
-                        <c:forEach items="${betListDone}" var="bet">
+                        <c:forEach items="${requestScope.betListDone}" var="bet">
                             <li>
                                 <form id="lot${bet.lot.id}" action="Controller" method="post">
                                     <input type="hidden" name="command" value="lot_choice"/>
@@ -51,7 +51,7 @@
                     </ul>
                 </div>
             </c:if>
-            <c:if test="${betListWin == null && betListDone == null}">
+            <c:if test="${requestScope.betListWin == null && requestScope.betListDone == null}">
                 <span><fmt:message key="profileBet.none"/></span>
             </c:if>
         </div>

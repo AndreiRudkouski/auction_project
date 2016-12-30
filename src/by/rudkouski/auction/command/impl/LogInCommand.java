@@ -15,6 +15,7 @@ public class LogInCommand implements ICommand {
     private static final String USER = "user";
     private static final String ERROR_USER = "errorUser";
     private static final String ERROR_BAN = "errorBan";
+    private static final String COMMAND = "command";
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -22,8 +23,8 @@ public class LogInCommand implements ICommand {
         String password = request.getParameter(PWD);
 
         HttpSession session = request.getSession();
-        session.setAttribute("COMMAND", this.getClass().getName());
         String page = returnPage(session);
+        session.setAttribute(COMMAND, request.getParameter(COMMAND));
         boolean validMail = new Validator().userMailValidate(mail);
         boolean validPassword = new Validator().userPasswordValidate(password);
         if (!validMail || !validPassword) {
@@ -45,5 +46,12 @@ public class LogInCommand implements ICommand {
             session.setAttribute(ERROR_USER, USER);
         }
         return page;
+    }
+
+    @Override
+    public void resetSessionMessage(HttpSession session) {
+        session.removeAttribute(ERROR_USER);
+        session.removeAttribute(ERROR_BAN);
+        session.removeAttribute(COMMAND);
     }
 }

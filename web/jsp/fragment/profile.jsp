@@ -46,13 +46,13 @@
             </div>
             <hr>
             <c:choose>
-                <c:when test="${lotHistory != null}">
+                <c:when test="${requestScope.lotHistory != null}">
                     <jsp:include page="profile/profileLotList.jsp"/>
                 </c:when>
-                <c:when test="${betHistory != null}">
+                <c:when test="${requestScope.betHistory != null}">
                     <jsp:include page="profile/profileBetList.jsp"/>
                 </c:when>
-                <c:when test="${newLot != null}">
+                <c:when test="${requestScope.newLot != null}">
                     <jsp:include page="profile/profileNewLot.jsp"/>
                 </c:when>
                 <c:otherwise>

@@ -8,16 +8,16 @@
     <body>
     <div class="changeMessage">
         <div>
-            <c:if test="${errorBalance != null}">
+            <c:if test="${sessionScope.errorBalance != null}">
                 <span><fmt:message key="balance"/></span>
             </c:if>
-            <c:if test="${errorFinish != null}">
+            <c:if test="${sessionScope.errorFinish != null}">
                 <span><fmt:message key="lotFinish"/></span>
             </c:if>
-            <c:if test="${betAccept != null}">
+            <c:if test="${sessionScope.betAccept != null}">
                 <span><fmt:message key="betAccept"/></span>
             </c:if>
-            <c:if test="${changeAccept != null}">
+            <c:if test="${sessionScope.changeAccept != null}">
                 <span><fmt:message key="changeAccept"/></span>
             </c:if>
         </div>

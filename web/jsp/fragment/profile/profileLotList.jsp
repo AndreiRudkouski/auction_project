@@ -8,16 +8,16 @@
     <body>
     <div>
         <div class="nameProf"><fmt:message key="profile.lot"/></div>
-        <form id="lot${lot.id}" action="Controller" method="post">
+        <form action="Controller" method="post">
             <input type="hidden" name="command" value="lot_new"/>
             <input id="save" type="submit" value="<fmt:message key="profileLot.newLot"/>">
         </form>
         <div class="dataLeft">
-            <c:if test="${lotListFinished != null}">
+            <c:if test="${requestScope.lotListFinished != null}">
                 <span><strong><fmt:message key="profileLot.completed"/></strong></span>
                 <div class="lotList">
                     <ul>
-                        <c:forEach items="${lotListFinished}" var="lot">
+                        <c:forEach items="${requestScope.lotListFinished}" var="lot">
                             <li>
                                 <form id="lot${lot.id}" action="Controller" method="post">
                                     <input type="hidden" name="command" value="lot_choice"/>
@@ -33,10 +33,10 @@
                     </ul>
                 </div>
             </c:if>
-            <c:if test="${lotListChecked != null}">
+            <c:if test="${requestScope.lotListChecked != null}">
                 <span><strong><fmt:message key="profileLot.notCompleted"/></strong></span>
                 <ul class="lotList">
-                    <c:forEach items="${lotListChecked}" var="lot">
+                    <c:forEach items="${requestScope.lotListChecked}" var="lot">
                         <li>
                             <form id="lot${lot.id}" action="Controller" method="post">
                                 <input type="hidden" name="command" value="lot_choice"/>
@@ -52,10 +52,10 @@
                     </c:forEach>
                 </ul>
             </c:if>
-            <c:if test="${lotListUnchecked != null}">
+            <c:if test="${requestScope.lotListUnchecked != null}">
                 <span><strong><fmt:message key="profileLot.new"/></strong></span>
                 <ul class="lotList">
-                    <c:forEach items="${lotListUnchecked}" var="lot">
+                    <c:forEach items="${requestScope.lotListUnchecked}" var="lot">
                         <li>
                             <form id="lot${lot.id}" action="Controller" method="post">
                                 <input type="hidden" name="command" value="lot_choice"/>
@@ -71,7 +71,7 @@
                     </c:forEach>
                 </ul>
             </c:if>
-            <c:if test="${lotListFinished == null && lotListChecked == null && lotListUnchecked == null}">
+            <c:if test="${requestScope.lotListFinished == null && requestScope.lotListChecked == null && requestScope.lotListUnchecked == null}">
                 <span><fmt:message key="profileLot.none"/></span>
             </c:if>
         </div>

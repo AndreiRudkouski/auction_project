@@ -16,4 +16,8 @@ public class LogOutCommand implements ICommand {
         }
         return MAIN_PAGE;
     }
+
+    @Override
+    public void resetSessionMessage(HttpSession session) {
+    }
 }

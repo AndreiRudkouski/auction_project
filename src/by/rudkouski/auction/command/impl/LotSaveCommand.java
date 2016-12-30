@@ -58,4 +58,8 @@ public class LotSaveCommand implements ICommand {
         String page = returnPage(session);
         return page;
     }
+
+    @Override
+    public void resetSessionMessage(HttpSession session) {
+    }
 }

@@ -42,7 +42,7 @@
                 <span><fmt:message key="lot.type"/></span><br>
                 <select name="type" id="type" onchange="javascript:changeActionType()">
                     <option selected disabled><fmt:message key="newLot.selectType"/></option>
-                    <c:forEach items="${typeList}" var="type">
+                    <c:forEach items="${requestScope.typeList}" var="type">
                         <option value="${type.id}"><span>${type.name}</span></option>
                     </c:forEach>
                 </select><br>
@@ -56,7 +56,7 @@
                 <span><fmt:message key="newLot.term"/></span><br>
                 <select name="term" id="term">
                     <option selected disabled><fmt:message key="newLot.selectTerm"/></option>
-                    <c:forEach items="${termList}" var="term">
+                    <c:forEach items="${requestScope.termList}" var="term">
                         <option value="${term.id}"><span>${term.name}</span></option>
                     </c:forEach>
                 </select><br>
@@ -64,7 +64,7 @@
                 <span><fmt:message key="lot.condition"/></span><br>
                 <select name="condition" id="condition">
                     <option selected disabled><fmt:message key="newLot.selectCond"/></option>
-                    <c:forEach items="${condList}" var="cond">
+                    <c:forEach items="${requestScope.condList}" var="cond">
                         <option value="${cond.id}"><span>${cond.name}</span></option>
                     </c:forEach>
                 </select>
@@ -85,7 +85,7 @@
             </div>
         </form>
     </div>
-    <c:if test="${errorLot != null}">
+    <c:if test="${requestScope.errorLot != null}">
         <script type="text/javascript">
             window.onload = errNewLot;
         </script>

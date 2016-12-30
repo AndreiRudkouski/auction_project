@@ -3,6 +3,7 @@ package by.rudkouski.auction.command.impl;
 import by.rudkouski.auction.command.ICommand;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class PageBackCommand implements ICommand {
     private static final String MAIN_PAGE = "main.jsp";
@@ -20,5 +21,9 @@ public class PageBackCommand implements ICommand {
         page = page != 0 ? page - 1 : 0;
         contentByPage(request, page);
         return MAIN_PAGE;
+    }
+
+    @Override
+    public void resetSessionMessage(HttpSession session) {
     }
 }

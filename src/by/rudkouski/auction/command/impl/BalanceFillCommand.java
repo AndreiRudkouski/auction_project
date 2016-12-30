@@ -17,6 +17,7 @@ public class BalanceFillCommand implements ICommand {
     private static final String ERROR_CARD = "errorCard";
     private static final String ERROR_AMOUNT = "errorAmount";
     private static final String CHANGE_ACCEPT = "changeAccept";
+    private static final String COMMAND = "command";
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -34,6 +35,15 @@ public class BalanceFillCommand implements ICommand {
             return page;
         }
 
+        User user = (User) session.getAttribute(USER);
+        if (user != null) {
+            userId = user.getId();
+        } else {
+            //throw new CommandException("Wrong data parsing", e);
+            return page;
+        }
+
+        session.setAttribute(COMMAND, request.getParameter(COMMAND));
         boolean validCard = new Validator().cardNumberValidate(cardNum);
         boolean validAmount = new Validator().amountValidate(amount);
         if (!validCard || !validAmount) {
@@ -46,14 +56,6 @@ public class BalanceFillCommand implements ICommand {
             return page;
         }
 
-        User user = (User) session.getAttribute(USER);
-        if (user != null) {
-            userId = user.getId();
-        } else {
-            //throw new CommandException("Wrong data parsing", e);
-            return page;
-        }
-
         ServiceManager factory = ServiceManager.getInstance();
         UserService userService = factory.getUserService();
         user = userService.fillUserBalanceById(userId, amount);
@@ -62,5 +64,13 @@ public class BalanceFillCommand implements ICommand {
             session.setAttribute(CHANGE_ACCEPT, CHANGE_ACCEPT);
         }
         return page;
+    }
+
+    @Override
+    public void resetSessionMessage(HttpSession session) {
+        session.removeAttribute(ERROR_CARD);
+        session.removeAttribute(ERROR_AMOUNT);
+        session.removeAttribute(CHANGE_ACCEPT);
+        session.removeAttribute(COMMAND);
     }
 }

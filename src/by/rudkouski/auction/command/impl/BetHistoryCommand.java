@@ -42,4 +42,8 @@ public class BetHistoryCommand implements ICommand {
         request.setAttribute(PROFILE, PROFILE);
         return MAIN_PAGE;
     }
+
+    @Override
+    public void resetSessionMessage(HttpSession session) {
+    }
 }

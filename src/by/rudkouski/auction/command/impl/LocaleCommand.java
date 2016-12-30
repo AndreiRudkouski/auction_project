@@ -9,8 +9,6 @@ public class LocaleCommand implements ICommand {
     private static final String LOCALE = "loc";
     private static final String LOCALE_EN = "en";
     private static final String LOCALE_BE = "be";
-    private static final String SAVE_REQ = "saveReq";
-    private static final String MAIN_PAGE = "main.jsp";
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -21,8 +19,11 @@ public class LocaleCommand implements ICommand {
         } else {
             session.setAttribute(LOCALE, LOCALE_BE);
         }
+        session = request.getSession();
+        return returnPage(session);
+    }
 
-        String url = (String) session.getAttribute(SAVE_REQ);
-        return url != null ? url : MAIN_PAGE;
+    @Override
+    public void resetSessionMessage(HttpSession session) {
     }
 }

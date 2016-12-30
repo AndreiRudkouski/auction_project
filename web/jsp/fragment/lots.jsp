@@ -8,6 +8,7 @@
     </head>
     <body>
     <main>
+        <c:set value="${requestScope.categoryId}" var="categoryId"/>
         <c:if test="${categoryId != null}">
             <div class="category"><fmt:message key="category"/>
                 <a class="section" href="javascript:onClick('cat${categoryId}')">

@@ -3,6 +3,7 @@ package by.rudkouski.auction.command.impl;
 import by.rudkouski.auction.command.ICommand;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class PageNextCommand implements ICommand {
     private static final String MAIN_PAGE = "main.jsp";
@@ -22,5 +23,9 @@ public class PageNextCommand implements ICommand {
         }
         contentByPage(request, page);
         return MAIN_PAGE;
+    }
+
+    @Override
+    public void resetSessionMessage(HttpSession session) {
     }
 }

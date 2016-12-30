@@ -13,7 +13,7 @@
             <caption><fmt:message key="bet.history"/></caption>
             <hr/>
             <tbody>
-            <c:forEach items="${lot.betList}" var="bet">
+            <c:forEach items="${requestScope.lot.betList}" var="bet">
                 <tr>
                     <td class="tdUser">
                         <ctg:user login="${bet.user.login}" mail="${bet.user.mail}"/>

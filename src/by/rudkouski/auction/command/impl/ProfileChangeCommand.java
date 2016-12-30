@@ -8,6 +8,8 @@ import by.rudkouski.auction.validation.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileChangeCommand implements ICommand {
     private static final String LOGIN = "login";
@@ -20,6 +22,7 @@ public class ProfileChangeCommand implements ICommand {
     private static final String ERROR_PWD = "errorPwd";
     private static final String ERROR_EXIST_LOGIN = "errorExistLogin";
     private static final String MAIN_PAGE = "main.jsp";
+    private static final String COMMAND = "command";
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -38,6 +41,7 @@ public class ProfileChangeCommand implements ICommand {
         }
 
         String page = returnPage(session);
+        session.setAttribute(COMMAND, request.getParameter(COMMAND));
         boolean validLogin = new Validator().userLoginChangeValidate(newLogin, oldLogin);
         boolean validOldPassword = new Validator().userPasswordValidate(oldPassword);
         boolean validNewPassword = new Validator().userPasswordValidate(newPassword);
@@ -78,5 +82,14 @@ public class ProfileChangeCommand implements ICommand {
             }
         }
         return page;
+    }
+
+    @Override
+    public void resetSessionMessage(HttpSession session) {
+        session.removeAttribute(ERROR_LOGIN);
+        session.removeAttribute(ERROR_PWD);
+        session.removeAttribute(ERROR_EXIST_LOGIN);
+        session.removeAttribute(CHANGE_ACCEPT);
+        session.removeAttribute(COMMAND);
     }
 }

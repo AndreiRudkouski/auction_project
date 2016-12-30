@@ -23,6 +23,7 @@ public class BetAddCommand implements ICommand {
     private static final String ERROR_FINISH = "errorFinish";
     private static final String BET_ACCEPT = "betAccept";
     private static final String USER = "user";
+    private static final String COMMAND = "command";
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -51,6 +52,7 @@ public class BetAddCommand implements ICommand {
         LotService lotService = factory.getLotService();
         BigDecimal minBet = lotService.determineLotMinBet(lotId);
 
+        session.setAttribute(COMMAND, request.getParameter(COMMAND));
         boolean validBet = new Validator().betDataValidate(curBet, minBet);
         if (!validBet) {
             session.setAttribute(ERROR_BET, ERROR_BET);
@@ -86,5 +88,14 @@ public class BetAddCommand implements ICommand {
             session.setAttribute(ERROR_FINISH, ERROR_FINISH);
         }
         return page;
+    }
+
+    @Override
+    public void resetSessionMessage(HttpSession session) {
+        session.removeAttribute(ERROR_BET);
+        session.removeAttribute(ERROR_BALANCE);
+        session.removeAttribute(ERROR_FINISH);
+        session.removeAttribute(BET_ACCEPT);
+        session.removeAttribute(COMMAND);
     }
 }

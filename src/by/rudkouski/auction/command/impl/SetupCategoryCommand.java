@@ -24,4 +24,8 @@ public class SetupCategoryCommand implements ICommand {
         session.setAttribute(CATEGORY_LIST, categoryList);
         return null;
     }
+
+    @Override
+    public void resetSessionMessage(HttpSession session) {
+    }
 }

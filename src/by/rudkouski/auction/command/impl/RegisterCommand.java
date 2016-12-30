@@ -14,6 +14,7 @@ public class RegisterCommand implements ICommand {
     private static final String PWD = "pwd";
     private static final String USER = "user";
     private static final String ERROR_AUTH = "errorAuth";
+    private static final String COMMAND = "command";
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -22,6 +23,7 @@ public class RegisterCommand implements ICommand {
 
         HttpSession session = request.getSession();
         String page = returnPage(session);
+        session.setAttribute(COMMAND, request.getParameter(COMMAND));
         boolean validMail = new Validator().userMailValidate(mail);
         boolean validPassword = new Validator().userPasswordValidate(password);
         if (!validMail || !validPassword) {
@@ -38,5 +40,11 @@ public class RegisterCommand implements ICommand {
             session.setAttribute(ERROR_AUTH, USER);
         }
         return page;
+    }
+
+    @Override
+    public void resetSessionMessage(HttpSession session) {
+        session.removeAttribute(ERROR_AUTH);
+        session.removeAttribute(COMMAND);
     }
 }

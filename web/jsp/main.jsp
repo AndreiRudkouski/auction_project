@@ -1,7 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%--<fmt:requestEncoding value="UTF-8"/>--%>
 <c:set var="loc" value="${sessionScope.loc}"/>
 <c:choose>
     <c:when test="${loc == null}">
@@ -22,13 +21,13 @@
 <c:import url="fragment/header.jsp"/>
 <c:import url="fragment/nav.jsp"/>
 <c:choose>
-    <c:when test="${profile != null && sessionScope.user != null}">
+    <c:when test="${requestScope.profile != null && sessionScope.user != null}">
         <c:import url="fragment/profile.jsp"/>
     </c:when>
     <c:otherwise>
         <c:choose>
-            <c:when test="${lot == null}">
-                <c:if test="${categoryId == null && lotList == null}">
+            <c:when test="${requestScope.lot == null}">
+                <c:if test="${requestScope.categoryId == null && requestScope.lotList == null}">
                     <c:import url="/jsp/Controller?command=setup_lot"/>
                 </c:if>
                 <c:import url="fragment/lots.jsp"/>

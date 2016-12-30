@@ -32,4 +32,8 @@ public class LotChoiceCommand implements ICommand {
         request.setAttribute(LOT, lot);
         return MAIN_PAGE;
     }
+
+    @Override
+    public void resetSessionMessage(HttpSession session) {
+    }
 }

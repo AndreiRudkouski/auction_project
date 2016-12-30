@@ -3,6 +3,7 @@ package by.rudkouski.auction.command.impl;
 import by.rudkouski.auction.command.ICommand;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 
 public class LotSearchCommand implements ICommand {
@@ -16,11 +17,15 @@ public class LotSearchCommand implements ICommand {
         try {
             search = new String(request.getParameter(FIELD_SEARCH).getBytes(ENCODING), request.getCharacterEncoding());
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            //throw new CommandException("Wrong data encoding", e);
         }
         if (search != null && !search.isEmpty()) {
             searchLot(request, search, 0);
         }
         return MAIN_PAGE;
+    }
+
+    @Override
+    public void resetSessionMessage(HttpSession session) {
     }
 }

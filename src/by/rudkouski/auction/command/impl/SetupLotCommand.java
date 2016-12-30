@@ -6,6 +6,7 @@ import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.impl.LotService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class SetupLotCommand implements ICommand {
@@ -21,5 +22,9 @@ public class SetupLotCommand implements ICommand {
         request.getSession().setAttribute(SAVE_REQ, null);
         request.setAttribute(LOT_LIST, lotList);
         return null;
+    }
+
+    @Override
+    public void resetSessionMessage(HttpSession session) {
     }
 }

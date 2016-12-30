@@ -18,6 +18,8 @@ public interface ICommand {
 
     String execute(HttpServletRequest request);
 
+    void resetSessionMessage(HttpSession session);
+
     default boolean searchLot(HttpServletRequest request, String search, int page) {
         ServiceManager factory = ServiceManager.getInstance();
         LotService lotService = factory.getLotService();

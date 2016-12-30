@@ -16,8 +16,6 @@
                 <c:if test="${loc == 'en'}">
                     <span>${sessionScope.categoryList.getNameEn(lot.categoryId)}</span>
                 </c:if>
-                <${requestScope['m'] = 'me'}/>
-
             </a>
         </div>
         <div class="lot">
