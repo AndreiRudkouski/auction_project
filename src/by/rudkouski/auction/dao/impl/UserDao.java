@@ -11,10 +11,10 @@ import java.sql.SQLException;
 
 public class UserDao implements IUserDao<User> {
     private ProxyConnection con;
-    private static final String SQL_USER = "SELECT user_id, login, email, balance, ban FROM user WHERE email = ? AND password = ?";
+    private static final String SQL_USER = "SELECT user_id, login, email, balance, ban, role_id FROM user WHERE email = ? AND password = ?";
     private static final String SQL_ADD_USER = "INSERT INTO user (email, password) VALUES (?, ?)";
     private static final String SQL_MAIL = "SELECT email FROM user WHERE email = ?";
-    private static final String SQL_USER_ID = "SELECT user_id, login, email, balance, ban FROM user WHERE user_id = ?";
+    private static final String SQL_USER_ID = "SELECT user_id, login, email, balance, ban, role_id FROM user WHERE user_id = ?";
     private static final String SQL_LOGIN = "SELECT login FROM user WHERE login = ?";
     private static final String SQL_LOGIN_CHANGE = "UPDATE user SET login = ? WHERE user_id = ?";
     private static final String SQL_PASSWORD_CHANGE = "UPDATE user SET password = ? WHERE user_id = ?";
@@ -194,6 +194,7 @@ public class UserDao implements IUserDao<User> {
         user.setMail(res.getString(3));
         user.setBalance(new BigDecimal(res.getString(4)));
         user.setBan(res.getBoolean(5));
+        user.setRoleId(res.getLong(6));
         return user;
     }
 

@@ -19,21 +19,28 @@
 </head>
 <body>
 <c:import url="fragment/header.jsp"/>
-<c:import url="fragment/nav.jsp"/>
 <c:choose>
-    <c:when test="${requestScope.profile != null && sessionScope.user != null}">
+    <c:when test="${sessionScope.user != null && sessionScope.user.roleId == 2}">
         <c:import url="fragment/profile.jsp"/>
     </c:when>
     <c:otherwise>
+        <c:import url="fragment/nav.jsp"/>
         <c:choose>
-            <c:when test="${requestScope.lot == null}">
-                <c:if test="${requestScope.categoryId == null && requestScope.lotList == null}">
-                    <c:import url="/jsp/Controller?command=setup_lot"/>
-                </c:if>
-                <c:import url="fragment/lots.jsp"/>
+            <c:when test="${requestScope.profile != null && sessionScope.user != null}">
+                <c:import url="fragment/profile.jsp"/>
             </c:when>
             <c:otherwise>
-                <c:import url="fragment/lot.jsp"/>
+                <c:choose>
+                    <c:when test="${requestScope.lot == null}">
+                        <c:if test="${requestScope.categoryId == null && requestScope.lotList == null}">
+                            <c:import url="/jsp/Controller?command=setup_lot"/>
+                        </c:if>
+                        <c:import url="fragment/lots.jsp"/>
+                    </c:when>
+                    <c:otherwise>
+                        <c:import url="fragment/lot.jsp"/>
+                    </c:otherwise>
+                </c:choose>
             </c:otherwise>
         </c:choose>
     </c:otherwise>

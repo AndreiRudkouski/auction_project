@@ -9,6 +9,7 @@ public class User extends AbstractEntity {
     private String mail;
     private BigDecimal balance;
     private boolean ban;
+    private long roleId;
 
     public String getLogin() {
         return login;
@@ -40,5 +41,13 @@ public class User extends AbstractEntity {
 
     public void setBan(boolean ban) {
         this.ban = ban;
+    }
+
+    public long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(long roleId) {
+        this.roleId = roleId;
     }
 }
