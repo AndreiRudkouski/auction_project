@@ -525,3 +525,11 @@ function visibleAdmin(id) {
     document.getElementById(id).style.display = 'block';
 }
 
+function validateFind(find) {
+    var field = document.getElementById(find);
+    if (!field.value) {
+        return false;
+    }
+    return true;
+}
+

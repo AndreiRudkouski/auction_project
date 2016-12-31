@@ -31,8 +31,8 @@ public class RegisterCommand implements ICommand {
             return page;
         }
 
-        ServiceManager factory = ServiceManager.getInstance();
-        UserService userService = factory.getUserService();
+        ServiceManager manager = ServiceManager.getInstance();
+        UserService userService = manager.getUserService();
         User user = userService.registerUser(mail, password);
         if (user != null) {
             session.setAttribute(USER, user);

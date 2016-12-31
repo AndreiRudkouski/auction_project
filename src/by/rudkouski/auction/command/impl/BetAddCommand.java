@@ -48,8 +48,8 @@ public class BetAddCommand implements ICommand {
             return page;
         }
 
-        ServiceManager factory = ServiceManager.getInstance();
-        LotService lotService = factory.getLotService();
+        ServiceManager manager = ServiceManager.getInstance();
+        LotService lotService = manager.getLotService();
         BigDecimal minBet = lotService.determineLotMinBet(lotId);
 
         session.setAttribute(COMMAND, request.getParameter(COMMAND));
@@ -59,7 +59,7 @@ public class BetAddCommand implements ICommand {
             return page;
         }
 
-        UserService userService = factory.getUserService();
+        UserService userService = manager.getUserService();
         BigDecimal balance = userService.receiveUserBalance(userId);
         if (balance.compareTo(curBet) < 0) {
             session.setAttribute(ERROR_BALANCE, ERROR_BALANCE);
@@ -77,10 +77,10 @@ public class BetAddCommand implements ICommand {
         bet.setAmount(curBet);
         bet.setTime(curTime);
 
-        BetService betService = factory.getBetService();
+        BetService betService = manager.getBetService();
         validBet = betService.addBet(bet, balance);
         if (validBet) {
-            userService = factory.getUserService();
+            userService = manager.getUserService();
             user = userService.receiveUserById(userId);
             session.setAttribute(USER, user);
             session.setAttribute(BET_ACCEPT, BET_ACCEPT);

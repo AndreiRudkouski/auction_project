@@ -25,8 +25,8 @@ public class LotChoiceCommand implements ICommand {
             return page;
         }
 
-        ServiceManager factory = ServiceManager.getInstance();
-        LotService lotService = factory.getLotService();
+        ServiceManager manager = ServiceManager.getInstance();
+        LotService lotService = manager.getLotService();
         Lot lot = lotService.searchLotById(lotId);
 
         request.setAttribute(LOT, lot);

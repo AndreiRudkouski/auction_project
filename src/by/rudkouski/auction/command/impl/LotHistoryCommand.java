@@ -32,8 +32,8 @@ public class LotHistoryCommand implements ICommand {
             return MAIN_PAGE;
         }
 
-        ServiceManager factory = ServiceManager.getInstance();
-        LotService lotService = factory.getLotService();
+        ServiceManager manager = ServiceManager.getInstance();
+        LotService lotService = manager.getLotService();
         List<List<Lot>> lotResult = lotService.receiveLotHistoryByUser(userId);
         if (lotResult.size() == RESULT_LIST_SIZE) {
             request.setAttribute(LOT_LIST_FINISH, lotResult.get(0));

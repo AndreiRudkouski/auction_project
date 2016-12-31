@@ -56,8 +56,8 @@ public class BalanceFillCommand implements ICommand {
             return page;
         }
 
-        ServiceManager factory = ServiceManager.getInstance();
-        UserService userService = factory.getUserService();
+        ServiceManager manager = ServiceManager.getInstance();
+        UserService userService = manager.getUserService();
         user = userService.fillUserBalanceById(userId, amount);
         if (user != null) {
             session.setAttribute(USER, user);

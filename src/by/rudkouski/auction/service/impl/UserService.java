@@ -1,7 +1,6 @@
 package by.rudkouski.auction.service.impl;
 
 import by.rudkouski.auction.bean.impl.User;
-import by.rudkouski.auction.dao.IUserDao;
 import by.rudkouski.auction.dao.impl.UserDao;
 import by.rudkouski.auction.pool.ConnectionPool;
 import by.rudkouski.auction.pool.ProxyConnection;
@@ -11,6 +10,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 public class UserService implements IUserService<User> {
     private static final ConnectionPool POOL = ConnectionPool.getInstance();
@@ -132,6 +132,12 @@ public class UserService implements IUserService<User> {
             POOL.returnConnection(con);
         }
         return balance;
+    }
+
+    @Override
+    public List<User> searchUser(String search) {
+
+        return null;
     }
 
     private String md5Convert(String st) {

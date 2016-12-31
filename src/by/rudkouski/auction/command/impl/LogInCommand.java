@@ -34,8 +34,8 @@ public class LogInCommand implements ICommand {
             return page;
         }
 
-        ServiceManager factory = ServiceManager.getInstance();
-        UserService userService = factory.getUserService();
+        ServiceManager manager = ServiceManager.getInstance();
+        UserService userService = manager.getUserService();
         User user = userService.logInUser(mail, password);
 
         if (user != null) {

@@ -8,8 +8,6 @@ import by.rudkouski.auction.validation.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ProfileChangeCommand implements ICommand {
     private static final String LOGIN = "login";
@@ -61,8 +59,8 @@ public class ProfileChangeCommand implements ICommand {
             return page;
         }
 
-        ServiceManager factory = ServiceManager.getInstance();
-        UserService userService = factory.getUserService();
+        ServiceManager manager = ServiceManager.getInstance();
+        UserService userService = manager.getUserService();
         if (validLogin) {
             user = userService.changeUserLogin(userId, newLogin);
             if (user != null) {

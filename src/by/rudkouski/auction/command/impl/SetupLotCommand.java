@@ -15,8 +15,8 @@ public class SetupLotCommand implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request) {
-        ServiceManager factory = ServiceManager.getInstance();
-        LotService lotService = factory.getLotService();
+        ServiceManager manager = ServiceManager.getInstance();
+        LotService lotService = manager.getLotService();
         List<Lot> lotList = lotService.setupLot();
 
         request.getSession().setAttribute(SAVE_REQ, null);

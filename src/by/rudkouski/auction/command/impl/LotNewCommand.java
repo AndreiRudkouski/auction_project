@@ -27,8 +27,8 @@ public class LotNewCommand implements ICommand {
             return MAIN_PAGE;
         }
 
-        ServiceManager factory = ServiceManager.getInstance();
-        CategoryService categoryService = factory.getCategoryService();
+        ServiceManager manager = ServiceManager.getInstance();
+        CategoryService categoryService = manager.getCategoryService();
         List<List> setupList = categoryService.setupNewLotData();
         if (setupList.size() == 3) {
             request.setAttribute(TYPE_LIST, setupList.get(0));

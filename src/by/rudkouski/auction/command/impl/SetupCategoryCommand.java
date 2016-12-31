@@ -15,8 +15,8 @@ public class SetupCategoryCommand implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request) {
-        ServiceManager factory = ServiceManager.getInstance();
-        CategoryService categoryService = factory.getCategoryService();
+        ServiceManager manager = ServiceManager.getInstance();
+        CategoryService categoryService = manager.getCategoryService();
         List<Category> categories = categoryService.setupCategory();
         CategoryList categoryList = new CategoryList(categories);
 

@@ -43,8 +43,8 @@ public class LotSaveCommand implements ICommand {
         String appPath = request.getServletContext().getRealPath(EMPTY_LINE);
 
 
-        ServiceManager factory = ServiceManager.getInstance();
-        LotService lotService = factory.getLotService();
+        ServiceManager manager = ServiceManager.getInstance();
+        LotService lotService = manager.getLotService();
         boolean result = lotService.addLot(lot, appPath);
         if (result) {
             session.setAttribute(CHANGE_ACCEPT, CHANGE_ACCEPT);

@@ -31,8 +31,8 @@ public class BetHistoryCommand implements ICommand {
             return MAIN_PAGE;
         }
 
-        ServiceManager factory = ServiceManager.getInstance();
-        BetService betService = factory.getBetService();
+        ServiceManager manager = ServiceManager.getInstance();
+        BetService betService = manager.getBetService();
         List<List<Bet>> betResult = betService.receiveBetHistoryByUser(userId);
         if (betResult.size() == RESULT_LIST_SIZE) {
             request.setAttribute(BET_LIST_WIN, betResult.get(0));

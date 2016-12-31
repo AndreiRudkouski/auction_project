@@ -83,7 +83,7 @@
     </c:if>
     </div>
     <jsp:include page="message.jsp"/>
-    <jsp:include page="card.jsp"/>
+    <jsp:include page="profile/profileCard.jsp"/>
     </body>
     </html>
 </fmt:bundle>
