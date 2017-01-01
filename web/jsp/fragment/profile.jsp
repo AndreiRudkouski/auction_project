@@ -47,10 +47,10 @@
             <hr>
             <c:choose>
                 <c:when test="${requestScope.lotHistory != null}">
-                    <jsp:include page="profile/profileLotList.jsp"/>
+                    <jsp:include page="profile/profileLot.jsp"/>
                 </c:when>
                 <c:when test="${requestScope.betHistory != null}">
-                    <jsp:include page="profile/profileBetList.jsp"/>
+                    <jsp:include page="profile/profileBet.jsp"/>
                 </c:when>
                 <c:when test="${requestScope.newLot != null}">
                     <jsp:include page="profile/profileNewLot.jsp"/>

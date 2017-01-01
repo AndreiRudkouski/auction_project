@@ -17,6 +17,7 @@ public class BetHistoryCommand implements ICommand {
     private static final String BET_LIST_WIN = "betListWin";
     private static final String BET_LIST_DONE = "betListDone";
     private static final String MAIN_PAGE = "main.jsp";
+    private static final String USER_ID = "userId";
     private static final int RESULT_LIST_SIZE = 2;
 
     @Override
@@ -29,6 +30,16 @@ public class BetHistoryCommand implements ICommand {
         } else {
             //throw new CommandException("Wrong data parsing", e);
             return MAIN_PAGE;
+        }
+
+        String id = request.getParameter(USER_ID);
+        if (id != null && !id.isEmpty()) {
+            try {
+                userId = Long.parseLong(id);
+            } catch (NumberFormatException e) {
+                //throw new CommandException("Wrong data parsing", e);
+                return MAIN_PAGE;
+            }
         }
 
         ServiceManager manager = ServiceManager.getInstance();

@@ -11,9 +11,8 @@ import java.util.List;
 
 public class UserSearchCommand implements ICommand {
     private static final String MAIN_PAGE = "main.jsp";
-    private static final String USER_SEARCH = "user_search";
+    private static final String USER_SEARCH = "userSearch";
     private static final String USER_LIST = "userList";
-    private static final int USER_LIST_NULL = 0;
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -21,12 +20,8 @@ public class UserSearchCommand implements ICommand {
         if (search != null && !search.isEmpty()) {
             ServiceManager manager = ServiceManager.getInstance();
             UserService userService = manager.getUserService();
-            List<User> userList = userService.searchUser(search);
-            if (userList != null) {
-                request.setAttribute(USER_LIST, userList);
-            } else {
-                request.setAttribute(USER_LIST, USER_LIST_NULL);
-            }
+            List<User> userList = userService.searchUserByLoginMail(search);
+            request.setAttribute(USER_LIST, userList);
         }
         return MAIN_PAGE;
     }

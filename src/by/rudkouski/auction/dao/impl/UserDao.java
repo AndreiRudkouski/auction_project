@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDao implements IUserDao<User> {
     private ProxyConnection con;
@@ -24,6 +26,9 @@ public class UserDao implements IUserDao<User> {
             "JOIN user ON bet.user_id = user.user_id " +
             "WHERE bet = (SELECT MAX(bet) FROM bet WHERE lot_id = ?)";
     private static final String SQL_PASSWORD = "SELECT password FROM user WHERE user_id = ? AND password = ?";
+    private static final String SQL_USER_SEARCH = "SELECT user_id, login, email, balance, ban, role_id FROM user " +
+            "WHERE role_id != 2 AND (email LIKE ? OR login LIKE ?) ORDER BY login, email";
+
 
     public UserDao(ProxyConnection con) {
         this.con = con;
@@ -185,6 +190,23 @@ public class UserDao implements IUserDao<User> {
             //throw new DaoException("SQLException", e);
         }
         return user;
+    }
+
+    @Override
+    public List<User> searchUserByLoginMail(String search) {
+        List<User> userList = new ArrayList<>();
+        try (PreparedStatement prSt = con.prepareStatement(SQL_USER_SEARCH)) {
+            prSt.setString(1, "%" + search + "%");
+            prSt.setString(2, "%" + search + "%");
+            ResultSet res = prSt.executeQuery();
+            while (res.next()) {
+                User user = createUser(res);
+                userList.add(user);
+            }
+        } catch (SQLException e) {
+            //throw new DaoException("SQLException", e);
+        }
+        return userList;
     }
 
     private User createUser(ResultSet res) throws SQLException {

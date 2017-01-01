@@ -5,6 +5,7 @@ import by.rudkouski.auction.bean.impl.User;
 import by.rudkouski.auction.pool.ProxyConnection;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface IUserDao<T extends AbstractEntity> {
     T logInUser(String mail, String password);
@@ -28,4 +29,6 @@ public interface IUserDao<T extends AbstractEntity> {
     boolean updateUserBalanceById(long userId, BigDecimal newBalance);
 
     T receivePrevMaxBetUser(long lotId);
+
+    List<T> searchUserByLoginMail(String search);
 }

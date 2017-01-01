@@ -8,7 +8,7 @@ import java.io.UnsupportedEncodingException;
 
 public class LotSearchCommand implements ICommand {
     private static final String MAIN_PAGE = "main.jsp";
-    private static final String FIELD_SEARCH = "field_search";
+    private static final String FIELD_SEARCH = "fieldSearch";
     private static final String ENCODING = "ISO-8859-1";
 
     @Override

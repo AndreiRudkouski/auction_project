@@ -55,7 +55,7 @@
             <div class="find-inner">
                 <form onsubmit="return validateFind('lotFind')" action="Controller">
                     <input type="hidden" name="command" value="lot_search"/>
-                    <input id="lotFind" type="text" name="field_search" placeholder="<fmt:message key="find"/>">
+                    <input id="lotFind" type="text" name="fieldSearch" placeholder="<fmt:message key="find"/>">
                     <input type="submit" value=" ">
                 </form>
             </div>

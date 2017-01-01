@@ -23,7 +23,8 @@ public enum CommandType {
     BALANCE_FILL(new BalanceFillCommand()),
     LOT_NEW(new LotNewCommand()),
     LOT_SAVE(new LotSaveCommand()),
-    USER_SEARCH(new UserSearchCommand());
+    USER_SEARCH(new UserSearchCommand()),
+    USER_CHOICE(new UserChoiceCommand());
 
     ICommand command;
 

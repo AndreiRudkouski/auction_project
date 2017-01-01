@@ -135,9 +135,17 @@ public class UserService implements IUserService<User> {
     }
 
     @Override
-    public List<User> searchUser(String search) {
-
-        return null;
+    public List<User> searchUserByLoginMail(String search) {
+        ProxyConnection con = null;
+        List<User> userList;
+        try {
+            con = POOL.takeConnection();
+            UserDao userDao = new UserDao(con);
+            userList = userDao.searchUserByLoginMail(search);
+        } finally {
+            POOL.returnConnection(con);
+        }
+        return userList;
     }
 
     private String md5Convert(String st) {

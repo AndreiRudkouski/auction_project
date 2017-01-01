@@ -18,6 +18,7 @@ public class LotHistoryCommand implements ICommand {
     private static final String LOT_LIST_CHECKED = "lotListChecked";
     private static final String LOT_LIST_UNCHECKED = "lotListUnchecked";
     private static final String MAIN_PAGE = "main.jsp";
+    private static final String USER_ID = "userId";
     private static final int RESULT_LIST_SIZE = 3;
 
     @Override
@@ -30,6 +31,16 @@ public class LotHistoryCommand implements ICommand {
         } else {
             //throw new CommandException("Wrong data parsing", e);
             return MAIN_PAGE;
+        }
+
+        String id = request.getParameter(USER_ID);
+        if (id != null && !id.isEmpty()) {
+            try {
+                userId = Long.parseLong(id);
+            } catch (NumberFormatException e) {
+                //throw new CommandException("Wrong data parsing", e);
+                return MAIN_PAGE;
+            }
         }
 
         ServiceManager manager = ServiceManager.getInstance();

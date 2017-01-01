@@ -20,5 +20,5 @@ public interface IUserService<T extends AbstractEntity> {
 
     BigDecimal receiveUserBalance(long userId);
 
-    List<T> searchUser(String search);
+    List<T> searchUserByLoginMail(String search);
 }
