@@ -24,7 +24,8 @@ public enum CommandType {
     LOT_NEW(new LotNewCommand()),
     LOT_SAVE(new LotSaveCommand()),
     USER_SEARCH(new UserSearchCommand()),
-    USER_CHOICE(new UserChoiceCommand());
+    USER_CHOICE(new UserChoiceCommand()),
+    LOT_SELECT(new LotSelectCommand());
 
     ICommand command;
 

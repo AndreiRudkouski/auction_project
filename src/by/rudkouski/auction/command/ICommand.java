@@ -23,7 +23,7 @@ public interface ICommand {
     default boolean searchLot(HttpServletRequest request, String search, int page) {
         ServiceManager factory = ServiceManager.getInstance();
         LotService lotService = factory.getLotService();
-        List<Lot> lotList = lotService.searchLotByNamePart(search, page);
+        List<Lot> lotList = lotService.searchLotByName(search, page);
 
         request.setAttribute(LOT_SEARCH, search);
         request.setAttribute(LOT_LIST, lotList);

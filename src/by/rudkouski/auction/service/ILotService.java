@@ -10,11 +10,17 @@ public interface ILotService<T extends AbstractEntity> {
 
     List<T> searchLotByCategory(long categoryId, int page);
 
-    List<T> searchLotByNamePart(String search, int page);
+    List<T> searchLotByName(String search, int page);
 
     T searchLotById(long lotId);
 
     List<List<T>> receiveLotHistoryByUser(long userId);
+
+    List<T> receiveFinishedLotHistoryByUser(long userId);
+
+    List<T> receiveUnfinishedLotHistoryByUser(long userId);
+
+    List<T> receiveUncheckedLotHistoryByUser(long userId);
 
     BigDecimal determineLotMinBet(long lotId);
 

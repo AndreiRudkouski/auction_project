@@ -21,7 +21,14 @@
 <c:import url="fragment/header.jsp"/>
 <c:choose>
     <c:when test="${sessionScope.user != null && sessionScope.user.roleId == 2}">
-        <c:import url="fragment/admin.jsp"/>
+        <c:choose>
+            <c:when test="${requestScope.lot == null}">
+                <c:import url="fragment/admin.jsp"/>
+            </c:when>
+            <c:otherwise>
+                <c:import url="fragment/lot.jsp"/>
+            </c:otherwise>
+        </c:choose>
     </c:when>
     <c:otherwise>
         <c:import url="fragment/nav.jsp"/>

@@ -15,7 +15,7 @@ public class LotHistoryCommand implements ICommand {
     private static final String PROFILE = "profile";
     private static final String LOT_HISTORY = "lotHistory";
     private static final String LOT_LIST_FINISH = "lotListFinished";
-    private static final String LOT_LIST_CHECKED = "lotListChecked";
+    private static final String LOT_LIST_UNFINISHED = "lotListUnfinished";
     private static final String LOT_LIST_UNCHECKED = "lotListUnchecked";
     private static final String MAIN_PAGE = "main.jsp";
     private static final String USER_ID = "userId";
@@ -48,7 +48,7 @@ public class LotHistoryCommand implements ICommand {
         List<List<Lot>> lotResult = lotService.receiveLotHistoryByUser(userId);
         if (lotResult.size() == RESULT_LIST_SIZE) {
             request.setAttribute(LOT_LIST_FINISH, lotResult.get(0));
-            request.setAttribute(LOT_LIST_CHECKED, lotResult.get(1));
+            request.setAttribute(LOT_LIST_UNFINISHED, lotResult.get(1));
             request.setAttribute(LOT_LIST_UNCHECKED, lotResult.get(2));
         }
         request.setAttribute(LOT_HISTORY, LOT_HISTORY);

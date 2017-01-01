@@ -22,6 +22,7 @@ public class LotDao implements ILotDao<Lot> {
     private static final long BLIND_AUCTION_TYPE_ID = 3;
     private static final BigDecimal TEN_PERCENT = new BigDecimal(10 / 100);
     private static final String FORMAT_DATE = "yyyy-MM-dd HH:mm:ss";
+    private static final String ANY_USER = "%";
 
     private static final String SQL_SETUP_LOT = "SELECT lot.lot_id, name, url, MAX(bet), priceStart, lot.type_id FROM lot " +
             "JOIN photo ON lot.lot_id = photo.lot_id " +
@@ -32,7 +33,7 @@ public class LotDao implements ILotDao<Lot> {
     private static final String SQL_SEARCH_LOT_FINISHED = "SELECT lot.lot_id, name, url, MAX(bet), priceStart, lot.type_id, description, lot.category_id, lot.user_id FROM lot " +
             "JOIN photo ON lot.lot_id = photo.lot_id " +
             "LEFT JOIN bet ON lot.lot_id = bet.lot_id WHERE lot.lot_id = ? GROUP BY lot.lot_id";
-    private static final String SQL_SEARCH_LOT_NOT_FINISHED = "SELECT lot.lot_id, name, url, MAX(bet), priceStart, lot.type_id, description, lot.category_id, " +
+    private static final String SQL_SEARCH_LOT_UNFINISHED = "SELECT lot.lot_id, name, url, MAX(bet), priceStart, lot.type_id, description, lot.category_id, " +
             "type.type, ADDDATE(timeStart, term), priceBlitz, cond.condition, lot.user_id FROM lot " +
             "JOIN term ON lot.term_id = term.term_id " +
             "JOIN photo ON lot.lot_id = photo.lot_id " +
@@ -48,9 +49,12 @@ public class LotDao implements ILotDao<Lot> {
     private static final String SQL_CHECK_FINISH_LOT = "SELECT finish, ADDDATE(timeStart, term), lot.lot_id FROM lot " +
             "JOIN term ON lot.term_id = term.term_id WHERE lot.lot_id = ?";
     private static final String SQL_MARK_FINISH_LOT = "UPDATE lot SET finish = 1 WHERE lot_id = ?";
-    private static final String SQL_HISTORY_LOT = "SELECT lot.lot_id, name, timeStart, lot.check, finish FROM lot " +
-            "WHERE user_id = ? " +
-            "ORDER BY timeStart DESC";
+    private static final String SQL_FINISHED_LOT_HISTORY = "SELECT lot.lot_id, name, timeStart, lot.check, finish FROM lot " +
+            "WHERE user_id LIKE ? AND finish = 1 AND lot.check = 1 ORDER BY timeStart DESC";
+    private static final String SQL_UNFINISHED_LOT_HISTORY = "SELECT lot.lot_id, name, timeStart, lot.check, finish FROM lot " +
+            "WHERE user_id LIKE ? AND finish = 0 AND lot.check = 1 ORDER BY timeStart DESC";
+    private static final String SQL_UNCHECKED_LOT_HISTORY = "SELECT lot.lot_id, name, timeStart, lot.check, finish FROM lot " +
+            "WHERE user_id LIKE ? AND lot.check = 0 ORDER BY timeStart DESC";
     private static final String SQL_ADD_LOT = "INSERT INTO lot (name, description, priceStart, priceBlitz, step, timeStart, category_id, user_id, term_id, type_id, condition_id) " +
             " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_ADD_PHOTO = "INSERT INTO photo (lot_id, url) VALUES (?, ?)";
@@ -89,7 +93,7 @@ public class LotDao implements ILotDao<Lot> {
     }
 
     @Override
-    public List<Lot> searchLotByNamePart(String search, int page) {
+    public List<Lot> searchLotByName(String search, int page) {
         List<Lot> lotList = null;
         try (PreparedStatement prSt = con.prepareStatement(SQL_SEARCH_LOT_NAME)) {
             prSt.setString(1, "%" + search + "%");
@@ -132,9 +136,9 @@ public class LotDao implements ILotDao<Lot> {
     }
 
     @Override
-    public Lot searchNotFinishedLotById(long lotId) {
+    public Lot searchUnfinishedLotById(long lotId) {
         Lot lot = null;
-        try (PreparedStatement prSt = con.prepareStatement(SQL_SEARCH_LOT_NOT_FINISHED)) {
+        try (PreparedStatement prSt = con.prepareStatement(SQL_SEARCH_LOT_UNFINISHED)) {
             prSt.setLong(1, lotId);
             ResultSet res = prSt.executeQuery();
             while (res.next()) {
@@ -195,23 +199,54 @@ public class LotDao implements ILotDao<Lot> {
     }
 
     @Override
-    public List<Lot> receiveLotHistoryByUser(long userId) {
+    public List<Lot> receiveFinishedLotHistoryByUser(long userId) {
         List<Lot> lotList = null;
-        try (PreparedStatement prSt = con.prepareStatement(SQL_HISTORY_LOT)) {
-            prSt.setLong(1, userId);
-            ResultSet res = prSt.executeQuery();
-            lotList = new ArrayList<>();
-            while (res.next()) {
-                Lot lot = new Lot();
-                lot.setId(res.getLong(1));
-                lot.setName(res.getString(2));
-                lot.setTimeStart(res.getTimestamp(3));
-                lot.setCheck(res.getBoolean(4));
-                lot.setFinish(res.getBoolean(5));
-                lotList.add(lot);
-            }
+        try (PreparedStatement prSt = con.prepareStatement(SQL_FINISHED_LOT_HISTORY)) {
+            lotList = receiveLotList(userId, prSt);
         } catch (SQLException e) {
             //throw new DaoException("SQLException", e);
+        }
+        return lotList;
+    }
+
+    @Override
+    public List<Lot> receiveUnfinishedLotHistoryByUser(long userId) {
+        List<Lot> lotList = null;
+        try (PreparedStatement prSt = con.prepareStatement(SQL_UNFINISHED_LOT_HISTORY)) {
+            lotList = receiveLotList(userId, prSt);
+        } catch (SQLException e) {
+            //throw new DaoException("SQLException", e);
+        }
+        return lotList;
+    }
+
+    @Override
+    public List<Lot> receiveUncheckedLotHistoryByUser(long userId) {
+        List<Lot> lotList = null;
+        try (PreparedStatement prSt = con.prepareStatement(SQL_UNCHECKED_LOT_HISTORY)) {
+            lotList = receiveLotList(userId, prSt);
+        } catch (SQLException e) {
+            //throw new DaoException("SQLException", e);
+        }
+        return lotList;
+    }
+
+    private List<Lot> receiveLotList(long userId, PreparedStatement prSt) throws  SQLException {
+        if (userId != 0) {
+            prSt.setLong(1, userId);
+        } else {
+            prSt.setString(1, ANY_USER);
+        }
+        ResultSet res = prSt.executeQuery();
+        List<Lot> lotList = new ArrayList<>();
+        while (res.next()) {
+            Lot lot = new Lot();
+            lot.setId(res.getLong(1));
+            lot.setName(res.getString(2));
+            lot.setTimeStart(res.getTimestamp(3));
+            lot.setCheck(res.getBoolean(4));
+            lot.setFinish(res.getBoolean(5));
+            lotList.add(lot);
         }
         return lotList;
     }
@@ -285,11 +320,6 @@ public class LotDao implements ILotDao<Lot> {
 
     private List<Lot> convertResult(ResultSet res) throws SQLException {
         List<Lot> lotList = new ArrayList<>();
-
-        List[] lots = new ArrayList[3];
-        lots[0] = lotList;
-
-
         while (res.next()) {
             Lot lot = createLot(res);
             lotList.add(lot);

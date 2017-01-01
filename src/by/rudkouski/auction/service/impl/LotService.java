@@ -54,13 +54,13 @@ public class LotService implements ILotService<Lot> {
     }
 
     @Override
-    public List<Lot> searchLotByNamePart(String search, int page) {
+    public List<Lot> searchLotByName(String search, int page) {
         ProxyConnection con = null;
         List<Lot> lotList;
         try {
             con = POOL.takeConnection();
             LotDao lotDao = new LotDao(con);
-            lotList = lotDao.searchLotByNamePart(search, page);
+            lotList = lotDao.searchLotByName(search, page);
         } finally {
             POOL.returnConnection(con);
         }
@@ -76,7 +76,7 @@ public class LotService implements ILotService<Lot> {
             con = POOL.takeConnection();
             LotDao lotDao = new LotDao(con);
             boolean finishLot = lotDao.checkAndMarkFinishLot(lotId, null);
-            lot = finishLot ? lotDao.searchFinishedLotById(lotId) : lotDao.searchNotFinishedLotById(lotId);
+            lot = finishLot ? lotDao.searchFinishedLotById(lotId) : lotDao.searchUnfinishedLotById(lotId);
             boolean createBetList = false;
             if ((finishLot && lot.getType().getId() == BLIND_TYPE_ID) || lot.getType().getId() != BLIND_TYPE_ID) {
                 createBetList = true;
@@ -94,45 +94,69 @@ public class LotService implements ILotService<Lot> {
     @Override
     public List<List<Lot>> receiveLotHistoryByUser(long userId) {
         ProxyConnection con = null;
-        List<Lot> lotList;
-        List<List<Lot>> lotResult = null;
+        List<Lot> lotListFinished;
+        List<Lot> lotListUnfinished;
+        List<Lot> lotListUnchecked;
         try {
             con = POOL.takeConnection();
             LotDao lotDao = new LotDao(con);
-            lotList = lotDao.receiveLotHistoryByUser(userId);
+            lotListFinished = lotDao.receiveFinishedLotHistoryByUser(userId);
+            lotListUnfinished = lotDao.receiveUnfinishedLotHistoryByUser(userId);
+            lotListUnchecked = lotDao.receiveUncheckedLotHistoryByUser(userId);
+
         } finally {
             POOL.returnConnection(con);
         }
-        if (lotList != null) {
-            List<Lot> lotListFinished = null;
-            List<Lot> lotListChecked = null;
-            List<Lot> lotListUnchecked = null;
-            for (Lot lot : lotList) {
-                if (lot.isFinish()) {
-                    if (lotListFinished == null) {
-                        lotListFinished = new ArrayList<>();
-                    }
-                    lotListFinished.add(lot);
-                } else {
-                    if (lot.isCheck()) {
-                        if (lotListChecked == null) {
-                            lotListChecked = new ArrayList<>();
-                        }
-                        lotListChecked.add(lot);
-                    } else {
-                        if (lotListUnchecked == null) {
-                            lotListUnchecked = new ArrayList<>();
-                        }
-                        lotListUnchecked.add(lot);
-                    }
-                }
-            }
-            lotResult = new ArrayList<>();
-            lotResult.add(lotListFinished);
-            lotResult.add(lotListChecked);
-            lotResult.add(lotListUnchecked);
-        }
+        List<List<Lot>> lotResult = new ArrayList<>();
+        lotResult.add(lotListFinished);
+        lotResult.add(lotListUnfinished);
+        lotResult.add(lotListUnchecked);
         return lotResult;
+    }
+
+    @Override
+    public List<Lot> receiveFinishedLotHistoryByUser(long userId) {
+        ProxyConnection con = null;
+        List<Lot> lotList;
+        try {
+            con = POOL.takeConnection();
+            LotDao lotDao = new LotDao(con);
+            lotList = lotDao.receiveFinishedLotHistoryByUser(userId);
+
+        } finally {
+            POOL.returnConnection(con);
+        }
+        return lotList;
+    }
+
+    @Override
+    public List<Lot> receiveUnfinishedLotHistoryByUser(long userId) {
+        ProxyConnection con = null;
+        List<Lot> lotList;
+        try {
+            con = POOL.takeConnection();
+            LotDao lotDao = new LotDao(con);
+            lotList = lotDao.receiveUnfinishedLotHistoryByUser(userId);
+
+        } finally {
+            POOL.returnConnection(con);
+        }
+        return lotList;
+    }
+
+    @Override
+    public List<Lot> receiveUncheckedLotHistoryByUser(long userId) {
+        ProxyConnection con = null;
+        List<Lot> lotList;
+        try {
+            con = POOL.takeConnection();
+            LotDao lotDao = new LotDao(con);
+            lotList = lotDao.receiveUncheckedLotHistoryByUser(userId);
+
+        } finally {
+            POOL.returnConnection(con);
+        }
+        return lotList;
     }
 
     @Override

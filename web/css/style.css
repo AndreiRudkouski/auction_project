@@ -1009,7 +1009,7 @@ footer {
     display: none;
 }
 
-.userFind input[type=text] {
+.userFind input[type=text], .userFind select {
     float: left;
     margin-top: 6px;
     width: 300px;
@@ -1071,5 +1071,3 @@ footer {
     position: absolute;
     margin-left: 80px;
 }
-
-

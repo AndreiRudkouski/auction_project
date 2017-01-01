@@ -35,9 +35,27 @@
             </ul>
         </div>
         <hr>
-        <div id="adminUser"><jsp:include page="admin/adminUser.jsp"/></div>
-        <div id="adminLot"><jsp:include page="admin/adminLot.jsp"/></div>
-        <div id="adminPwd"><jsp:include page="admin/adminPwd.jsp"/></div>
+        <div id="adminUser">
+            <jsp:include page="admin/adminUser.jsp"/>
+        </div>
+        <div id="adminLot">
+            <jsp:include page="admin/adminLot.jsp"/>
+        </div>
+        <div id="adminPwd">
+            <jsp:include page="admin/adminPwd.jsp"/>
+        </div>
+        <c:choose>
+            <c:when test="${requestScope.lotSelect != null}">
+                <script type="text/javascript">
+                    window.onload = visibleAdmin('adminLot');
+                </script>
+            </c:when>
+            <c:otherwise>
+                <script type="text/javascript">
+                    window.onload = visibleAdmin('adminUser');
+                </script>
+            </c:otherwise>
+        </c:choose>
     </div>
     </body>
     </html>

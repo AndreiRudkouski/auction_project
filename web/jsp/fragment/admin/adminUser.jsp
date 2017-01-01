@@ -21,7 +21,6 @@
                     <input type="submit" value="Найти">
                 </form>
             </div>
-
             <div class="userList">
                 <c:if test="${requestScope.userList != null}">
                     <c:choose>

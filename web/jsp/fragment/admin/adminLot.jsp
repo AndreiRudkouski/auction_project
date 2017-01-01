@@ -6,7 +6,28 @@
     <head>
     </head>
     <body>
-    <div class="nameProf"><fmt:message key="profile.lot"/></div>
+    <div>
+        <div class="nameProf"><fmt:message key="profile.lot"/></div>
+        <div class="dataLeft">
+            <div class="userFind">
+                <span>Пошук па типу:</span><br>
+                <form action="Controller" method="post">
+                    <input type="hidden" name="command" value="lot_select"/>
+                    <select name="lotSelect" onchange="this.form.submit()">
+                        <option selected disabled>Выберите тип лота</option>
+                        <option value="lotListFinished">Завершенные</option>
+                        <option value="lotListUnfinished">Незавершенные</option>
+                        <option value="lotListUnchecked">Новые</option>
+                    </select>
+                </form>
+            </div>
+            <div class="userList">
+                <c:if test="${requestScope.lotSelect != null}">
+                    <jsp:include page="../profile/profileLotList.jsp"/>
+                </c:if>
+            </div>
+        </div>
+    </div>
     </body>
     </html>
 </fmt:bundle>

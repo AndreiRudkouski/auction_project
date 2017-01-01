@@ -26,10 +26,10 @@
             </ul>
         </div>
     </c:if>
-    <c:if test="${requestScope.lotListChecked != null}">
+    <c:if test="${requestScope.lotListUnfinished != null}">
         <span><strong><fmt:message key="profileLot.notCompleted"/></strong></span>
         <ul class="lotList">
-            <c:forEach items="${requestScope.lotListChecked}" var="lot">
+            <c:forEach items="${requestScope.lotListUnfinished}" var="lot">
                 <li>
                     <form id="lot${lot.id}" action="Controller" method="post">
                         <input type="hidden" name="command" value="lot_choice"/>
@@ -63,7 +63,7 @@
             </c:forEach>
         </ul>
     </c:if>
-    <c:if test="${requestScope.lotListFinished == null && requestScope.lotListChecked == null && requestScope.lotListUnchecked == null}">
+    <c:if test="${requestScope.lotListFinished == null && requestScope.lotListUnfinished == null && requestScope.lotListUnchecked == null}">
         <span><fmt:message key="profileLot.none"/></span>
     </c:if>
     </body>
