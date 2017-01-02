@@ -10,14 +10,14 @@
         <div class="nameProf"><fmt:message key="profile.lot"/></div>
         <div class="dataLeft">
             <div class="userFind">
-                <span>Пошук па типу:</span><br>
+                <span><fmt:message key="admin.searchLot"/></span><br>
                 <form action="Controller" method="post">
                     <input type="hidden" name="command" value="lot_select"/>
                     <select name="lotSelect" onchange="this.form.submit()">
-                        <option selected disabled>Выберите тип лота</option>
-                        <option value="lotListFinished">Завершенные</option>
-                        <option value="lotListUnfinished">Незавершенные</option>
-                        <option value="lotListUnchecked">Новые</option>
+                        <option selected disabled><fmt:message key="newLot.selectType"/></option>
+                        <option value="lotListFinished"><fmt:message key="profileLot.completed"/></option>
+                        <option value="lotListUnfinished"><fmt:message key="profileLot.notCompleted"/></option>
+                        <option value="lotListUnchecked"><fmt:message key="profileLot.new"/></option>
                     </select>
                 </form>
             </div>

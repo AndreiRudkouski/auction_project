@@ -13,12 +13,12 @@
         </div>
         <div class="dataLeft">
             <div class="userFind">
-                <span>Пошук па лагину ци пароли:</span>
+                <span><fmt:message key="admin.searchUser"/></span>
                 <form onsubmit="return validateFind('userFind')" action="Controller" method="post">
                     <input type="hidden" name="command" value="user_search"/>
                     <input id="userFind" type="text" name="userSearch" autocomplete="off"
-                           placeholder="Пошук карыстальника">
-                    <input type="submit" value="Найти">
+                           placeholder="<fmt:message key="admin.search"/>">
+                    <input type="submit" value="<fmt:message key="admin.find"/>">
                 </form>
             </div>
             <div class="userList">
@@ -39,19 +39,19 @@
                             </div>
                         </c:when>
                         <c:otherwise>
-                            <span>Карыстальникау не знойдзена</span>
+                            <span><fmt:message key="admin.searchNone"/></span>
                         </c:otherwise>
                     </c:choose>
                 </c:if>
                 <c:if test="${requestScope.user != null}">
                     <c:set value="${requestScope.user}" var="user"/>
-                    <span>Login: ${user.login}</span><br>
-                    <span>E-mail: ${user.mail}</span><br>
-                    <span>Balance: ${user.balance}</span><br>
+                    <span><fmt:message key="profile.login"/> ${user.login}</span><br>
+                    <span><fmt:message key="profile.mail"/> ${user.mail}</span><br>
+                    <span><fmt:message key="profile.balance"/> ${user.balance}</span><br>
                     <form id="banChange" action="Controller" method="post">
                         <input type="hidden" name="command" value="ban_change"/>
                         <input type="hidden" name="userId" value="${user.id}">
-                        <span>Ban: ${user.ban}</span> <input id="saveBan" type="submit" value="Змяниць">
+                        <span><fmt:message key="admin.ban"/> ${user.ban}</span> <input id="saveBan" type="submit" value="<fmt:message key="admin.change"/>">
                     </form>
                     <div class="userLot">
                         <form class="section" id="lotHistory" action="Controller" method="get">

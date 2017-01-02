@@ -33,6 +33,5 @@ public class BanChangeCommand implements ICommand {
 
     @Override
     public void resetSessionMessage(HttpSession session) {
-
     }
 }
