@@ -10,19 +10,28 @@
         <div class="choice">
             <ul>
                 <li>
-                    <a class="section" href="javascript:visibleAdmin('adminUser')">
-                        <span><fmt:message key="admin.user"/></span>
-                    </a>
+                    <form class="section" id="adminUser" action="Controller" method="get">
+                        <input type="hidden" name="command" value="admin_user"/>
+                        <a href="javascript:onClick('adminUser')">
+                            <span><fmt:message key="admin.user"/></span>
+                        </a>
+                    </form>
                 </li>
                 <li>
-                    <a class="section" href="javascript:visibleAdmin('adminLot')">
-                        <span><fmt:message key="profile.lot"/></span>
-                    </a>
+                    <form class="section" id="adminLot" action="Controller" method="get">
+                        <input type="hidden" name="command" value="admin_lot"/>
+                        <a href="javascript:onClick('adminLot')">
+                            <span><fmt:message key="profile.lot"/></span>
+                        </a>
+                    </form>
                 </li>
                 <li>
-                    <a class="section" href="javascript:visibleAdmin('adminPwd')">
-                        <span><fmt:message key="admin.password"/></span>
-                    </a>
+                    <form class="section" id="adminPwd" action="Controller" method="get">
+                        <input type="hidden" name="command" value="admin_pwd"/>
+                        <a href="javascript:onClick('adminPwd')">
+                            <span><fmt:message key="admin.password"/></span>
+                        </a>
+                    </form>
                 </li>
                 <li>
                     <form class="section" id="logOut" action="Controller" method="get">
@@ -35,28 +44,29 @@
             </ul>
         </div>
         <hr>
-        <div id="adminUser">
-            <jsp:include page="admin/adminUser.jsp"/>
-        </div>
-        <div id="adminLot">
-            <jsp:include page="admin/adminLot.jsp"/>
-        </div>
-        <div id="adminPwd">
-            <jsp:include page="admin/adminPwd.jsp"/>
-        </div>
         <c:choose>
             <c:when test="${requestScope.lotSelect != null}">
-                <script type="text/javascript">
-                    window.onload = visibleAdmin('adminLot');
-                </script>
+                <jsp:include page="admin/adminLot.jsp"/>
+            </c:when>
+            <c:when test="${requestScope.pwdSelect != null}">
+                <jsp:include page="admin/adminPwd.jsp"/>
             </c:when>
             <c:otherwise>
-                <script type="text/javascript">
-                    window.onload = visibleAdmin('adminUser');
-                </script>
+                <jsp:include page="admin/adminUser.jsp"/>
             </c:otherwise>
         </c:choose>
     </div>
+    <c:if test="${sessionScope.errorPwd != null}">
+        <script type="text/javascript">
+            window.onload = errorAdminPwd;
+        </script>
+    </c:if>
+    <c:if test="${sessionScope.changeAccept != null}">
+        <script type="text/javascript">
+            window.onload = changeMessage;
+        </script>
+    </c:if>
+    <jsp:include page="message.jsp"/>
     </body>
     </html>
 </fmt:bundle>

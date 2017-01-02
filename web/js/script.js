@@ -518,18 +518,82 @@ function errNewLot() {
     document.getElementById('errLot').style.visibility = 'visible';
 }
 
-function visibleAdmin(id) {
-    document.getElementById('adminUser').style.display = 'none';
-    document.getElementById('adminLot').style.display = 'none';
-    document.getElementById('adminPwd').style.display = 'none';
-    document.getElementById(id).style.display = 'block';
-}
-
 function validateFind(find) {
     var field = document.getElementById(find);
     if (!field.value) {
         return false;
     }
     return true;
+}
+
+function validatePwdChange() {
+    resetPwdChange();
+    var oldPwd = document.pwdChange.adminOldPwd.value,
+        newPwd = document.pwdChange.adminNewPwd.value;
+
+    if (!oldPwd && !newPwd) {
+        return false;
+    }
+
+    if (!oldPwd && newPwd) {
+        document.getElementById('errFillAdminOldPwd').style.visibility = 'visible';
+        document.getElementById('adminOldPwd').style.border = '1px solid red';
+        return false;
+    }
+
+    if (newPwd && newPwd.length < 6) {
+        document.getElementById('errLenAdminNewPwd').style.visibility = 'visible';
+        document.getElementById('adminNewPwd').style.border = '1px solid red';
+        document.pwdChange.adminNewPwd.value = "";
+        return false;
+    }
+
+    if (newPwd && newPwd.search(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/i) !== 0) {
+        document.getElementById('errBadAdminNewPwd').style.visibility = 'visible';
+        document.getElementById('adminNewPwd').style.border = '1px solid red';
+        document.pwdChange.adminNewPwd.value = "";
+        return false;
+    }
+
+    if (oldPwd && oldPwd.length < 6) {
+        document.getElementById('errLenAdminOldPwd').style.visibility = 'visible';
+        document.getElementById('adminOldPwd').style.border = '1px solid red';
+        document.pwdChange.adminOldPwd.value = "";
+        return false;
+    }
+
+    if (oldPwd && oldPwd.search(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/i) !== 0) {
+        document.getElementById('errBadAdminOldPwd').style.visibility = 'visible';
+        document.getElementById('adminOldPwd').style.border = '1px solid red';
+        document.pwdChange.adminOldPwd.value = "";
+        return false;
+    }
+
+    if (oldPwd && newPwd && oldPwd.valueOf() == newPwd.valueOf()) {
+        document.getElementById('errOldAdminNewPwd').style.visibility = 'visible';
+        document.getElementById('adminOldPwd').style.border = '1px solid red';
+        document.pwdChange.adminOldPwd.value = "";
+        document.getElementById('adminNewPwd').style.border = '1px solid red';
+        document.pwdChange.adminNewPwd.value = "";
+        return false;
+    }
+    return true;
+}
+
+function resetPwdChange() {
+    document.getElementById('adminOldPwd').style.border = '1px solid #d9d9d9';
+    document.getElementById('adminNewPwd').style.border = '1px solid #d9d9d9';
+    document.getElementById('errFillAdminOldPwd').style.visibility = 'hidden';
+    document.getElementById('errLenAdminNewPwd').style.visibility = 'hidden';
+    document.getElementById('errBadAdminNewPwd').style.visibility = 'hidden';
+    document.getElementById('errLenAdminOldPwd').style.visibility = 'hidden';
+    document.getElementById('errBadAdminOldPwd').style.visibility = 'hidden';
+    document.getElementById('errOldAdminNewPwd').style.visibility = 'hidden';
+}
+
+function errorAdminPwd() {
+    document.getElementById('adminOldPwd').style.border = '1px solid red';
+    document.getElementById('adminNewPwd').style.border = '1px solid red';
+    document.getElementById('errAdminPwd').style.visibility = 'visible';
 }
 

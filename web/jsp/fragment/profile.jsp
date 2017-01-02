@@ -81,7 +81,6 @@
             window.onload = changeMessage;
         </script>
     </c:if>
-    </div>
     <jsp:include page="message.jsp"/>
     <jsp:include page="profile/profileCard.jsp"/>
     </body>

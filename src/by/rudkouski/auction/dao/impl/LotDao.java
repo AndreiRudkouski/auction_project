@@ -45,9 +45,8 @@ public class LotDao implements ILotDao<Lot> {
             "LEFT JOIN bet ON lot.lot_id = bet.lot_id WHERE name LIKE ? AND lot.check = 1 GROUP BY lot.lot_id ORDER BY lot.timeStart DESC LIMIT ?, ?";
     private static final String SQL_MIN_BET = "SELECT MAX(bet), priceStart, step, lot.type_id FROM lot " +
             "LEFT JOIN bet ON lot.lot_id = bet.lot_id WHERE lot.lot_id = ? GROUP BY lot.lot_id";
-
     private static final String SQL_CHECK_FINISH_LOT = "SELECT finish, ADDDATE(timeStart, term), lot.lot_id FROM lot " +
-            "JOIN term ON lot.term_id = term.term_id WHERE lot.lot_id = ?";
+            "JOIN term ON lot.term_id = term.term_id WHERE lot.lot_id = ? AND lot.check = 1";
     private static final String SQL_MARK_FINISH_LOT = "UPDATE lot SET finish = 1 WHERE lot_id = ?";
     private static final String SQL_FINISHED_LOT_HISTORY = "SELECT lot.lot_id, name, timeStart, lot.check, finish FROM lot " +
             "WHERE user_id LIKE ? AND finish = 1 AND lot.check = 1 ORDER BY timeStart DESC";

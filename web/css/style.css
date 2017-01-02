@@ -1005,10 +1005,6 @@ footer {
 
 /*------ADMIN------*/
 
-#adminLot, #adminPwd {
-    display: none;
-}
-
 .userFind input[type=text], .userFind select {
     float: left;
     margin-top: 6px;
@@ -1037,6 +1033,14 @@ footer {
     margin-top: 6px;
 }
 
+.userFind #save {
+    float: left;
+    position: absolute;
+    margin-top: 70px;
+    margin-left: -120px;
+
+}
+
 .userList {
     margin-top: 40px;
 }
@@ -1056,6 +1060,29 @@ footer {
 
 .userList form:hover {
     opacity: 0.7;
+}
+
+.userFind input[type=password] {
+    outline: none;
+    color: #777;
+    padding-left: 10px;
+    margin-top: 12px;
+    margin-left: 18px;
+    width: 300px;
+    height: 25px;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8;
+}
+
+.userFind input[type=password]:hover {
+    border: 1px solid #b6bfc0;
+    box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .7), 0 0 0 5px #f5f7f8;
+}
+
+.userFind input[type=password]:focus {
+    border: 1px solid #a8c9e4;
+    box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #e6f2f9;
 }
 
 .userFindList {
