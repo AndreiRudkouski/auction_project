@@ -16,6 +16,7 @@ public class UserDao implements IUserDao<User> {
     private static final String SQL_USER = "SELECT user_id, login, email, balance, ban, role_id FROM user WHERE email = ? AND password = ?";
     private static final String SQL_ADD_USER = "INSERT INTO user (email, password) VALUES (?, ?)";
     private static final String SQL_MAIL = "SELECT email FROM user WHERE email = ?";
+    private static final String SQL_CHANGE_BAN = "UPDATE user SET ban = ? WHERE user_id = ?";
     private static final String SQL_USER_ID = "SELECT user_id, login, email, balance, ban, role_id FROM user WHERE user_id = ?";
     private static final String SQL_LOGIN = "SELECT login FROM user WHERE login = ?";
     private static final String SQL_LOGIN_CHANGE = "UPDATE user SET login = ? WHERE user_id = ?";
@@ -77,6 +78,19 @@ public class UserDao implements IUserDao<User> {
             //throw new DaoException("SQLException", e);
         }
         return user;
+    }
+
+    @Override
+    public boolean changeBanUserById(long userId, boolean ban) {
+        try (PreparedStatement prSt = con.prepareStatement(SQL_CHANGE_BAN)) {
+            prSt.setBoolean(1, ban);
+            prSt.setLong(2, userId);
+            prSt.executeUpdate();
+        } catch (SQLException e) {
+            //throw new DaoException("SQLException", e);
+            return false;
+        }
+        return true;
     }
 
     @Override

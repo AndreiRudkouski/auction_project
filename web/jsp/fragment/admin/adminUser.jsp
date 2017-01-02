@@ -45,10 +45,14 @@
                 </c:if>
                 <c:if test="${requestScope.user != null}">
                     <c:set value="${requestScope.user}" var="user"/>
-                        <span>Login: ${user.login}</span><br>
-                        <span>E-mail: ${user.mail}</span><br>
-                        <span>Balance: ${user.balance}</span><br>
-                        <span>Ban: ${user.ban}</span><br>
+                    <span>Login: ${user.login}</span><br>
+                    <span>E-mail: ${user.mail}</span><br>
+                    <span>Balance: ${user.balance}</span><br>
+                    <form id="banChange" action="Controller" method="post">
+                        <input type="hidden" name="command" value="ban_change"/>
+                        <input type="hidden" name="userId" value="${user.id}">
+                        <span>Ban: ${user.ban}</span> <input id="saveBan" type="submit" value="Змяниць">
+                    </form>
                     <div class="userLot">
                         <form class="section" id="lotHistory" action="Controller" method="get">
                             <input type="hidden" name="command" value="lot_history"/>

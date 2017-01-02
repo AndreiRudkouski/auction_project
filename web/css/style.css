@@ -1062,6 +1062,15 @@ footer {
     opacity: 0.7;
 }
 
+#banChange {
+    margin: 0;
+    padding: 0;
+}
+
+#banChange:hover {
+    opacity: 1;
+}
+
 .userFind input[type=password] {
     outline: none;
     color: #777;
@@ -1097,4 +1106,11 @@ footer {
 .userBet {
     position: absolute;
     margin-left: 80px;
+}
+
+#saveBan {
+    position: absolute;
+    float: left;
+    margin-left: 10px;
+    padding: 1px;
 }

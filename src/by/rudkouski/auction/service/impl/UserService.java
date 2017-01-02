@@ -66,6 +66,22 @@ public class UserService implements IUserService<User> {
     }
 
     @Override
+    public User changeBanUserById(long userId) {
+        ProxyConnection con = null;
+        User user;
+        try {
+            con = POOL.takeConnection();
+            UserDao userDao = new UserDao(con);
+            user = userDao.receiveUserById(userId);
+            userDao.changeBanUserById(userId, !user.isBan());
+            user = userDao.receiveUserById(userId);
+        } finally {
+            POOL.returnConnection(con);
+        }
+        return user;
+    }
+
+    @Override
     public User changeUserLogin(long userId, String login) {
         ProxyConnection con = null;
         boolean check = true;

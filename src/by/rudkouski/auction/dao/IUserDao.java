@@ -14,6 +14,8 @@ public interface IUserDao<T extends AbstractEntity> {
 
     T receiveUserById(long userId);
 
+    boolean changeBanUserById(long userId, boolean ban);
+
     boolean changeUserLogin(long userId, String login);
 
     boolean changeUserPassword(long userId, String password);

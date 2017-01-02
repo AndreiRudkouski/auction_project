@@ -28,7 +28,8 @@ public enum CommandType {
     LOT_SELECT(new LotSelectCommand()),
     ADMIN_USER(new AdminUserCommand()),
     ADMIN_LOT(new AdminLotCommand()),
-    ADMIN_PWD(new AdminPasswordCommand());
+    ADMIN_PWD(new AdminPasswordCommand()),
+    BAN_CHANGE(new BanChangeCommand());
 
     ICommand command;
 

@@ -18,6 +18,8 @@ public interface IUserService<T extends AbstractEntity> {
 
     T fillUserBalanceById(long userId, BigDecimal amount);
 
+    T changeBanUserById(long userId);
+
     BigDecimal receiveUserBalance(long userId);
 
     List<T> searchUserByLoginMail(String search);
