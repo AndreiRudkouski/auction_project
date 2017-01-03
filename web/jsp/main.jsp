@@ -19,6 +19,9 @@
 </head>
 <body>
 <c:import url="fragment/header.jsp"/>
+<c:if test="${sessionScope.categoryList == null}">
+    <c:import url="/jsp/Controller?command=setup_category"/>
+</c:if>
 <c:choose>
     <c:when test="${sessionScope.user != null && sessionScope.user.roleId == 2}">
         <c:choose>
@@ -26,7 +29,7 @@
                 <c:import url="fragment/admin.jsp"/>
             </c:when>
             <c:otherwise>
-                <c:import url="fragment/lot.jsp"/>
+                <c:import url="fragment/lot/lot.jsp"/>
             </c:otherwise>
         </c:choose>
     </c:when>
@@ -42,10 +45,10 @@
                         <c:if test="${requestScope.categoryId == null && requestScope.lotList == null}">
                             <c:import url="/jsp/Controller?command=setup_lot"/>
                         </c:if>
-                        <c:import url="fragment/lots.jsp"/>
+                        <c:import url="fragment/lot/lots.jsp"/>
                     </c:when>
                     <c:otherwise>
-                        <c:import url="fragment/lot.jsp"/>
+                        <c:import url="fragment/lot/lot.jsp"/>
                     </c:otherwise>
                 </c:choose>
             </c:otherwise>

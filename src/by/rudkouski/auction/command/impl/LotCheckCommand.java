@@ -3,41 +3,45 @@ package by.rudkouski.auction.command.impl;
 import by.rudkouski.auction.bean.impl.User;
 import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
-import by.rudkouski.auction.service.impl.UserService;
+import by.rudkouski.auction.service.impl.LotService;
 import by.rudkouski.auction.validation.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class BanChangeCommand implements ICommand {
-    private static final String USER_ID = "userId";
-    private static final String USER = "user";
+public class LotCheckCommand implements ICommand {
+    private static final String LOT_ID = "lotId";
+    private static final String CHANGE_ACCEPT = "changeAccept";
+    private static final String COMMAND = "command";
 
     @Override
     public String execute(HttpServletRequest request) {
+        HttpSession session = request.getSession();
         if (!new Validator().userValidate(request)) {
             //throw new CommandException("Wrong data parsing", e);
             return MAIN_PAGE;
         }
 
-        long userId;
+        long lotId;
         try {
-            userId = Long.parseLong(request.getParameter(USER_ID));
+            lotId = Long.parseLong(request.getParameter(LOT_ID));
         } catch (NumberFormatException e) {
             //throw new CommandException("Wrong data parsing", e);
             return MAIN_PAGE;
         }
 
+        String page = returnPage(session);
+        session.setAttribute(COMMAND, request.getParameter(COMMAND));
         ServiceManager manager = ServiceManager.getInstance();
-        UserService userService = manager.getUserService();
-        User user = userService.changeBanUserById(userId);
-        if (user != null) {
-            request.setAttribute(USER, user);
-        }
-        return MAIN_PAGE;
+        LotService lotService = manager.getLotService();
+        lotService.checkLot(lotId);
+        session.setAttribute(CHANGE_ACCEPT, CHANGE_ACCEPT);
+        return page;
     }
 
     @Override
     public void resetSessionMessage(HttpSession session) {
+        session.removeAttribute(CHANGE_ACCEPT);
+        session.removeAttribute(COMMAND);
     }
 }

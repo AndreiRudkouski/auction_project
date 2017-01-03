@@ -27,18 +27,18 @@ public class BalanceFillCommand implements ICommand {
 
         HttpSession session = request.getSession();
         String page = returnPage(session);
-        try {
-            cardNum = request.getParameter(CARD_NUM);
-            amount = new BigDecimal(request.getParameter(AMOUNT));
-        } catch (NumberFormatException e) {
-            //throw new CommandException("Wrong data parsing", e);
-            return page;
-        }
-
         User user = (User) session.getAttribute(USER);
         if (user != null) {
             userId = user.getId();
         } else {
+            //throw new CommandException("Wrong data parsing", e);
+            return page;
+        }
+
+        try {
+            cardNum = request.getParameter(CARD_NUM);
+            amount = new BigDecimal(request.getParameter(AMOUNT));
+        } catch (NumberFormatException e) {
             //throw new CommandException("Wrong data parsing", e);
             return page;
         }

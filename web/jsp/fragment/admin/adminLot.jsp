@@ -15,9 +15,9 @@
                     <input type="hidden" name="command" value="lot_select"/>
                     <select name="lotSelect" onchange="this.form.submit()">
                         <option selected disabled><fmt:message key="newLot.selectType"/></option>
-                        <option value="lotListFinished"><fmt:message key="profileLot.completed"/></option>
-                        <option value="lotListUnfinished"><fmt:message key="profileLot.notCompleted"/></option>
-                        <option value="lotListUnchecked"><fmt:message key="profileLot.new"/></option>
+                        <option value="lotListFinished"><fmt:message key="admin.completed"/></option>
+                        <option value="lotListUnfinished"><fmt:message key="admin.notCompleted"/></option>
+                        <option value="lotListUnchecked"><fmt:message key="admin.new"/></option>
                     </select>
                 </form>
             </div>

@@ -1,12 +1,10 @@
 package by.rudkouski.auction.validation;
 
-import by.rudkouski.auction.bean.impl.Condition;
-import by.rudkouski.auction.bean.impl.Lot;
-import by.rudkouski.auction.bean.impl.Term;
-import by.rudkouski.auction.bean.impl.Type;
+import by.rudkouski.auction.bean.impl.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -33,11 +31,13 @@ public class Validator {
     private static final String PRICE_STEP = "priceStep";
     private static final String PRICE_BLITZ = "priceBlitz";
     private static final String PHOTO = "photo";
+    private static final String OLD_PHOTO = "oldPhoto";
     private static final String REGEX_IMG_FILE = ".+\\.(jpe?g)$";
     private static final String CONTENT = "content-disposition";
     private static final String FILE_NAME = "filename";
     private static final String SEMICOLON_DIVIDE = ";";
     private static final String EQUAL_DIVIDE = "=";
+    private static final String USER = "user";
 
     public boolean userMailValidate(String mail) {
         if (mail == null || mail.isEmpty() || !mail.matches(MAIL_REGEX)) {
@@ -80,12 +80,13 @@ public class Validator {
         String title;
         long categoryId;
         BigDecimal priceStart;
-        BigDecimal priceStep;
+        BigDecimal priceStep = null;
         BigDecimal priceBlitz = null;
         long typeId;
         long termId;
         long conditionId;
         String description;
+        String oldPhoto;
         String photo = null;
         Part part;
 
@@ -108,8 +109,12 @@ public class Validator {
             return null;
         }
 
-        priceStep = new BigDecimal(request.getParameter(PRICE_STEP));
-        if (priceStep != null && (priceStart.compareTo(ZERO_AMOUNT) <= 0 || priceStart.compareTo(MAX_AMOUNT) > 0)) {
+        String priceStepTmp = request.getParameter(PRICE_STEP);
+        if (priceStepTmp != null && !priceStepTmp.isEmpty()) {
+            priceStep = new BigDecimal(request.getParameter(PRICE_STEP));
+        }
+
+        if (priceStep!= null && (priceStart.compareTo(ZERO_AMOUNT) <= 0 || priceStart.compareTo(MAX_AMOUNT) > 0)) {
             return null;
         }
 
@@ -130,7 +135,8 @@ public class Validator {
             //throw new CommandException("Wrong data parsing", e);
             return null;
         }
-        if (photo == null || photo.isEmpty() || !photo.matches(REGEX_IMG_FILE)) {
+        oldPhoto = request.getParameter(OLD_PHOTO);
+        if ((photo == null || photo.isEmpty() || !photo.matches(REGEX_IMG_FILE)) && (oldPhoto == null || oldPhoto.isEmpty())) {
             return null;
         }
 
@@ -165,5 +171,11 @@ public class Validator {
             }
         }
         return null;
+    }
+
+    public boolean userValidate(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute(USER);
+        return user != null ? true : false;
     }
 }

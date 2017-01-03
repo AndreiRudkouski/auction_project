@@ -18,11 +18,12 @@ public class LotSaveCommand implements ICommand {
     private static final String PROFILE = "profile";
     private static final String CHANGE_ACCEPT = "changeAccept";
     private static final String MAIN_PAGE = "main.jsp";
+    private static final String LOT_ID = "lotId";
+    private static final String COMMAND = "command";
 
     @Override
     public String execute(HttpServletRequest request) {
         long userId;
-
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(USER);
         if (user != null) {
@@ -40,13 +41,30 @@ public class LotSaveCommand implements ICommand {
             return MAIN_PAGE;
         }
         lot.setUserId(userId);
-        String appPath = request.getServletContext().getRealPath(EMPTY_LINE);
 
-
+        session.setAttribute(COMMAND, request.getParameter(COMMAND));
+        String page = returnPage(session);
         ServiceManager manager = ServiceManager.getInstance();
         LotService lotService = manager.getLotService();
-        boolean result = lotService.addLot(lot, appPath);
-        if (result) {
+        boolean resultEdit = false;
+        boolean resultSave = false;
+        long lotId;
+        String id = request.getParameter(LOT_ID);
+        String appPath = request.getServletContext().getRealPath(EMPTY_LINE);
+        if (id != null && !id.isEmpty()) {
+            try {
+                lotId = Long.parseLong(id);
+            } catch (NumberFormatException e) {
+                //throw new CommandException("Wrong data parsing", e);
+                return MAIN_PAGE;
+            }
+            lot.setId(lotId);
+            resultEdit = lotService.editLot(lot, appPath);
+        } else {
+            resultSave = lotService.addLot(lot, appPath);
+        }
+
+        if (resultEdit || resultSave) {
             session.setAttribute(CHANGE_ACCEPT, CHANGE_ACCEPT);
         } else {
             request.setAttribute(NEW_LOT, NEW_LOT);
@@ -54,12 +72,12 @@ public class LotSaveCommand implements ICommand {
             request.setAttribute(PROFILE, PROFILE);
             return MAIN_PAGE;
         }
-
-        String page = returnPage(session);
         return page;
     }
 
     @Override
     public void resetSessionMessage(HttpSession session) {
+        session.removeAttribute(CHANGE_ACCEPT);
+        session.removeAttribute(COMMAND);
     }
 }

@@ -1,7 +1,6 @@
 package by.rudkouski.auction.dao;
 
 import by.rudkouski.auction.bean.AbstractEntity;
-import by.rudkouski.auction.pool.ProxyConnection;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -32,5 +31,9 @@ public interface ILotDao<T extends AbstractEntity> {
 
     long addLot(T lot);
 
-    void addPhotoByLotId (long lotId, String photo);
+    void addPhotoByLotId(long lotId, String photo);
+
+    void editLot(T lot);
+
+    void checkLot(long lotId);
 }

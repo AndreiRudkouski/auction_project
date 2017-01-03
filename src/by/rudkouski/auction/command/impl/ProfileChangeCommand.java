@@ -25,10 +25,6 @@ public class ProfileChangeCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request) {
         long userId;
-        String newLogin = request.getParameter(LOGIN);
-        String oldLogin = request.getParameter(OLD_LOGIN);
-        String newPassword = request.getParameter(NEW_PWD);
-        String oldPassword = request.getParameter(OLD_PWD);
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(USER);
         if (user != null) {
@@ -38,6 +34,10 @@ public class ProfileChangeCommand implements ICommand {
             return MAIN_PAGE;
         }
 
+        String newLogin = request.getParameter(LOGIN);
+        String oldLogin = request.getParameter(OLD_LOGIN);
+        String newPassword = request.getParameter(NEW_PWD);
+        String oldPassword = request.getParameter(OLD_PWD);
         String page = returnPage(session);
         session.setAttribute(COMMAND, request.getParameter(COMMAND));
         boolean validLogin = new Validator().userLoginChangeValidate(newLogin, oldLogin);

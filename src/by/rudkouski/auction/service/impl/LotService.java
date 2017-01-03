@@ -191,19 +191,66 @@ public class LotService implements ILotService<Lot> {
             lot.getPart().write(savePath + File.separator + photoName);
             lotDao.addPhotoByLotId(id, photoName);
             con.commit();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             //throw new ServiceException("SQLException", e);
             try {
                 con.rollback();
             } catch (SQLException e1) {
                 //throw new ServiceException("SQLException", e);
             }
-        } catch (IOException e) {
-            //throw new ServiceException("IOException", e);
         } finally {
             POOL.returnConnection(con);
         }
         return true;
+    }
+
+    @Override
+    public boolean editLot(Lot lot, String appPath) {
+        ProxyConnection con = null;
+        try {
+            con = POOL.takeConnection();
+            LotDao lotDao = new LotDao(con);
+            long id = lot.getId();
+            Lot lotTmp = lotDao.searchFinishedLotById(id);
+            if (lotTmp.isCheck()) {
+                return false;
+            }
+            con.setAutoCommit(false);
+            lotDao.editLot(lot);
+            if (lot.getPhoto() != null) {
+                String savePath = appPath + IMG_FOLDER;
+                File fileSaveDir = new File(savePath);
+                if (!fileSaveDir.exists()) {
+                    fileSaveDir.mkdir();
+                }
+                String[] extension = lot.getPhoto().split(POINT_DIVIDER);
+                String photoName = LOT + id + POINT + extension[extension.length - 1];
+                lot.getPart().write(savePath + File.separator + photoName);
+            }
+            con.commit();
+        } catch (SQLException | IOException e) {
+            //throw new ServiceException("SQLException", e);
+            try {
+                con.rollback();
+            } catch (SQLException e1) {
+                //throw new ServiceException("SQLException", e);
+            }
+        } finally {
+            POOL.returnConnection(con);
+        }
+        return true;
+    }
+
+    @Override
+    public void checkLot(long lotId) {
+        ProxyConnection con = null;
+        try {
+            con = POOL.takeConnection();
+            LotDao lotDao = new LotDao(con);
+            lotDao.checkLot(lotId);
+        } finally {
+            POOL.returnConnection(con);
+        }
     }
 
     private void createPhotoPath(List<Lot> lotList) {

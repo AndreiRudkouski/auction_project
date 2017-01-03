@@ -7,9 +7,6 @@
     <head>
     </head>
     <body>
-    <c:if test="${sessionScope.categoryList == null}">
-        <c:import url="/jsp/Controller?command=setup_category"/>
-    </c:if>
     <nav>
         <strong><fmt:message key="category"/></strong>
             ${sessionScope.categoryList.setupIterator()}

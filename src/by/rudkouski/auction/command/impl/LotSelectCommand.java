@@ -4,6 +4,7 @@ import by.rudkouski.auction.bean.impl.Lot;
 import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.impl.LotService;
+import by.rudkouski.auction.validation.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,11 @@ public class LotSelectCommand implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request) {
+        if (!new Validator().userValidate(request)) {
+            //throw new CommandException("Wrong data parsing", e);
+            return MAIN_PAGE;
+        }
+
         String select = request.getParameter(LOT_SELECT);
         if (select != null && !select.isEmpty()) {
             ServiceManager manager = ServiceManager.getInstance();

@@ -4,6 +4,7 @@ import by.rudkouski.auction.bean.impl.User;
 import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.impl.UserService;
+import by.rudkouski.auction.validation.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,6 +17,11 @@ public class UserSearchCommand implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request) {
+        if (!new Validator().userValidate(request)) {
+            //throw new CommandException("Wrong data parsing", e);
+            return MAIN_PAGE;
+        }
+
         String search = request.getParameter(USER_SEARCH);
         if (search != null && !search.isEmpty()) {
             ServiceManager manager = ServiceManager.getInstance();

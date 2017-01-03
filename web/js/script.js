@@ -364,7 +364,10 @@ function resetErrorCard() {
     document.getElementById('amount').style.border = '1px solid #d9d9d9';
 }
 
-function getFileParam() {
+function getFileParam(photo) {
+    if (photo != null) {
+        alert("hghh");
+    }
     var file = document.getElementById('photo').files[0];
     if (file) {
         if (/\.(jpe?g)$/i.test(file.name)) {
@@ -372,38 +375,35 @@ function getFileParam() {
             elPreview.innerHTML = '';
             var newImg = document.createElement('img');
             newImg.className = "preview-img";
-            if (typeof file.getAsDataURL == 'function') {
-                if (file.getAsDataURL().substr(0, 11) == 'data:image/') {
-                    newImg.setAttribute('src', file.getAsDataURL());
+            var reader = new FileReader();
+            reader.onloadend = function (evt) {
+                if (evt.target.readyState == FileReader.DONE) {
+                    newImg.setAttribute('src', evt.target.result);
                     elPreview.appendChild(newImg);
                 }
+            };
+            var blob;
+            if (file.slice) {
+                blob = file.slice(0, file.size);
             }
-            else {
-                var reader = new FileReader();
-                reader.onloadend = function (evt) {
-                    if (evt.target.readyState == FileReader.DONE) {
-                        newImg.setAttribute('src', evt.target.result);
-                        elPreview.appendChild(newImg);
-                    }
-                };
-                var blob;
-                if (file.slice) {
-                    blob = file.slice(0, file.size);
-                }
-                else if (file.webkitSlice) {
-                    blob = file.webkitSlice(0, file.size);
-                }
-                else if (file.mozSlice) {
-                    blob = file.mozSlice(0, file.size);
-                }
-                reader.readAsDataURL(blob);
+            else if (file.webkitSlice) {
+                blob = file.webkitSlice(0, file.size);
             }
+            else if (file.mozSlice) {
+                blob = file.mozSlice(0, file.size);
+            }
+            reader.readAsDataURL(blob);
         }
     }
 }
 
-function changeActionType() {
-    var type = document.newLot.type.value;
+function changeActionType(typeTmp) {
+    var type;
+    if (typeTmp) {
+        type = typeTmp;
+    } else {
+        type = document.newLot.type.value;
+    }
     if (type == 3) {
         document.getElementById('priceStep').disabled = 1;
         document.getElementById('priceBlitz').disabled = 1;
@@ -424,7 +424,7 @@ function changeActionType() {
     }
 }
 
-function validateNewLot() {
+function validateNewLot(oldPhoto) {
     resetErrorLot();
     var result = true,
         title = document.newLot.title.value,
@@ -482,7 +482,7 @@ function validateNewLot() {
         document.getElementById('errDescription').style.visibility = 'visible';
         result = false;
     }
-    if (!photo) {
+    if (!photo && !oldPhoto) {
         document.getElementById('preview').style.border = '1px solid red';
         document.getElementById('errPhoto').style.visibility = 'visible';
         result = false;
@@ -596,4 +596,22 @@ function errorAdminPwd() {
     document.getElementById('adminNewPwd').style.border = '1px solid red';
     document.getElementById('errAdminPwd').style.visibility = 'visible';
 }
+
+function setLotCategory(cat) {
+    $('select#category').val(cat);
+    changeActionType(cat);
+}
+
+function setLotType(type) {
+    $('select#type').val(type);
+}
+
+function setLotTerm(term) {
+    $('select#term').val(term);
+}
+
+function setLotCondition(cond) {
+    $('select#condition').val(cond);
+}
+
 

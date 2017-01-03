@@ -25,4 +25,8 @@ public interface ILotService<T extends AbstractEntity> {
     BigDecimal determineLotMinBet(long lotId);
 
     boolean addLot(T lot, String appPath);
+
+    boolean editLot(T lot, String appPath);
+
+    void checkLot(long lotId);
 }
