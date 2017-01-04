@@ -14,7 +14,7 @@ import java.io.*;
 @WebServlet("/jsp/Controller")
 @MultipartConfig
 public class Controller extends HttpServlet {
-    private static final CommandDefiner DEFINER = new CommandDefiner();
+    private static final CommandManager COM_MANAGER = new CommandManager();
     private static final String REGEX_SEND_REDIRECT = ".*(Controller).*";
 
     @Override
@@ -32,19 +32,21 @@ public class Controller extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        ICommand command = DEFINER.defineCommandRequest(request);
+        ICommand command = COM_MANAGER.defineCommandRequest(request);
         String page = command.execute(request);
 
         if (page != null) {
             if (page.matches(REGEX_SEND_REDIRECT)) {
+                COM_MANAGER.saveCommandSession(request);
                 response.sendRedirect(page);
             } else {
                 request.getRequestDispatcher(page).forward(request, response);
                 HttpSession session = request.getSession();
                 if (session != null) {
-                    command = DEFINER.defineCommandSession(session);
+                    command = COM_MANAGER.defineCommandSession(session);
                     if (command != null) {
                         command.resetSessionMessage(session);
+                        COM_MANAGER.resetCommandSession(session);
                     }
                 }
             }

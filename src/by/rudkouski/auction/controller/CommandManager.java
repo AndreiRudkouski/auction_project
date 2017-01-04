@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Locale;
 
-public class CommandDefiner {
+public class CommandManager {
     static final String COMMAND = "command";
 
     public ICommand defineCommandRequest(HttpServletRequest request) {
@@ -23,6 +23,17 @@ public class CommandDefiner {
             return null;
         }
         return receiveCommand(action);
+    }
+
+    public void saveCommandSession(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if (session != null) {
+            session.setAttribute(COMMAND, request.getParameter(COMMAND));
+        }
+    }
+
+    public void resetCommandSession(HttpSession session) {
+        session.removeAttribute(COMMAND);
     }
 
     private ICommand receiveCommand(String name) {

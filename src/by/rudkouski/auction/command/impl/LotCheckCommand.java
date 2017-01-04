@@ -31,7 +31,6 @@ public class LotCheckCommand implements ICommand {
         }
 
         String page = returnPage(session);
-        session.setAttribute(COMMAND, request.getParameter(COMMAND));
         ServiceManager manager = ServiceManager.getInstance();
         LotService lotService = manager.getLotService();
         lotService.checkLot(lotId);
@@ -42,6 +41,5 @@ public class LotCheckCommand implements ICommand {
     @Override
     public void resetSessionMessage(HttpSession session) {
         session.removeAttribute(CHANGE_ACCEPT);
-        session.removeAttribute(COMMAND);
     }
 }

@@ -42,7 +42,6 @@ public class LotSaveCommand implements ICommand {
         }
         lot.setUserId(userId);
 
-        session.setAttribute(COMMAND, request.getParameter(COMMAND));
         String page = returnPage(session);
         ServiceManager manager = ServiceManager.getInstance();
         LotService lotService = manager.getLotService();
@@ -78,6 +77,5 @@ public class LotSaveCommand implements ICommand {
     @Override
     public void resetSessionMessage(HttpSession session) {
         session.removeAttribute(CHANGE_ACCEPT);
-        session.removeAttribute(COMMAND);
     }
 }

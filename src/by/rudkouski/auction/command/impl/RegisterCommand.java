@@ -45,6 +45,5 @@ public class RegisterCommand implements ICommand {
     @Override
     public void resetSessionMessage(HttpSession session) {
         session.removeAttribute(ERROR_AUTH);
-        session.removeAttribute(COMMAND);
     }
 }

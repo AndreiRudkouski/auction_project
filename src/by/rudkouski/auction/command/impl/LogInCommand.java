@@ -57,6 +57,5 @@ public class LogInCommand implements ICommand {
     public void resetSessionMessage(HttpSession session) {
         session.removeAttribute(ERROR_USER);
         session.removeAttribute(ERROR_BAN);
-        session.removeAttribute(COMMAND);
     }
 }

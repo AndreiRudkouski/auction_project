@@ -43,7 +43,6 @@ public class BalanceFillCommand implements ICommand {
             return page;
         }
 
-        session.setAttribute(COMMAND, request.getParameter(COMMAND));
         boolean validCard = new Validator().cardNumberValidate(cardNum);
         boolean validAmount = new Validator().amountValidate(amount);
         if (!validCard || !validAmount) {
@@ -71,6 +70,5 @@ public class BalanceFillCommand implements ICommand {
         session.removeAttribute(ERROR_CARD);
         session.removeAttribute(ERROR_AMOUNT);
         session.removeAttribute(CHANGE_ACCEPT);
-        session.removeAttribute(COMMAND);
     }
 }

@@ -38,8 +38,8 @@ public class ProfileChangeCommand implements ICommand {
         String oldLogin = request.getParameter(OLD_LOGIN);
         String newPassword = request.getParameter(NEW_PWD);
         String oldPassword = request.getParameter(OLD_PWD);
+
         String page = returnPage(session);
-        session.setAttribute(COMMAND, request.getParameter(COMMAND));
         boolean validLogin = new Validator().userLoginChangeValidate(newLogin, oldLogin);
         boolean validOldPassword = new Validator().userPasswordValidate(oldPassword);
         boolean validNewPassword = new Validator().userPasswordValidate(newPassword);
@@ -88,6 +88,5 @@ public class ProfileChangeCommand implements ICommand {
         session.removeAttribute(ERROR_PWD);
         session.removeAttribute(ERROR_EXIST_LOGIN);
         session.removeAttribute(CHANGE_ACCEPT);
-        session.removeAttribute(COMMAND);
     }
 }

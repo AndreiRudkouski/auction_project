@@ -53,7 +53,6 @@ public class BetAddCommand implements ICommand {
         LotService lotService = manager.getLotService();
         BigDecimal minBet = lotService.determineLotMinBet(lotId);
 
-        session.setAttribute(COMMAND, request.getParameter(COMMAND));
         boolean validBet = new Validator().betDataValidate(curBet, minBet);
         if (!validBet) {
             session.setAttribute(ERROR_BET, ERROR_BET);
@@ -97,6 +96,5 @@ public class BetAddCommand implements ICommand {
         session.removeAttribute(ERROR_BALANCE);
         session.removeAttribute(ERROR_FINISH);
         session.removeAttribute(BET_ACCEPT);
-        session.removeAttribute(COMMAND);
     }
 }
