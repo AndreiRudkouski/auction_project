@@ -23,7 +23,6 @@ public class BetAddCommand implements ICommand {
     private static final String ERROR_FINISH = "errorFinish";
     private static final String BET_ACCEPT = "betAccept";
     private static final String USER = "user";
-    private static final String COMMAND = "command";
 
     @Override
     public String execute(HttpServletRequest request) {

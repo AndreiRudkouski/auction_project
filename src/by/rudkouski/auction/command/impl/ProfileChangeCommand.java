@@ -20,7 +20,6 @@ public class ProfileChangeCommand implements ICommand {
     private static final String ERROR_PWD = "errorPwd";
     private static final String ERROR_EXIST_LOGIN = "errorExistLogin";
     private static final String MAIN_PAGE = "main.jsp";
-    private static final String COMMAND = "command";
 
     @Override
     public String execute(HttpServletRequest request) {

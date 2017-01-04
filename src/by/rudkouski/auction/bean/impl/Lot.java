@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Lot extends AbstractEntity {
-    private long userId;
+    private User user;
     private String name;
     private BigDecimal price;
     private BigDecimal priceBlitz;
@@ -27,12 +27,12 @@ public class Lot extends AbstractEntity {
     private boolean check;
     private Part part;
 
-    public long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getName() {

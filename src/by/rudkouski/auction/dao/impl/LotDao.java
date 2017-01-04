@@ -1,9 +1,6 @@
 package by.rudkouski.auction.dao.impl;
 
-import by.rudkouski.auction.bean.impl.Condition;
-import by.rudkouski.auction.bean.impl.Lot;
-import by.rudkouski.auction.bean.impl.Term;
-import by.rudkouski.auction.bean.impl.Type;
+import by.rudkouski.auction.bean.impl.*;
 import by.rudkouski.auction.dao.ILotDao;
 import by.rudkouski.auction.pool.ProxyConnection;
 
@@ -133,7 +130,9 @@ public class LotDao implements ILotDao<Lot> {
                     lot.setPrice(new BigDecimal(res.getString(4)));
                 }
                 lot.setFinish(true);
-                lot.setUserId(res.getLong(9));
+                User user = new User();
+                user.setId(res.getLong(9));
+                lot.setUser(user);
                 lot.setCheck(res.getBoolean(10));
             }
         } catch (SQLException e) {
@@ -172,7 +171,9 @@ public class LotDao implements ILotDao<Lot> {
                 cond.setId(res.getLong(15));
                 cond.setName(res.getString(16));
                 lot.setCondition(cond);
-                lot.setUserId(res.getLong(17));
+                User user = new User();
+                user.setId(res.getLong(17));
+                lot.setUser(user);
                 lot.setCheck(res.getBoolean(18));
                 lot.setTimeStart(res.getTimestamp(19));
             }
@@ -369,7 +370,7 @@ public class LotDao implements ILotDao<Lot> {
         String timeLot = new SimpleDateFormat(FORMAT_DATE).format(lot.getTimeStart());
         prSt.setString(6, timeLot);
         prSt.setLong(7, lot.getCategoryId());
-        prSt.setLong(8, lot.getUserId());
+        prSt.setLong(8, lot.getUser().getId());
         prSt.setLong(9, lot.getTerm().getId());
         prSt.setLong(10, lot.getType().getId());
         prSt.setLong(11, lot.getCondition().getId());

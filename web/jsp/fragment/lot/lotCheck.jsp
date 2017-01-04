@@ -82,7 +82,7 @@
                         </c:when>
                         <c:otherwise>
                             <c:choose>
-                                <c:when test="${sessionScope.user.id != lot.userId && sessionScope.user.roleId != 2}">
+                                <c:when test="${sessionScope.user.id != lot.user.id && sessionScope.user.roleId != 2}">
                                     <input type="submit" value="<fmt:message key="lot.bet"/>"/>
                                 </c:when>
                                 <c:otherwise>

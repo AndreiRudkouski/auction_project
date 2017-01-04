@@ -307,6 +307,10 @@ table .price {
     background-color: #ededed;
 }
 
+.price a:hover {
+    opacity: 0.7;
+}
+
 .bet input[type=number] {
     width: 100px;
     float: left;

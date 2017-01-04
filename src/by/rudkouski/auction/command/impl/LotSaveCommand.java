@@ -19,7 +19,6 @@ public class LotSaveCommand implements ICommand {
     private static final String CHANGE_ACCEPT = "changeAccept";
     private static final String MAIN_PAGE = "main.jsp";
     private static final String LOT_ID = "lotId";
-    private static final String COMMAND = "command";
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -40,7 +39,9 @@ public class LotSaveCommand implements ICommand {
             request.setAttribute(PROFILE, PROFILE);
             return MAIN_PAGE;
         }
-        lot.setUserId(userId);
+        user = new User();
+        user.setId(userId);
+        lot.setUser(user);
 
         String page = returnPage(session);
         ServiceManager manager = ServiceManager.getInstance();

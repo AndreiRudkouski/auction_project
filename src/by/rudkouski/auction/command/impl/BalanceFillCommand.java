@@ -17,7 +17,6 @@ public class BalanceFillCommand implements ICommand {
     private static final String ERROR_CARD = "errorCard";
     private static final String ERROR_AMOUNT = "errorAmount";
     private static final String CHANGE_ACCEPT = "changeAccept";
-    private static final String COMMAND = "command";
 
     @Override
     public String execute(HttpServletRequest request) {

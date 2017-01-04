@@ -2,8 +2,10 @@ package by.rudkouski.auction.service.impl;
 
 import by.rudkouski.auction.bean.impl.Bet;
 import by.rudkouski.auction.bean.impl.Lot;
+import by.rudkouski.auction.bean.impl.User;
 import by.rudkouski.auction.dao.impl.BetDao;
 import by.rudkouski.auction.dao.impl.LotDao;
+import by.rudkouski.auction.dao.impl.UserDao;
 import by.rudkouski.auction.pool.ConnectionPool;
 import by.rudkouski.auction.pool.ProxyConnection;
 import by.rudkouski.auction.service.ILotService;
@@ -84,6 +86,11 @@ public class LotService implements ILotService<Lot> {
             BetDao betDao = new BetDao(con);
             List<Bet> betList = betDao.receiveBetListByLotId(lotId, createBetList);
             lot.setBetList(betList);
+            if (!lot.isCheck()) {
+                UserDao userDao = new UserDao(con);
+                User user = userDao.receiveUserById(lot.getUser().getId());
+                lot.setUser(user);
+            }
         } finally {
             POOL.returnConnection(con);
         }

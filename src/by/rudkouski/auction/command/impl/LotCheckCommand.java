@@ -1,6 +1,5 @@
 package by.rudkouski.auction.command.impl;
 
-import by.rudkouski.auction.bean.impl.User;
 import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.impl.LotService;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpSession;
 public class LotCheckCommand implements ICommand {
     private static final String LOT_ID = "lotId";
     private static final String CHANGE_ACCEPT = "changeAccept";
-    private static final String COMMAND = "command";
 
     @Override
     public String execute(HttpServletRequest request) {
