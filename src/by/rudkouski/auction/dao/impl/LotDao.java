@@ -62,7 +62,7 @@ public class LotDao implements ILotDao<Lot> {
     private static final String SQL_EDIT_LOT = "UPDATE lot SET name = ?, description = ?, priceStart = ?, priceBlitz = ?, step = ?, " +
             "timeStart = ?, category_id = ?, user_id = ?, term_id = ?, type_id = ?, condition_id = ? " +
             "WHERE lot_id = ?";
-    private static final String SQL_CHECK_LOT = "UPDATE lot SET lot.check = 1 WHERE lot_id = ?";
+    private static final String SQL_CHECK_LOT = "UPDATE lot SET lot.check = 1, timeStart = ? WHERE lot_id = ?";
 
 
     public LotDao(ProxyConnection con) {
@@ -378,7 +378,9 @@ public class LotDao implements ILotDao<Lot> {
     @Override
     public void checkLot(long lotId) {
         try (PreparedStatement prSt = con.prepareStatement(SQL_CHECK_LOT)) {
-            prSt.setLong(1, lotId);
+            String timeLot = new SimpleDateFormat(FORMAT_DATE).format(new Date(System.currentTimeMillis()));
+            prSt.setString(1, timeLot);
+            prSt.setLong(2, lotId);
             prSt.executeUpdate();
         } catch (SQLException e) {
             //throw new DaoException("SQLException", e);
