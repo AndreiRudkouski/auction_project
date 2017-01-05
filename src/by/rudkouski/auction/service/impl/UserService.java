@@ -4,6 +4,7 @@ import by.rudkouski.auction.bean.impl.User;
 import by.rudkouski.auction.dao.exception.DaoException;
 import by.rudkouski.auction.dao.impl.UserDao;
 import by.rudkouski.auction.pool.ConnectionPool;
+import by.rudkouski.auction.pool.ConnectionPoolException;
 import by.rudkouski.auction.pool.ProxyConnection;
 import by.rudkouski.auction.service.IUserService;
 import by.rudkouski.auction.service.exception.ServiceException;
@@ -28,10 +29,14 @@ public class UserService implements IUserService<User> {
             con = POOL.takeConnection();
             UserDao userDao = new UserDao(con);
             user = userDao.logInUser(mail, md5Password);
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         return user;
     }
@@ -51,10 +56,14 @@ public class UserService implements IUserService<User> {
             } else {
                 return null;
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         return user;
     }
@@ -67,10 +76,14 @@ public class UserService implements IUserService<User> {
             con = POOL.takeConnection();
             UserDao userDao = new UserDao(con);
             user = userDao.receiveUserById(userId);
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         return user;
     }
@@ -85,10 +98,14 @@ public class UserService implements IUserService<User> {
             user = userDao.receiveUserById(userId);
             userDao.changeBanUserById(userId, !user.isBan());
             user = userDao.receiveUserById(userId);
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         return user;
     }
@@ -110,10 +127,14 @@ public class UserService implements IUserService<User> {
             } else {
                 return null;
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         return user;
     }
@@ -134,10 +155,14 @@ public class UserService implements IUserService<User> {
             } else {
                 return null;
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         return user;
     }
@@ -152,10 +177,14 @@ public class UserService implements IUserService<User> {
             BigDecimal balance = userDao.receiveUserBalance(userId);
             userDao.updateUserBalanceById(userId, balance.add(amount));
             user = userDao.receiveUserById(userId);
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         return user;
     }
@@ -168,10 +197,14 @@ public class UserService implements IUserService<User> {
             con = POOL.takeConnection();
             UserDao userDao = new UserDao(con);
             balance = userDao.receiveUserBalance(userId);
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         return balance;
     }
@@ -184,10 +217,14 @@ public class UserService implements IUserService<User> {
             con = POOL.takeConnection();
             UserDao userDao = new UserDao(con);
             userList = userDao.searchUserByLoginMail(search);
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         return userList;
     }
@@ -209,7 +246,6 @@ public class UserService implements IUserService<User> {
         while (md5Hex.length() < 32) {
             md5Hex = ZERO + md5Hex;
         }
-
         return md5Hex;
     }
 }

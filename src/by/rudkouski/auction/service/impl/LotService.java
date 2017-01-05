@@ -8,6 +8,7 @@ import by.rudkouski.auction.dao.impl.BetDao;
 import by.rudkouski.auction.dao.impl.LotDao;
 import by.rudkouski.auction.dao.impl.UserDao;
 import by.rudkouski.auction.pool.ConnectionPool;
+import by.rudkouski.auction.pool.ConnectionPoolException;
 import by.rudkouski.auction.pool.ProxyConnection;
 import by.rudkouski.auction.service.ILotService;
 import by.rudkouski.auction.service.exception.ServiceException;
@@ -35,10 +36,14 @@ public class LotService implements ILotService<Lot> {
             con = POOL.takeConnection();
             LotDao lotDao = new LotDao(con);
             lotList = lotDao.setupLot();
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         createPhotoPath(lotList);
         return lotList;
@@ -52,10 +57,14 @@ public class LotService implements ILotService<Lot> {
             con = POOL.takeConnection();
             LotDao lotDao = new LotDao(con);
             lotList = lotDao.searchLotByCategory(categoryId, page);
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         createPhotoPath(lotList);
         return lotList;
@@ -69,10 +78,14 @@ public class LotService implements ILotService<Lot> {
             con = POOL.takeConnection();
             LotDao lotDao = new LotDao(con);
             lotList = lotDao.searchLotByName(search, page);
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         createPhotoPath(lotList);
         return lotList;
@@ -99,10 +112,14 @@ public class LotService implements ILotService<Lot> {
                 User user = userDao.receiveUserById(lot.getUser().getId());
                 lot.setUser(user);
             }
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         lot.setPhoto(IMG_FOLDER + lot.getPhoto());
         return lot;
@@ -120,10 +137,14 @@ public class LotService implements ILotService<Lot> {
             lotListFinished = lotDao.receiveFinishedLotHistoryByUser(userId);
             lotListUnfinished = lotDao.receiveUnfinishedLotHistoryByUser(userId);
             lotListUnchecked = lotDao.receiveUncheckedLotHistoryByUser(userId);
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         List<List<Lot>> lotResult = new ArrayList<>();
         lotResult.add(lotListFinished);
@@ -140,10 +161,14 @@ public class LotService implements ILotService<Lot> {
             con = POOL.takeConnection();
             LotDao lotDao = new LotDao(con);
             lotList = lotDao.receiveFinishedLotHistoryByUser(userId);
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         return lotList;
     }
@@ -156,10 +181,14 @@ public class LotService implements ILotService<Lot> {
             con = POOL.takeConnection();
             LotDao lotDao = new LotDao(con);
             lotList = lotDao.receiveUnfinishedLotHistoryByUser(userId);
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         return lotList;
     }
@@ -172,10 +201,14 @@ public class LotService implements ILotService<Lot> {
             con = POOL.takeConnection();
             LotDao lotDao = new LotDao(con);
             lotList = lotDao.receiveUncheckedLotHistoryByUser(userId);
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         return lotList;
     }
@@ -188,10 +221,14 @@ public class LotService implements ILotService<Lot> {
             con = POOL.takeConnection();
             LotDao lotDao = new LotDao(con);
             minBet = lotDao.determineLotMinBet(lotId);
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         return minBet;
     }
@@ -214,7 +251,7 @@ public class LotService implements ILotService<Lot> {
             lot.getPart().write(savePath + File.separator + photoName);
             lotDao.addPhotoByLotId(id, photoName);
             con.commit();
-        } catch (SQLException | IOException | DaoException e) {
+        } catch (SQLException | IOException | DaoException | ConnectionPoolException e) {
             try {
                 con.rollback();
             } catch (SQLException e1) {
@@ -222,7 +259,11 @@ public class LotService implements ILotService<Lot> {
             }
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         return true;
     }
@@ -251,7 +292,7 @@ public class LotService implements ILotService<Lot> {
                 lot.getPart().write(savePath + File.separator + photoName);
             }
             con.commit();
-        } catch (SQLException | IOException | DaoException e) {
+        } catch (SQLException | IOException | DaoException | ConnectionPoolException e) {
             try {
                 con.rollback();
             } catch (SQLException e1) {
@@ -259,7 +300,11 @@ public class LotService implements ILotService<Lot> {
             }
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         return true;
     }
@@ -271,10 +316,14 @@ public class LotService implements ILotService<Lot> {
             con = POOL.takeConnection();
             LotDao lotDao = new LotDao(con);
             lotDao.checkLot(lotId);
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
     }
 

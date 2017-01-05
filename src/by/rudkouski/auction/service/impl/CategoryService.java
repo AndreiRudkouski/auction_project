@@ -7,6 +7,7 @@ import by.rudkouski.auction.bean.impl.Type;
 import by.rudkouski.auction.dao.exception.DaoException;
 import by.rudkouski.auction.dao.impl.CategoryDao;
 import by.rudkouski.auction.pool.ConnectionPool;
+import by.rudkouski.auction.pool.ConnectionPoolException;
 import by.rudkouski.auction.pool.ProxyConnection;
 import by.rudkouski.auction.service.ICategoryService;
 import by.rudkouski.auction.service.exception.ServiceException;
@@ -25,10 +26,14 @@ public class CategoryService implements ICategoryService<Category> {
             con = POOL.takeConnection();
             CategoryDao catalogDao = new CategoryDao(con);
             categoryList = catalogDao.setupCategory();
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         return categoryList;
     }
@@ -47,10 +52,14 @@ public class CategoryService implements ICategoryService<Category> {
             setupList.add(typeList);
             setupList.add(termList);
             setupList.add(condList);
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         return setupList;
     }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <properties>
+        <Property name="LOG_DIR">${sys:saveDirectory}/log</Property>
+        <Property name="ARCHIVE">${LOG_DIR}/$${date:yyyy-MM}</Property>
+        <property name="PATTERN">%d{dd.MM.yyyy HH:mm:ss} %-5p (%F:%M) - %m%n</property>
+    </properties>
+    <appenders>
+        <RollingFile name="RollingFile" fileName="${LOG_DIR}/log.log"
+                     filePattern="${ARCHIVE}/log-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="20 KB"/>
+            </Policies>
+        </RollingFile>
+    </appenders>
+    <loggers>
+        <root level="ERROR" additivity="false">
+            <appender-ref ref="RollingFile"/>
+        </root>
+    </loggers>
+</configuration>

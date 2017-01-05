@@ -5,11 +5,15 @@ import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.LotService;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class LotChoiceCommand implements ICommand {
+    private static final Logger LOGGER = LogManager.getLogger(LotChoiceCommand.class);
     private static final String MAIN_PAGE = "main.jsp";
     private static final String LOT_ID = "lotId";
     private static final String LOT = "lot";
@@ -27,7 +31,7 @@ public class LotChoiceCommand implements ICommand {
             LotService lotService = manager.getLotService();
             lot = lotService.searchLotById(lotId);
         } catch (NumberFormatException | ServiceException e) {
-            //log("Wrong data parsing", e);
+            LOGGER.log(Level.ERROR, "Exception: ", e);
             session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
             return page;
         }

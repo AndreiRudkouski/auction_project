@@ -1,5 +1,9 @@
 package by.rudkouski.auction.pool;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +13,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DataBaseManager {
+    private static final Logger LOGGER = LogManager.getLogger(DataBaseManager.class);
     private static final Properties PROP = new Properties();
     private static final String FILE_PROPERTIES = "/resource/db.properties";
     private static final String DB_URL = "db.url";
@@ -20,16 +25,10 @@ public class DataBaseManager {
     private DataBaseManager() {
     }
 
-    public static ProxyConnection getConnection() throws SQLException {
-        try {
-            ClassLoader loader = Thread.currentThread().getContextClassLoader();
-            InputStream stream = loader.getResourceAsStream(FILE_PROPERTIES);
-            PROP.load(stream);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static ProxyConnection getConnection() throws SQLException, IOException {
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        InputStream stream = loader.getResourceAsStream(FILE_PROPERTIES);
+        PROP.load(stream);
         String url = PROP.getProperty(DB_URL);
         String user = PROP.getProperty(DB_USER);
         String pass = PROP.getProperty(DB_PASSWORD);
@@ -42,6 +41,7 @@ public class DataBaseManager {
         try {
             return Integer.parseInt(PROP.getProperty(DB_POOL_SIZE, Integer.toString(INIT_POOL_SIZE)));
         } catch (NumberFormatException e) {
+            LOGGER.log(Level.ERROR, "Error during getting connection pool size", e);
             return INIT_POOL_SIZE;
         }
     }

@@ -7,13 +7,16 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
 @WebListener()
-public class ClosePoolListener implements ServletContextListener {
+public class InitAndCloseListener implements ServletContextListener {
+    private static final String EMPTY_LINE = "";
+    private static final String SAVE_DIRECTORY = "saveDirectory";
 
-    public ClosePoolListener() {
+    public InitAndCloseListener() {
     }
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        System.setProperty(SAVE_DIRECTORY, sce.getServletContext().getRealPath(EMPTY_LINE));
     }
 
     @Override

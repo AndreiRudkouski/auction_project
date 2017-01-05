@@ -6,11 +6,15 @@ import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.UserService;
 import by.rudkouski.auction.validation.Validator;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class LogInCommand implements ICommand {
+    private static final Logger LOGGER = LogManager.getLogger(LogInCommand.class);
     private static final String MAIL = "mail";
     private static final String PWD = "pwd";
     private static final String USER = "user";
@@ -40,7 +44,7 @@ public class LogInCommand implements ICommand {
         try {
             user = userService.logInUser(mail, password);
         } catch (ServiceException e) {
-            //log("Wrong data parsing", e);
+            LOGGER.log(Level.ERROR, "Exception: ", e);
             session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
             return returnPage(session);
         }

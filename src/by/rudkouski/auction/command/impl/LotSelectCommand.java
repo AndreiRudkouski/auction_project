@@ -6,12 +6,16 @@ import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.LotService;
 import by.rudkouski.auction.validation.Validator;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class LotSelectCommand implements ICommand {
+    private static final Logger LOGGER = LogManager.getLogger(LotSelectCommand.class);
     private static final String LOT_SELECT = "lotSelect";
     private static final String LOT_LIST_FINISH = "lotListFinished";
     private static final String LOT_LIST_UNFINISHED = "lotListUnfinished";
@@ -44,7 +48,7 @@ public class LotSelectCommand implements ICommand {
                     request.setAttribute(LOT_LIST_UNCHECKED, lotList);
                 }
             } catch (ServiceException e) {
-                //log("Wrong data parsing", e);
+                LOGGER.log(Level.ERROR, "Exception: ", e);
                 HttpSession session = request.getSession();
                 session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
                 return returnPage(session);

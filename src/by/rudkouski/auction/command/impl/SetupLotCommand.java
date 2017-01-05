@@ -5,12 +5,16 @@ import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.LotService;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class SetupLotCommand implements ICommand {
+    private static final Logger LOGGER = LogManager.getLogger(SetupLotCommand.class);
     private static final String SAVE_REQ = "saveReq";
     private static final String LOT_LIST = "lotList";
 
@@ -22,7 +26,7 @@ public class SetupLotCommand implements ICommand {
         try {
             lotList = lotService.setupLot();
         } catch (ServiceException e) {
-            //log("Wrong data parsing", e);
+            LOGGER.log(Level.FATAL, "Exception: ", e);
             throw new RuntimeException("Error of setup lots", e);
         }
 

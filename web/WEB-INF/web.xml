@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
     <error-page>
-        <exception-name>java.lang.Exception</exception-name>
+        <exception-type>java.lang.Exception</exception-type>
         <location>/jsp/error.jsp</location>
     </error-page>
 </web-app>

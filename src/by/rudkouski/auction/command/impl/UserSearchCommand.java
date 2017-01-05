@@ -6,12 +6,16 @@ import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.UserService;
 import by.rudkouski.auction.validation.Validator;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class UserSearchCommand implements ICommand {
+    private static final Logger LOGGER = LogManager.getLogger(UserSearchCommand.class);
     private static final String MAIN_PAGE = "main.jsp";
     private static final String USER_SEARCH = "userSearch";
     private static final String USER_LIST = "userList";
@@ -31,7 +35,7 @@ public class UserSearchCommand implements ICommand {
             try {
                 userList = userService.searchUserByLoginMail(search);
             } catch (ServiceException e) {
-                //log("Wrong data parsing", e);
+                LOGGER.log(Level.ERROR, "Exception: ", e);
                 HttpSession session = request.getSession();
                 session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
                 return returnPage(session);

@@ -6,12 +6,16 @@ import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.BetService;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class BetHistoryCommand implements ICommand {
+    private static final Logger LOGGER = LogManager.getLogger(BetHistoryCommand.class);
     private static final String USER = "user";
     private static final String PROFILE = "profile";
     private static final String BET_HISTORY = "betHistory";
@@ -49,7 +53,7 @@ public class BetHistoryCommand implements ICommand {
                 request.setAttribute(BET_HISTORY, BET_HISTORY);
             }
         } catch (NumberFormatException | ServiceException e) {
-            //log("Wrong data parsing", e);
+            LOGGER.log(Level.ERROR, "Exception: ", e);
             session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
             return returnPage(session);
         }

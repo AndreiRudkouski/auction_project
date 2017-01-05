@@ -1,11 +1,16 @@
 package by.rudkouski.auction.pool;
 
+import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ConnectionPool {
+    private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
     private static final ConnectionPool INSTANCE = new ConnectionPool();
     private final BlockingQueue<ProxyConnection> connectionQueue;
     private final int poolSize;
@@ -17,23 +22,23 @@ public class ConnectionPool {
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         } catch (SQLException e) {
-            //log
-            throw new RuntimeException("Wrong register driver", e);
+            LOGGER.log(Level.FATAL, "Wrong the new JDBC Driver registration", e);
+            throw new RuntimeException("Error of JDBC Driver registration", e);
         }
 
         for (int i = 0; i < poolSize; i++) {
             try {
                 ProxyConnection connection = DataBaseManager.getConnection();
                 connectionQueue.put(connection);
-            } catch (SQLException | InterruptedException e) {
+            } catch (SQLException | InterruptedException | IOException e) {
                 //if throw exception try create and put additional connection
-                //log
+                LOGGER.log(Level.ERROR, "Error during creating a new connection", e);
                 tryNum++;
                 if (tryNum < poolSize) {
                     i--;
                 } else {
-                    //log
-                    throw new RuntimeException("Wrong initialization connection pool", e);
+                    LOGGER.log(Level.FATAL, "Wrong initialization connection pool", e);
+                    throw new RuntimeException("Error of connection pool initialization", e);
                 }
             }
         }
@@ -51,34 +56,30 @@ public class ConnectionPool {
         for (int i = 0; i < queue.size(); i++) {
             try {
                 queue.take().realClose();
-            } catch (SQLException e) {
-                //log
-            } catch (InterruptedException e) {
-                //log
+            } catch (SQLException | InterruptedException e) {
+                LOGGER.log(Level.ERROR, "Error during closing the connection", e);
             }
         }
     }
 
-    public ProxyConnection takeConnection() {
-        ProxyConnection connection = null;
+    public ProxyConnection takeConnection() throws ConnectionPoolException {
+        ProxyConnection connection;
         try {
             connection = connectionQueue.take();
         } catch (InterruptedException e) {
-            //log
+            throw new ConnectionPoolException("Error during taking connection from the pool", e);
         }
         return connection;
     }
 
-    public void returnConnection(ProxyConnection connection) {
+    public void returnConnection(ProxyConnection connection) throws ConnectionPoolException {
         try {
             if (connection != null) {
                 connection.setAutoCommit(true);
                 connectionQueue.put(connection);
             }
-        } catch (InterruptedException e) {
-            //log
-        } catch (SQLException e) {
-            //log
+        } catch (InterruptedException | SQLException e) {
+            throw new ConnectionPoolException("Error during returning connection to the pool", e);
         }
     }
 }

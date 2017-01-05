@@ -6,12 +6,16 @@ import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.CategoryService;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class SetupCategoryCommand implements ICommand {
+    private static final Logger LOGGER = LogManager.getLogger(SetupCategoryCommand.class);
     private static final String CATEGORY_LIST = "categoryList";
 
     @Override
@@ -22,7 +26,7 @@ public class SetupCategoryCommand implements ICommand {
         try {
             categories = categoryService.setupCategory();
         } catch (ServiceException e) {
-            //log("Wrong data parsing", e);
+            LOGGER.log(Level.FATAL, "Exception: ", e);
             throw new RuntimeException("Error of setup categories", e);
         }
         CategoryList categoryList = new CategoryList(categories);

@@ -10,6 +10,9 @@ import by.rudkouski.auction.service.impl.BetService;
 import by.rudkouski.auction.service.impl.LotService;
 import by.rudkouski.auction.service.impl.UserService;
 import by.rudkouski.auction.validation.Validator;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,6 +20,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class BetAddCommand implements ICommand {
+    private static final Logger LOGGER = LogManager.getLogger(BetAddCommand.class);
     private static final String LOT_ID = "lotId";
     private static final String AMOUNT_BET = "amountBet";
     private static final String ERROR_BET = "errorBet";
@@ -85,7 +89,7 @@ public class BetAddCommand implements ICommand {
                 session.setAttribute(ERROR_FINISH, ERROR_FINISH);
             }
         } catch (NumberFormatException | ServiceException e) {
-            //log("Wrong data parsing", e);
+            LOGGER.log(Level.ERROR, "Exception: ", e);
             session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
             return page;
         }

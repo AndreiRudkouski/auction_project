@@ -7,6 +7,7 @@ import by.rudkouski.auction.dao.impl.BetDao;
 import by.rudkouski.auction.dao.impl.LotDao;
 import by.rudkouski.auction.dao.impl.UserDao;
 import by.rudkouski.auction.pool.ConnectionPool;
+import by.rudkouski.auction.pool.ConnectionPoolException;
 import by.rudkouski.auction.pool.ProxyConnection;
 import by.rudkouski.auction.service.IBetService;
 import by.rudkouski.auction.service.exception.ServiceException;
@@ -46,7 +47,7 @@ public class BetService implements IBetService<Bet> {
             } else {
                 return false;
             }
-        } catch (SQLException | DaoException e) {
+        } catch (SQLException | DaoException | ConnectionPoolException e) {
             try {
                 con.rollback();
             } catch (SQLException e1) {
@@ -54,7 +55,11 @@ public class BetService implements IBetService<Bet> {
             }
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         return true;
     }
@@ -68,10 +73,14 @@ public class BetService implements IBetService<Bet> {
             con = POOL.takeConnection();
             BetDao betDao = new BetDao(con);
             betList = betDao.receiveBetHistoryByUser(userId);
-        } catch (DaoException e) {
+        } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
-            POOL.returnConnection(con);
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
         }
         if (betList != null) {
             List<Bet> betListWin = null;

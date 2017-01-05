@@ -7,12 +7,16 @@ import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.CategoryService;
 import by.rudkouski.auction.service.impl.LotService;
 import by.rudkouski.auction.validation.Validator;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class LotNewCommand implements ICommand {
+    private static final Logger LOGGER = LogManager.getLogger(LotNewCommand.class);
     private static final String TYPE_LIST = "typeList";
     private static final String TERM_LIST = "termList";
     private static final String CONDITION_LIST = "condList";
@@ -52,7 +56,7 @@ public class LotNewCommand implements ICommand {
                 request.setAttribute(LOT, lot);
             }
         } catch (NumberFormatException | ServiceException e) {
-            //log("Wrong data parsing", e);
+            LOGGER.log(Level.ERROR, "Exception: ", e);
             HttpSession session = request.getSession();
             session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
             return returnPage(session);

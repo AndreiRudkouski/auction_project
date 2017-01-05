@@ -6,11 +6,15 @@ import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.UserService;
 import by.rudkouski.auction.validation.Validator;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class ProfileChangeCommand implements ICommand {
+    private static final Logger LOGGER = LogManager.getLogger(ProfileChangeCommand.class);
     private static final String LOGIN = "login";
     private static final String OLD_LOGIN = "userOldLogin";
     private static final String NEW_PWD = "newPwd";
@@ -81,6 +85,7 @@ public class ProfileChangeCommand implements ICommand {
                 }
             }
         } catch (ServiceException e) {
+            LOGGER.log(Level.ERROR, "Exception: ", e);
             session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
             return page;
         }
