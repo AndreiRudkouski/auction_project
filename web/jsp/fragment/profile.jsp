@@ -76,12 +76,6 @@
             window.onload = errorPwd;
         </script>
     </c:if>
-    <c:if test="${sessionScope.changeAccept != null}">
-        <script type="text/javascript">
-            window.onload = changeMessage;
-        </script>
-    </c:if>
-    <jsp:include page="message.jsp"/>
     <jsp:include page="profile/profileCard.jsp"/>
     </body>
     </html>

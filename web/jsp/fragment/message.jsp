@@ -20,6 +20,9 @@
             <c:if test="${sessionScope.changeAccept != null}">
                 <span><fmt:message key="changeAccept"/></span>
             </c:if>
+            <c:if test="${sessionScope.errorMessage != null}">
+                <span><fmt:message key="error"/></span>
+            </c:if>
         </div>
     </div>
     </body>

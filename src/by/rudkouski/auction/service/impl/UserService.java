@@ -1,10 +1,12 @@
 package by.rudkouski.auction.service.impl;
 
 import by.rudkouski.auction.bean.impl.User;
+import by.rudkouski.auction.dao.exception.DaoException;
 import by.rudkouski.auction.dao.impl.UserDao;
 import by.rudkouski.auction.pool.ConnectionPool;
 import by.rudkouski.auction.pool.ProxyConnection;
 import by.rudkouski.auction.service.IUserService;
+import by.rudkouski.auction.service.exception.ServiceException;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -18,7 +20,7 @@ public class UserService implements IUserService<User> {
     private static final String ALGORITHM = "MD5";
 
     @Override
-    public User logInUser(String mail, String password) {
+    public User logInUser(String mail, String password) throws ServiceException {
         String md5Password = md5Convert(password);
         ProxyConnection con = null;
         User user;
@@ -26,6 +28,8 @@ public class UserService implements IUserService<User> {
             con = POOL.takeConnection();
             UserDao userDao = new UserDao(con);
             user = userDao.logInUser(mail, md5Password);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         } finally {
             POOL.returnConnection(con);
         }
@@ -33,32 +37,38 @@ public class UserService implements IUserService<User> {
     }
 
     @Override
-    public User registerUser(String mail, String password) {
+    public User registerUser(String mail, String password) throws ServiceException {
         String md5Password = md5Convert(password);
         ProxyConnection con = null;
+        User user;
         try {
             con = POOL.takeConnection();
             UserDao userDao = new UserDao(con);
             boolean check = userDao.checkUniqueUserMail(mail);
             if (check) {
-                boolean register = userDao.registerUser(mail, md5Password);
-                return register ? userDao.logInUser(mail, md5Password) : null;
+                userDao.registerUser(mail, md5Password);
+                user = userDao.logInUser(mail, md5Password);
             } else {
                 return null;
             }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         } finally {
             POOL.returnConnection(con);
         }
+        return user;
     }
 
     @Override
-    public User receiveUserById(long userId) {
+    public User receiveUserById(long userId) throws ServiceException {
         ProxyConnection con = null;
         User user;
         try {
             con = POOL.takeConnection();
             UserDao userDao = new UserDao(con);
             user = userDao.receiveUserById(userId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         } finally {
             POOL.returnConnection(con);
         }
@@ -66,7 +76,7 @@ public class UserService implements IUserService<User> {
     }
 
     @Override
-    public User changeBanUserById(long userId) {
+    public User changeBanUserById(long userId) throws ServiceException {
         ProxyConnection con = null;
         User user;
         try {
@@ -75,6 +85,8 @@ public class UserService implements IUserService<User> {
             user = userDao.receiveUserById(userId);
             userDao.changeBanUserById(userId, !user.isBan());
             user = userDao.receiveUserById(userId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         } finally {
             POOL.returnConnection(con);
         }
@@ -82,29 +94,34 @@ public class UserService implements IUserService<User> {
     }
 
     @Override
-    public User changeUserLogin(long userId, String login) {
+    public User changeUserLogin(long userId, String login) throws ServiceException {
         ProxyConnection con = null;
-        boolean check = true;
+        User user;
         try {
             con = POOL.takeConnection();
             UserDao userDao = new UserDao(con);
+            boolean check = false;
             if (!login.isEmpty()) {
                 check = userDao.checkUniqueUserLogin(login);
             }
             if (check) {
-                boolean change = userDao.changeUserLogin(userId, login);
-                return change ? userDao.receiveUserById(userId) : null;
+                userDao.changeUserLogin(userId, login);
+                user = userDao.receiveUserById(userId);
             } else {
                 return null;
             }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         } finally {
             POOL.returnConnection(con);
         }
+        return user;
     }
 
     @Override
-    public User changeUserPassword(long userId, String oldPassword, String newPassword) {
+    public User changeUserPassword(long userId, String oldPassword, String newPassword) throws ServiceException {
         ProxyConnection con = null;
+        User user;
         String md5OldPassword = md5Convert(oldPassword);
         String md5NewPassword = md5Convert(newPassword);
         try {
@@ -112,38 +129,47 @@ public class UserService implements IUserService<User> {
             UserDao userDao = new UserDao(con);
             boolean check = userDao.checkUserPassword(userId, md5OldPassword);
             if (check) {
-                boolean change = userDao.changeUserPassword(userId, md5NewPassword);
-                return change ? userDao.receiveUserById(userId) : null;
+                userDao.changeUserPassword(userId, md5NewPassword);
+                user = userDao.receiveUserById(userId);
             } else {
                 return null;
             }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         } finally {
             POOL.returnConnection(con);
         }
+        return user;
     }
 
     @Override
-    public User fillUserBalanceById(long userId, BigDecimal amount) {
+    public User fillUserBalanceById(long userId, BigDecimal amount) throws ServiceException {
         ProxyConnection con = null;
+        User user;
         try {
             con = POOL.takeConnection();
             UserDao userDao = new UserDao(con);
             BigDecimal balance = userDao.receiveUserBalance(userId);
             userDao.updateUserBalanceById(userId, balance.add(amount));
-            return userDao.receiveUserById(userId);
+            user = userDao.receiveUserById(userId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         } finally {
             POOL.returnConnection(con);
         }
+        return user;
     }
 
     @Override
-    public BigDecimal receiveUserBalance(long userId) {
+    public BigDecimal receiveUserBalance(long userId) throws ServiceException {
         ProxyConnection con = null;
         BigDecimal balance;
         try {
             con = POOL.takeConnection();
             UserDao userDao = new UserDao(con);
             balance = userDao.receiveUserBalance(userId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         } finally {
             POOL.returnConnection(con);
         }
@@ -151,13 +177,15 @@ public class UserService implements IUserService<User> {
     }
 
     @Override
-    public List<User> searchUserByLoginMail(String search) {
+    public List<User> searchUserByLoginMail(String search) throws ServiceException {
         ProxyConnection con = null;
         List<User> userList;
         try {
             con = POOL.takeConnection();
             UserDao userDao = new UserDao(con);
             userList = userDao.searchUserByLoginMail(search);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         } finally {
             POOL.returnConnection(con);
         }

@@ -4,6 +4,7 @@ import by.rudkouski.auction.bean.CategoryList;
 import by.rudkouski.auction.bean.impl.Category;
 import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
+import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.CategoryService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,13 @@ public class SetupCategoryCommand implements ICommand {
     public String execute(HttpServletRequest request) {
         ServiceManager manager = ServiceManager.getInstance();
         CategoryService categoryService = manager.getCategoryService();
-        List<Category> categories = categoryService.setupCategory();
+        List<Category> categories;
+        try {
+            categories = categoryService.setupCategory();
+        } catch (ServiceException e) {
+            //log("Wrong data parsing", e);
+            throw new RuntimeException("Error of setup categories", e);
+        }
         CategoryList categoryList = new CategoryList(categories);
 
         HttpSession session = request.getSession();

@@ -2,6 +2,7 @@ package by.rudkouski.auction.dao.impl;
 
 import by.rudkouski.auction.bean.impl.User;
 import by.rudkouski.auction.dao.IUserDao;
+import by.rudkouski.auction.dao.exception.DaoException;
 import by.rudkouski.auction.pool.ProxyConnection;
 
 import java.math.BigDecimal;
@@ -36,7 +37,7 @@ public class UserDao implements IUserDao<User> {
     }
 
     @Override
-    public User logInUser(String mail, String password) {
+    public User logInUser(String mail, String password) throws DaoException {
         User user = null;
         try (PreparedStatement prSt = con.prepareStatement(SQL_USER)) {
             prSt.setString(1, mail);
@@ -47,26 +48,24 @@ public class UserDao implements IUserDao<User> {
                 user = createUser(res);
             }
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return user;
     }
 
     @Override
-    public boolean registerUser(String mail, String password) {
+    public void registerUser(String mail, String password) throws DaoException {
         try (PreparedStatement prSt = con.prepareStatement(SQL_ADD_USER)) {
             prSt.setString(1, mail);
             prSt.setString(2, password);
             prSt.executeUpdate();
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
-            return false;
+            throw new DaoException("SQLException", e);
         }
-        return true;
     }
 
     @Override
-    public User receiveUserById(long userId) {
+    public User receiveUserById(long userId) throws DaoException {
         User user = null;
         try (PreparedStatement prSt = con.prepareStatement(SQL_USER_ID)) {
             prSt.setLong(1, userId);
@@ -75,44 +74,38 @@ public class UserDao implements IUserDao<User> {
                 user = createUser(res);
             }
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return user;
     }
 
     @Override
-    public boolean changeBanUserById(long userId, boolean ban) {
+    public void changeBanUserById(long userId, boolean ban) throws DaoException {
         try (PreparedStatement prSt = con.prepareStatement(SQL_CHANGE_BAN)) {
             prSt.setBoolean(1, ban);
             prSt.setLong(2, userId);
             prSt.executeUpdate();
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
-            return false;
+            throw new DaoException("SQLException", e);
         }
-        return true;
     }
 
     @Override
-    public boolean changeUserLogin(long userId, String login) {
+    public void changeUserLogin(long userId, String login) throws DaoException {
         try (PreparedStatement prSt = con.prepareStatement(SQL_LOGIN_CHANGE)) {
             changeUserProfile(userId, login, prSt);
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
-            return false;
+            throw new DaoException("SQLException", e);
         }
-        return true;
     }
 
     @Override
-    public boolean changeUserPassword(long userId, String password) {
+    public void changeUserPassword(long userId, String password) throws DaoException {
         try (PreparedStatement prSt = con.prepareStatement(SQL_PASSWORD_CHANGE)) {
             changeUserProfile(userId, password, prSt);
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
-            return false;
+            throw new DaoException("SQLException", e);
         }
-        return true;
     }
 
     private void changeUserProfile(long userId, String content, PreparedStatement prSt) throws SQLException {
@@ -122,7 +115,7 @@ public class UserDao implements IUserDao<User> {
     }
 
     @Override
-    public BigDecimal receiveUserBalance(long userId) {
+    public BigDecimal receiveUserBalance(long userId) throws DaoException {
         BigDecimal balance = null;
         try (PreparedStatement prSt = con.prepareStatement(SQL_BALANCE)) {
             prSt.setLong(1, userId);
@@ -131,13 +124,13 @@ public class UserDao implements IUserDao<User> {
                 balance = res.getBigDecimal(1);
             }
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return balance;
     }
 
     @Override
-    public boolean checkUserPassword(long userId, String password) {
+    public boolean checkUserPassword(long userId, String password) throws DaoException {
         try (PreparedStatement prSt = con.prepareStatement(SQL_PASSWORD)) {
             prSt.setLong(1, userId);
             prSt.setString(2, password);
@@ -146,48 +139,46 @@ public class UserDao implements IUserDao<User> {
                 return true;
             }
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return false;
     }
 
     @Override
-    public boolean checkUniqueUserMail(String mail) {
-        boolean result = false;
+    public boolean checkUniqueUserMail(String mail) throws DaoException {
+        boolean result;
         try (PreparedStatement prSt = con.prepareStatement(SQL_MAIL)) {
             result = checkUniqueUserContent(mail, prSt);
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return result;
     }
 
     @Override
-    public boolean checkUniqueUserLogin(String login) {
-        boolean result = false;
+    public boolean checkUniqueUserLogin(String login) throws DaoException {
+        boolean result;
         try (PreparedStatement prSt = con.prepareStatement(SQL_LOGIN)) {
             result = checkUniqueUserContent(login, prSt);
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return result;
     }
 
     @Override
-    public boolean updateUserBalanceById(long userId, BigDecimal newBalance) {
+    public void updateUserBalanceById(long userId, BigDecimal newBalance) throws DaoException {
         try (PreparedStatement prSt = con.prepareStatement(SQL_UPDATE_BALANCE)) {
             prSt.setBigDecimal(1, newBalance);
             prSt.setLong(2, userId);
             prSt.executeUpdate();
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
-            return false;
+            throw new DaoException("SQLException", e);
         }
-        return true;
     }
 
     @Override
-    public User receivePrevMaxBetUser(long lotId) {
+    public User receivePrevMaxBetUser(long lotId) throws DaoException {
         User user = null;
         try (PreparedStatement prSt = con.prepareStatement(SQL_PREV_MAX_BET)) {
             prSt.setLong(1, lotId);
@@ -201,13 +192,13 @@ public class UserDao implements IUserDao<User> {
                 user.setBalance(balance.add(bet));
             }
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return user;
     }
 
     @Override
-    public List<User> searchUserByLoginMail(String search) {
+    public List<User> searchUserByLoginMail(String search) throws DaoException {
         List<User> userList = new ArrayList<>();
         try (PreparedStatement prSt = con.prepareStatement(SQL_USER_SEARCH)) {
             prSt.setString(1, "%" + search + "%");
@@ -218,7 +209,7 @@ public class UserDao implements IUserDao<User> {
                 userList.add(user);
             }
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return userList;
     }

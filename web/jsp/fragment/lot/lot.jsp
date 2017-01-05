@@ -39,14 +39,8 @@
                 window.onload = errorBet;
             </script>
         </c:if>
-        <c:if test="${sessionScope.errorBalance != null || sessionScope.errorFinish != null || sessionScope.betAccept != null || sessionScope.changeAccept != null}">
-            <script type="text/javascript">
-                window.onload = changeMessage;
-            </script>
-        </c:if>
     </main>
     <jsp:include page="../betList.jsp"/>
-    <jsp:include page="../message.jsp"/>
     </body>
     </html>
 </fmt:bundle>

@@ -4,6 +4,7 @@ import by.rudkouski.auction.bean.impl.Bet;
 import by.rudkouski.auction.bean.impl.Lot;
 import by.rudkouski.auction.bean.impl.User;
 import by.rudkouski.auction.dao.IBetDao;
+import by.rudkouski.auction.dao.exception.DaoException;
 import by.rudkouski.auction.pool.ProxyConnection;
 
 import java.math.BigDecimal;
@@ -32,8 +33,8 @@ public class BetDao implements IBetDao<Bet> {
     }
 
     @Override
-    public List<Bet> receiveBetListByLotId(long lotId, boolean createBetList) {
-        List<Bet> betList = null;
+    public List<Bet> receiveBetListByLotId(long lotId, boolean createBetList) throws DaoException {
+        List<Bet> betList;
         try (PreparedStatement prSt = con.prepareStatement(SQL_LOT_BET)) {
             prSt.setLong(1, lotId);
             ResultSet res = prSt.executeQuery();
@@ -51,14 +52,14 @@ public class BetDao implements IBetDao<Bet> {
                 }
                 betList.add(bet);
             }
-        } catch (SQLException e1) {
-            //throw new DaoException("SQLException", e);
+        } catch (SQLException e) {
+            throw new DaoException("SQLException", e);
         }
         return betList;
     }
 
     @Override
-    public void writeNewBet(Bet bet) {
+    public void writeNewBet(Bet bet)  throws DaoException {
         try (PreparedStatement prSt = con.prepareStatement(SQL_ADD_BET)) {
             prSt.setBigDecimal(1, bet.getAmount());
             String timeBet = new SimpleDateFormat(FORMAT_DATE).format(bet.getTime());
@@ -67,12 +68,12 @@ public class BetDao implements IBetDao<Bet> {
             prSt.setLong(4, bet.getUser().getId());
             prSt.executeUpdate();
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
     }
 
     @Override
-    public boolean checkReachBlitzPriceByLotId(long lotId, BigDecimal bet) {
+    public boolean checkReachBlitzPriceByLotId(long lotId, BigDecimal bet)  throws DaoException {
         try (PreparedStatement prSt = con.prepareStatement(SQL_BLITZ_PRICE)) {
             prSt.setLong(1, lotId);
             ResultSet res = prSt.executeQuery();
@@ -84,14 +85,14 @@ public class BetDao implements IBetDao<Bet> {
                 return false;
             }
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return true;
     }
 
     @Override
-    public List<Bet> receiveBetHistoryByUser(long userId) {
-        List<Bet> betList = null;
+    public List<Bet> receiveBetHistoryByUser(long userId)  throws DaoException {
+        List<Bet> betList;
         try (PreparedStatement prSt = con.prepareStatement(SQL_BET_HISTORY)) {
             prSt.setLong(1, userId);
             ResultSet res = prSt.executeQuery();
@@ -111,7 +112,7 @@ public class BetDao implements IBetDao<Bet> {
                 betList.add(bet);
             }
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return betList;
     }

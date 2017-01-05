@@ -2,19 +2,18 @@ package by.rudkouski.auction.dao;
 
 import by.rudkouski.auction.bean.AbstractEntity;
 import by.rudkouski.auction.bean.impl.Bet;
-import by.rudkouski.auction.bean.impl.User;
-import by.rudkouski.auction.pool.ProxyConnection;
+import by.rudkouski.auction.dao.exception.DaoException;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public interface IBetDao<T extends AbstractEntity> {
 
-    void writeNewBet(Bet bet);
+    void writeNewBet(Bet bet) throws DaoException;
 
-    boolean checkReachBlitzPriceByLotId(long lotId, BigDecimal bet);
+    boolean checkReachBlitzPriceByLotId(long lotId, BigDecimal bet) throws DaoException;
 
-    List<T> receiveBetListByLotId(long lotId, boolean createBetList);
+    List<T> receiveBetListByLotId(long lotId, boolean createBetList) throws DaoException;
 
-    List<T> receiveBetHistoryByUser(long userId);
+    List<T> receiveBetHistoryByUser(long userId) throws DaoException;
 }

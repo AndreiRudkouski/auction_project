@@ -2,6 +2,7 @@ package by.rudkouski.auction.command;
 
 import by.rudkouski.auction.bean.impl.Lot;
 import by.rudkouski.auction.service.ServiceManager;
+import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.LotService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,7 @@ public interface ICommand {
 
     void resetSessionMessage(HttpSession session);
 
-    default boolean searchLot(HttpServletRequest request, String search, int page) {
+    default boolean searchLot(HttpServletRequest request, String search, int page) throws ServiceException {
         ServiceManager factory = ServiceManager.getInstance();
         LotService lotService = factory.getLotService();
         List<Lot> lotList = lotService.searchLotByName(search, page);
@@ -32,7 +33,7 @@ public interface ICommand {
         return true;
     }
 
-    default boolean contentByPage (HttpServletRequest request, int page) {
+    default boolean contentByPage(HttpServletRequest request, int page) throws ServiceException {
         boolean result;
         String search = request.getParameter(LOT_SEARCH);
         if (search != null && !search.isEmpty()) {
@@ -44,16 +45,15 @@ public interface ICommand {
         return result;
     }
 
-    default boolean categoryChoice(HttpServletRequest request, int page) {
+    default boolean categoryChoice(HttpServletRequest request, int page) throws ServiceException {
         long categoryId;
         try {
             categoryId = Long.parseLong(request.getParameter(CATEGORY_ID));
         } catch (NumberFormatException e) {
-            //throw new CommandException("Wrong data parsing", e);
-            return false;
+            throw new ServiceException(e);
         }
         if (categoryId <= 0) {
-            //throw new CommandException("Wrong category id", e);
+            //log
             return false;
         }
 

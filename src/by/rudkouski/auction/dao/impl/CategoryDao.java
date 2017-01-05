@@ -5,6 +5,7 @@ import by.rudkouski.auction.bean.impl.Condition;
 import by.rudkouski.auction.bean.impl.Term;
 import by.rudkouski.auction.bean.impl.Type;
 import by.rudkouski.auction.dao.ICategoryDao;
+import by.rudkouski.auction.dao.exception.DaoException;
 import by.rudkouski.auction.pool.ProxyConnection;
 
 import java.sql.ResultSet;
@@ -25,8 +26,8 @@ public class CategoryDao implements ICategoryDao<Category> {
     }
 
     @Override
-    public List<Category> setupCategory() {
-        List<Category> categoryList = null;
+    public List<Category> setupCategory() throws DaoException {
+        List<Category> categoryList;
         try (Statement st = con.createStatement()) {
             ResultSet res = st.executeQuery(SQL_CATEGORY);
             categoryList = new ArrayList<>();
@@ -38,14 +39,14 @@ public class CategoryDao implements ICategoryDao<Category> {
                 categoryList.add(category);
             }
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return categoryList;
     }
 
     @Override
-    public List<Term> setupTerm() {
-        List<Term> termList = null;
+    public List<Term> setupTerm() throws DaoException {
+        List<Term> termList;
         try (Statement st = con.createStatement()) {
             ResultSet res = st.executeQuery(SQL_TERM);
             termList = new ArrayList<>();
@@ -56,14 +57,14 @@ public class CategoryDao implements ICategoryDao<Category> {
                 termList.add(term);
             }
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return termList;
     }
 
     @Override
-    public List<Condition> setupCondition() {
-        List<Condition> condList = null;
+    public List<Condition> setupCondition() throws DaoException {
+        List<Condition> condList;
         try (Statement st = con.createStatement()) {
             ResultSet res = st.executeQuery(SQL_CONDITION);
             condList = new ArrayList<>();
@@ -74,14 +75,14 @@ public class CategoryDao implements ICategoryDao<Category> {
                 condList.add(cond);
             }
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return condList;
     }
 
     @Override
-    public List<Type> setupType() {
-        List<Type> typeList = null;
+    public List<Type> setupType() throws DaoException {
+        List<Type> typeList;
         try (Statement st = con.createStatement()) {
             ResultSet res = st.executeQuery(SQL_TYPE);
             typeList = new ArrayList<>();
@@ -92,7 +93,7 @@ public class CategoryDao implements ICategoryDao<Category> {
                 typeList.add(type);
             }
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return typeList;
     }

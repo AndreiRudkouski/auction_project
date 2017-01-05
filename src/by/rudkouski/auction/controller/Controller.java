@@ -40,7 +40,6 @@ public class Controller extends HttpServlet {
                 COM_MANAGER.saveCommandSession(request);
                 response.sendRedirect(page);
             } else {
-                request.getRequestDispatcher(page).forward(request, response);
                 HttpSession session = request.getSession();
                 if (session != null) {
                     command = COM_MANAGER.defineCommandSession(session);
@@ -48,6 +47,8 @@ public class Controller extends HttpServlet {
                         command.resetSessionMessage(session);
                         COM_MANAGER.resetCommandSession(session);
                     }
+                    request.getRequestDispatcher(page).forward(request, response);
+                    COM_MANAGER.saveCommandSession(request);
                 }
             }
         }

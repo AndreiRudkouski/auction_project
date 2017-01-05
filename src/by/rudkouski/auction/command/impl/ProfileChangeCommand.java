@@ -3,6 +3,7 @@ package by.rudkouski.auction.command.impl;
 import by.rudkouski.auction.bean.impl.User;
 import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
+import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.UserService;
 import by.rudkouski.auction.validation.Validator;
 
@@ -19,6 +20,7 @@ public class ProfileChangeCommand implements ICommand {
     private static final String ERROR_LOGIN = "errorLogin";
     private static final String ERROR_PWD = "errorPwd";
     private static final String ERROR_EXIST_LOGIN = "errorExistLogin";
+    private static final String ERROR_MESSAGE = "errorMessage";
     private static final String MAIN_PAGE = "main.jsp";
 
     @Override
@@ -29,7 +31,6 @@ public class ProfileChangeCommand implements ICommand {
         if (user != null) {
             userId = user.getId();
         } else {
-            //throw new CommandException("Wrong data parsing", e);
             return MAIN_PAGE;
         }
 
@@ -60,23 +61,28 @@ public class ProfileChangeCommand implements ICommand {
 
         ServiceManager manager = ServiceManager.getInstance();
         UserService userService = manager.getUserService();
-        if (validLogin) {
-            user = userService.changeUserLogin(userId, newLogin);
-            if (user != null) {
-                session.setAttribute(USER, user);
-                session.setAttribute(CHANGE_ACCEPT, CHANGE_ACCEPT);
-            } else {
-                session.setAttribute(ERROR_EXIST_LOGIN, ERROR_EXIST_LOGIN);
+        try {
+            if (validLogin) {
+                user = userService.changeUserLogin(userId, newLogin);
+                if (user != null) {
+                    session.setAttribute(USER, user);
+                    session.setAttribute(CHANGE_ACCEPT, CHANGE_ACCEPT);
+                } else {
+                    session.setAttribute(ERROR_EXIST_LOGIN, ERROR_EXIST_LOGIN);
+                }
             }
-        }
-        if (validOldPassword && validNewPassword) {
-            user = userService.changeUserPassword(userId, oldPassword, newPassword);
-            if (user != null) {
-                session.setAttribute(USER, user);
-                session.setAttribute(CHANGE_ACCEPT, CHANGE_ACCEPT);
-            } else {
-                session.setAttribute(ERROR_PWD, ERROR_PWD);
+            if (validOldPassword && validNewPassword) {
+                user = userService.changeUserPassword(userId, oldPassword, newPassword);
+                if (user != null) {
+                    session.setAttribute(USER, user);
+                    session.setAttribute(CHANGE_ACCEPT, CHANGE_ACCEPT);
+                } else {
+                    session.setAttribute(ERROR_PWD, ERROR_PWD);
+                }
             }
+        } catch (ServiceException e) {
+            session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
+            return page;
         }
         return page;
     }
@@ -87,5 +93,6 @@ public class ProfileChangeCommand implements ICommand {
         session.removeAttribute(ERROR_PWD);
         session.removeAttribute(ERROR_EXIST_LOGIN);
         session.removeAttribute(CHANGE_ACCEPT);
+        session.removeAttribute(ERROR_MESSAGE);
     }
 }

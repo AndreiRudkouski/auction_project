@@ -3,6 +3,7 @@ package by.rudkouski.auction.command.impl;
 import by.rudkouski.auction.bean.impl.User;
 import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
+import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.UserService;
 import by.rudkouski.auction.validation.Validator;
 
@@ -14,7 +15,7 @@ public class RegisterCommand implements ICommand {
     private static final String PWD = "pwd";
     private static final String USER = "user";
     private static final String ERROR_AUTH = "errorAuth";
-    private static final String COMMAND = "command";
+    private static final String ERROR_MESSAGE = "errorMessage";
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -23,7 +24,6 @@ public class RegisterCommand implements ICommand {
 
         HttpSession session = request.getSession();
         String page = returnPage(session);
-        session.setAttribute(COMMAND, request.getParameter(COMMAND));
         boolean validMail = new Validator().userMailValidate(mail);
         boolean validPassword = new Validator().userPasswordValidate(password);
         if (!validMail || !validPassword) {
@@ -33,7 +33,13 @@ public class RegisterCommand implements ICommand {
 
         ServiceManager manager = ServiceManager.getInstance();
         UserService userService = manager.getUserService();
-        User user = userService.registerUser(mail, password);
+        User user;
+        try {
+            user = userService.registerUser(mail, password);
+        } catch (ServiceException e) {
+            session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
+            return page;
+        }
         if (user != null) {
             session.setAttribute(USER, user);
         } else {
@@ -45,5 +51,6 @@ public class RegisterCommand implements ICommand {
     @Override
     public void resetSessionMessage(HttpSession session) {
         session.removeAttribute(ERROR_AUTH);
+        session.removeAttribute(ERROR_MESSAGE);
     }
 }

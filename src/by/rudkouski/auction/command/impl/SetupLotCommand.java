@@ -3,6 +3,7 @@ package by.rudkouski.auction.command.impl;
 import by.rudkouski.auction.bean.impl.Lot;
 import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
+import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.LotService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,13 @@ public class SetupLotCommand implements ICommand {
     public String execute(HttpServletRequest request) {
         ServiceManager manager = ServiceManager.getInstance();
         LotService lotService = manager.getLotService();
-        List<Lot> lotList = lotService.setupLot();
+        List<Lot> lotList;
+        try {
+            lotList = lotService.setupLot();
+        } catch (ServiceException e) {
+            //log("Wrong data parsing", e);
+            throw new RuntimeException("Error of setup lots", e);
+        }
 
         request.getSession().setAttribute(SAVE_REQ, null);
         request.setAttribute(LOT_LIST, lotList);

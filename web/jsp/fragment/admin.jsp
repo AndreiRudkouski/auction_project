@@ -61,12 +61,6 @@
             window.onload = errorAdminPwd;
         </script>
     </c:if>
-    <c:if test="${sessionScope.changeAccept != null}">
-        <script type="text/javascript">
-            window.onload = changeMessage;
-        </script>
-    </c:if>
-    <jsp:include page="message.jsp"/>
     </body>
     </html>
 </fmt:bundle>

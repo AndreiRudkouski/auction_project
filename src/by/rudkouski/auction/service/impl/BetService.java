@@ -2,12 +2,14 @@ package by.rudkouski.auction.service.impl;
 
 import by.rudkouski.auction.bean.impl.Bet;
 import by.rudkouski.auction.bean.impl.User;
+import by.rudkouski.auction.dao.exception.DaoException;
 import by.rudkouski.auction.dao.impl.BetDao;
 import by.rudkouski.auction.dao.impl.LotDao;
 import by.rudkouski.auction.dao.impl.UserDao;
 import by.rudkouski.auction.pool.ConnectionPool;
 import by.rudkouski.auction.pool.ProxyConnection;
 import by.rudkouski.auction.service.IBetService;
+import by.rudkouski.auction.service.exception.ServiceException;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -18,7 +20,7 @@ public class BetService implements IBetService<Bet> {
     private static final ConnectionPool POOL = ConnectionPool.getInstance();
 
     @Override
-    public boolean addBet(Bet bet, BigDecimal balance) {
+    public boolean addBet(Bet bet, BigDecimal balance) throws ServiceException {
         ProxyConnection con = null;
         try {
             con = POOL.takeConnection();
@@ -41,14 +43,16 @@ public class BetService implements IBetService<Bet> {
                     lotDao.markFinishLot(bet.getLot().getId());
                 }
                 con.commit();
+            } else {
+                return false;
             }
-        } catch (SQLException e) {
-            //throw new ServiceException("SQLException", e);
+        } catch (SQLException | DaoException e) {
             try {
                 con.rollback();
             } catch (SQLException e1) {
-                //throw new DaoException("SQLException", e);
+                throw new ServiceException("SQLException during rollback", e);
             }
+            throw new ServiceException(e);
         } finally {
             POOL.returnConnection(con);
         }
@@ -56,7 +60,7 @@ public class BetService implements IBetService<Bet> {
     }
 
     @Override
-    public List<List<Bet>> receiveBetHistoryByUser(long userId) {
+    public List<List<Bet>> receiveBetHistoryByUser(long userId) throws ServiceException {
         ProxyConnection con = null;
         List<Bet> betList;
         List<List<Bet>> betResult = null;
@@ -64,6 +68,8 @@ public class BetService implements IBetService<Bet> {
             con = POOL.takeConnection();
             BetDao betDao = new BetDao(con);
             betList = betDao.receiveBetHistoryByUser(userId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
         } finally {
             POOL.returnConnection(con);
         }

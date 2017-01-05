@@ -17,7 +17,8 @@ public class ConnectionPool {
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         } catch (SQLException e) {
-            e.printStackTrace();
+            //log
+            throw new RuntimeException("Wrong register driver", e);
         }
 
         for (int i = 0; i < poolSize; i++) {
@@ -26,10 +27,12 @@ public class ConnectionPool {
                 connectionQueue.put(connection);
             } catch (SQLException | InterruptedException e) {
                 //if throw exception try create and put additional connection
+                //log
                 tryNum++;
                 if (tryNum < poolSize) {
                     i--;
                 } else {
+                    //log
                     throw new RuntimeException("Wrong initialization connection pool", e);
                 }
             }
@@ -49,9 +52,9 @@ public class ConnectionPool {
             try {
                 queue.take().realClose();
             } catch (SQLException e) {
-                e.printStackTrace();
+                //log
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                //log
             }
         }
     }
@@ -61,7 +64,7 @@ public class ConnectionPool {
         try {
             connection = connectionQueue.take();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            //log
         }
         return connection;
     }
@@ -73,9 +76,9 @@ public class ConnectionPool {
                 connectionQueue.put(connection);
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            //log
         } catch (SQLException e) {
-            e.printStackTrace();
+            //log
         }
     }
 }

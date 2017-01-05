@@ -5,6 +5,7 @@ import by.rudkouski.auction.bean.impl.Lot;
 import by.rudkouski.auction.bean.impl.User;
 import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
+import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.BetService;
 import by.rudkouski.auction.service.impl.LotService;
 import by.rudkouski.auction.service.impl.UserService;
@@ -21,6 +22,7 @@ public class BetAddCommand implements ICommand {
     private static final String ERROR_BET = "errorBet";
     private static final String ERROR_BALANCE = "errorBalance";
     private static final String ERROR_FINISH = "errorFinish";
+    private static final String ERROR_MESSAGE = "errorMessage";
     private static final String BET_ACCEPT = "betAccept";
     private static final String USER = "user";
 
@@ -36,55 +38,56 @@ public class BetAddCommand implements ICommand {
         if (user != null) {
             userId = user.getId();
         } else {
-            //throw new CommandException("Wrong data parsing", e);
-            return page;
+            return MAIN_PAGE;
         }
 
+        boolean validBet;
+        ServiceManager manager = ServiceManager.getInstance();
+        UserService userService = manager.getUserService();
         try {
             lotId = Long.parseLong(request.getParameter(LOT_ID));
             curBet = new BigDecimal(request.getParameter(AMOUNT_BET));
-        } catch (NumberFormatException e) {
-            //throw new CommandException("Wrong data parsing", e);
+
+            LotService lotService = manager.getLotService();
+            BigDecimal minBet;
+            minBet = lotService.determineLotMinBet(lotId);
+            validBet = new Validator().betDataValidate(curBet, minBet);
+            if (!validBet) {
+                session.setAttribute(ERROR_BET, ERROR_BET);
+                return page;
+            }
+
+            BigDecimal balance = userService.receiveUserBalance(userId);
+            if (balance.compareTo(curBet) < 0) {
+                session.setAttribute(ERROR_BALANCE, ERROR_BALANCE);
+                return page;
+            }
+
+            Date curTime = new Date(System.currentTimeMillis());
+            Bet bet = new Bet();
+            user = new User();
+            user.setId(userId);
+            bet.setUser(user);
+            Lot lot = new Lot();
+            lot.setId(lotId);
+            bet.setLot(lot);
+            bet.setAmount(curBet);
+            bet.setTime(curTime);
+
+            BetService betService = manager.getBetService();
+            validBet = betService.addBet(bet, balance);
+            if (validBet) {
+                userService = manager.getUserService();
+                user = userService.receiveUserById(userId);
+                session.setAttribute(USER, user);
+                session.setAttribute(BET_ACCEPT, BET_ACCEPT);
+            } else {
+                session.setAttribute(ERROR_FINISH, ERROR_FINISH);
+            }
+        } catch (NumberFormatException | ServiceException e) {
+            //log("Wrong data parsing", e);
+            session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
             return page;
-        }
-
-        ServiceManager manager = ServiceManager.getInstance();
-        LotService lotService = manager.getLotService();
-        BigDecimal minBet = lotService.determineLotMinBet(lotId);
-
-        boolean validBet = new Validator().betDataValidate(curBet, minBet);
-        if (!validBet) {
-            session.setAttribute(ERROR_BET, ERROR_BET);
-            return page;
-        }
-
-        UserService userService = manager.getUserService();
-        BigDecimal balance = userService.receiveUserBalance(userId);
-        if (balance.compareTo(curBet) < 0) {
-            session.setAttribute(ERROR_BALANCE, ERROR_BALANCE);
-            return page;
-        }
-
-        Date curTime = new Date(System.currentTimeMillis());
-        Bet bet = new Bet();
-        user = new User();
-        user.setId(userId);
-        bet.setUser(user);
-        Lot lot = new Lot();
-        lot.setId(lotId);
-        bet.setLot(lot);
-        bet.setAmount(curBet);
-        bet.setTime(curTime);
-
-        BetService betService = manager.getBetService();
-        validBet = betService.addBet(bet, balance);
-        if (validBet) {
-            userService = manager.getUserService();
-            user = userService.receiveUserById(userId);
-            session.setAttribute(USER, user);
-            session.setAttribute(BET_ACCEPT, BET_ACCEPT);
-        } else {
-            session.setAttribute(ERROR_FINISH, ERROR_FINISH);
         }
         return page;
     }
@@ -95,5 +98,6 @@ public class BetAddCommand implements ICommand {
         session.removeAttribute(ERROR_BALANCE);
         session.removeAttribute(ERROR_FINISH);
         session.removeAttribute(BET_ACCEPT);
+        session.removeAttribute(ERROR_MESSAGE);
     }
 }

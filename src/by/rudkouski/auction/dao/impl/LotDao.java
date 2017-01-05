@@ -2,6 +2,7 @@ package by.rudkouski.auction.dao.impl;
 
 import by.rudkouski.auction.bean.impl.*;
 import by.rudkouski.auction.dao.ILotDao;
+import by.rudkouski.auction.dao.exception.DaoException;
 import by.rudkouski.auction.pool.ProxyConnection;
 
 import java.math.BigDecimal;
@@ -67,20 +68,20 @@ public class LotDao implements ILotDao<Lot> {
     }
 
     @Override
-    public List<Lot> setupLot() {
-        List<Lot> lotList = null;
+    public List<Lot> setupLot() throws DaoException {
+        List<Lot> lotList;
         try (Statement st = con.createStatement()) {
             ResultSet res = st.executeQuery(SQL_SETUP_LOT);
             lotList = convertResult(res);
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return lotList;
     }
 
     @Override
-    public List<Lot> searchLotByCategory(long categoryId, int page) {
-        List<Lot> lotList = null;
+    public List<Lot> searchLotByCategory(long categoryId, int page) throws DaoException {
+        List<Lot> lotList;
         try (PreparedStatement prSt = con.prepareStatement(SQL_SEARCH_LOT_CATEGORY)) {
             prSt.setLong(1, categoryId);
             int lineStart = page * COUNT_VIEW;
@@ -90,14 +91,14 @@ public class LotDao implements ILotDao<Lot> {
             ResultSet res = prSt.executeQuery();
             lotList = convertResult(res);
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return lotList;
     }
 
     @Override
-    public List<Lot> searchLotByName(String search, int page) {
-        List<Lot> lotList = null;
+    public List<Lot> searchLotByName(String search, int page) throws DaoException {
+        List<Lot> lotList;
         try (PreparedStatement prSt = con.prepareStatement(SQL_SEARCH_LOT_NAME)) {
             prSt.setString(1, "%" + search + "%");
             int lineStart = page * COUNT_VIEW;
@@ -107,13 +108,13 @@ public class LotDao implements ILotDao<Lot> {
             ResultSet res = prSt.executeQuery();
             lotList = convertResult(res);
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return lotList;
     }
 
     @Override
-    public Lot searchFinishedLotById(long lotId) {
+    public Lot searchFinishedLotById(long lotId) throws DaoException {
         Lot lot = null;
         try (PreparedStatement prSt = con.prepareStatement(SQL_SEARCH_LOT_FINISHED)) {
             prSt.setLong(1, lotId);
@@ -136,13 +137,13 @@ public class LotDao implements ILotDao<Lot> {
                 lot.setCheck(res.getBoolean(10));
             }
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return lot;
     }
 
     @Override
-    public Lot searchUnfinishedLotById(long lotId) {
+    public Lot searchUnfinishedLotById(long lotId) throws DaoException {
         Lot lot = null;
         try (PreparedStatement prSt = con.prepareStatement(SQL_SEARCH_LOT_UNFINISHED)) {
             prSt.setLong(1, lotId);
@@ -178,7 +179,7 @@ public class LotDao implements ILotDao<Lot> {
                 lot.setTimeStart(res.getTimestamp(19));
             }
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return lot;
     }
@@ -206,7 +207,7 @@ public class LotDao implements ILotDao<Lot> {
     }
 
     @Override
-    public boolean checkAndMarkFinishLot(long lotId, Date time) {
+    public boolean checkAndMarkFinishLot(long lotId, Date time) throws DaoException {
         try (PreparedStatement prSt = con.prepareStatement(SQL_CHECK_FINISH_LOT)) {
             prSt.setLong(1, lotId);
             ResultSet res = prSt.executeQuery();
@@ -226,50 +227,50 @@ public class LotDao implements ILotDao<Lot> {
                 }
             }
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return true;
     }
 
     @Override
-    public void markFinishLot(long lotId) {
+    public void markFinishLot(long lotId) throws DaoException {
         try (PreparedStatement prSt = con.prepareStatement(SQL_MARK_FINISH_LOT)) {
             prSt.setLong(1, lotId);
             prSt.executeUpdate();
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
     }
 
     @Override
-    public List<Lot> receiveFinishedLotHistoryByUser(long userId) {
-        List<Lot> lotList = null;
+    public List<Lot> receiveFinishedLotHistoryByUser(long userId) throws DaoException {
+        List<Lot> lotList;
         try (PreparedStatement prSt = con.prepareStatement(SQL_FINISHED_LOT_HISTORY)) {
             lotList = receiveLotList(userId, prSt);
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return lotList;
     }
 
     @Override
-    public List<Lot> receiveUnfinishedLotHistoryByUser(long userId) {
-        List<Lot> lotList = null;
+    public List<Lot> receiveUnfinishedLotHistoryByUser(long userId) throws DaoException {
+        List<Lot> lotList;
         try (PreparedStatement prSt = con.prepareStatement(SQL_UNFINISHED_LOT_HISTORY)) {
             lotList = receiveLotList(userId, prSt);
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return lotList;
     }
 
     @Override
-    public List<Lot> receiveUncheckedLotHistoryByUser(long userId) {
-        List<Lot> lotList = null;
+    public List<Lot> receiveUncheckedLotHistoryByUser(long userId) throws DaoException {
+        List<Lot> lotList;
         try (PreparedStatement prSt = con.prepareStatement(SQL_UNCHECKED_LOT_HISTORY)) {
             lotList = receiveLotList(userId, prSt);
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return lotList;
     }
@@ -295,7 +296,7 @@ public class LotDao implements ILotDao<Lot> {
     }
 
     @Override
-    public BigDecimal determineLotMinBet(long lotId) {
+    public BigDecimal determineLotMinBet(long lotId) throws DaoException {
         BigDecimal minBet = null;
         try (PreparedStatement prSt = con.prepareStatement(SQL_MIN_BET)) {
             prSt.setLong(1, lotId);
@@ -318,13 +319,13 @@ public class LotDao implements ILotDao<Lot> {
                 }
             }
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return minBet;
     }
 
     @Override
-    public long addLot(Lot lot) {
+    public long addLot(Lot lot) throws DaoException {
         long newLotId = 0;
         try (PreparedStatement prSt = con.prepareStatement(SQL_ADD_LOT, Statement.RETURN_GENERATED_KEYS)) {
             fillStatementLot(prSt, lot);
@@ -334,30 +335,30 @@ public class LotDao implements ILotDao<Lot> {
                 newLotId = res.getLong(1);
             }
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
         return newLotId;
     }
 
     @Override
-    public void addPhotoByLotId(long lotId, String photo) {
+    public void addPhotoByLotId(long lotId, String photo) throws DaoException {
         try (PreparedStatement prSt = con.prepareStatement(SQL_ADD_PHOTO)) {
             prSt.setLong(1, lotId);
             prSt.setString(2, photo);
             prSt.executeUpdate();
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
     }
 
     @Override
-    public void editLot(Lot lot) {
+    public void editLot(Lot lot) throws DaoException {
         try (PreparedStatement prSt = con.prepareStatement(SQL_EDIT_LOT)) {
             fillStatementLot(prSt, lot);
             prSt.setLong(12, lot.getId());
             prSt.executeUpdate();
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
     }
 
@@ -377,14 +378,14 @@ public class LotDao implements ILotDao<Lot> {
     }
 
     @Override
-    public void checkLot(long lotId) {
+    public void checkLot(long lotId) throws DaoException {
         try (PreparedStatement prSt = con.prepareStatement(SQL_CHECK_LOT)) {
             String timeLot = new SimpleDateFormat(FORMAT_DATE).format(new Date(System.currentTimeMillis()));
             prSt.setString(1, timeLot);
             prSt.setLong(2, lotId);
             prSt.executeUpdate();
         } catch (SQLException e) {
-            //throw new DaoException("SQLException", e);
+            throw new DaoException("SQLException", e);
         }
     }
 }

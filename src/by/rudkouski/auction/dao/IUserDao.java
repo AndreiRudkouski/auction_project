@@ -2,35 +2,36 @@ package by.rudkouski.auction.dao;
 
 import by.rudkouski.auction.bean.AbstractEntity;
 import by.rudkouski.auction.bean.impl.User;
+import by.rudkouski.auction.dao.exception.DaoException;
 import by.rudkouski.auction.pool.ProxyConnection;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public interface IUserDao<T extends AbstractEntity> {
-    T logInUser(String mail, String password);
+    T logInUser(String mail, String password) throws DaoException;
 
-    boolean registerUser(String mail, String password);
+    void registerUser(String mail, String password) throws DaoException;
 
-    T receiveUserById(long userId);
+    T receiveUserById(long userId) throws DaoException;
 
-    boolean changeBanUserById(long userId, boolean ban);
+    void changeBanUserById(long userId, boolean ban) throws DaoException;
 
-    boolean changeUserLogin(long userId, String login);
+    void changeUserLogin(long userId, String login) throws DaoException;
 
-    boolean changeUserPassword(long userId, String password);
+    void changeUserPassword(long userId, String password) throws DaoException;
 
-    BigDecimal receiveUserBalance(long userId);
+    BigDecimal receiveUserBalance(long userId) throws DaoException;
 
-    boolean checkUserPassword(long userId, String password);
+    boolean checkUserPassword(long userId, String password) throws DaoException;
 
-    boolean checkUniqueUserMail(String mail);
+    boolean checkUniqueUserMail(String mail) throws DaoException;
 
-    boolean checkUniqueUserLogin(String login);
+    boolean checkUniqueUserLogin(String login) throws DaoException;
 
-    boolean updateUserBalanceById(long userId, BigDecimal newBalance);
+    void updateUserBalanceById(long userId, BigDecimal newBalance) throws DaoException;
 
-    T receivePrevMaxBetUser(long lotId);
+    T receivePrevMaxBetUser(long lotId) throws DaoException;
 
-    List<T> searchUserByLoginMail(String search);
+    List<T> searchUserByLoginMail(String search) throws DaoException;
 }

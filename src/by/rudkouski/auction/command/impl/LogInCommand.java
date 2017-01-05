@@ -3,6 +3,7 @@ package by.rudkouski.auction.command.impl;
 import by.rudkouski.auction.bean.impl.User;
 import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
+import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.UserService;
 import by.rudkouski.auction.validation.Validator;
 
@@ -15,7 +16,7 @@ public class LogInCommand implements ICommand {
     private static final String USER = "user";
     private static final String ERROR_USER = "errorUser";
     private static final String ERROR_BAN = "errorBan";
-    private static final String COMMAND = "command";
+    private static final String ERROR_MESSAGE = "errorMessage";
     private static final long ADMIN_ROLE_ID = 2;
     public static final String MAIN_PAGE = "main.jsp";
 
@@ -26,7 +27,6 @@ public class LogInCommand implements ICommand {
 
         HttpSession session = request.getSession();
         String page = returnPage(session);
-        session.setAttribute(COMMAND, request.getParameter(COMMAND));
         boolean validMail = new Validator().userMailValidate(mail);
         boolean validPassword = new Validator().userPasswordValidate(password);
         if (!validMail || !validPassword) {
@@ -36,7 +36,14 @@ public class LogInCommand implements ICommand {
 
         ServiceManager manager = ServiceManager.getInstance();
         UserService userService = manager.getUserService();
-        User user = userService.logInUser(mail, password);
+        User user;
+        try {
+            user = userService.logInUser(mail, password);
+        } catch (ServiceException e) {
+            //log("Wrong data parsing", e);
+            session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
+            return returnPage(session);
+        }
 
         if (user != null) {
             if (!user.isBan()) {
@@ -57,5 +64,6 @@ public class LogInCommand implements ICommand {
     public void resetSessionMessage(HttpSession session) {
         session.removeAttribute(ERROR_USER);
         session.removeAttribute(ERROR_BAN);
+        session.removeAttribute(ERROR_MESSAGE);
     }
 }
