@@ -30,12 +30,11 @@ public class LotChoiceCommand implements ICommand {
             ServiceManager manager = ServiceManager.getInstance();
             LotService lotService = manager.getLotService();
             lot = lotService.searchLotById(lotId);
+            request.setAttribute(LOT, lot);
         } catch (NumberFormatException | ServiceException e) {
             LOGGER.log(Level.ERROR, "Exception: ", e);
             session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
-            return page;
         }
-        request.setAttribute(LOT, lot);
         return MAIN_PAGE;
     }
 

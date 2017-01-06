@@ -54,15 +54,14 @@ public class LotNewCommand implements ICommand {
                 LotService lotService = manager.getLotService();
                 Lot lot = lotService.searchLotById(lotId);
                 request.setAttribute(LOT, lot);
+                request.setAttribute(NEW_LOT, NEW_LOT);
+                request.setAttribute(PROFILE, PROFILE);
             }
         } catch (NumberFormatException | ServiceException e) {
             LOGGER.log(Level.ERROR, "Exception: ", e);
             HttpSession session = request.getSession();
             session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
-            return returnPage(session);
         }
-        request.setAttribute(NEW_LOT, NEW_LOT);
-        request.setAttribute(PROFILE, PROFILE);
         return MAIN_PAGE;
     }
 

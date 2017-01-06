@@ -37,18 +37,17 @@ public class Controller extends HttpServlet {
 
         if (page != null) {
             if (page.matches(REGEX_SEND_REDIRECT)) {
-                COM_MANAGER.saveCommandSession(request);
                 response.sendRedirect(page);
+                COM_MANAGER.saveCommandSession(request, true);
             } else {
+                request.getRequestDispatcher(page).forward(request, response);
+                COM_MANAGER.saveCommandSession(request, false);
                 HttpSession session = request.getSession();
                 if (session != null) {
                     command = COM_MANAGER.defineCommandSession(session);
                     if (command != null) {
                         command.resetSessionMessage(session);
-                        COM_MANAGER.resetCommandSession(session);
                     }
-                    request.getRequestDispatcher(page).forward(request, response);
-                    COM_MANAGER.saveCommandSession(request);
                 }
             }
         }

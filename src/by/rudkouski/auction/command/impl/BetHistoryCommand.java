@@ -52,12 +52,11 @@ public class BetHistoryCommand implements ICommand {
                 request.setAttribute(BET_LIST_DONE, betResult.get(1));
                 request.setAttribute(BET_HISTORY, BET_HISTORY);
             }
+            request.setAttribute(PROFILE, PROFILE);
         } catch (NumberFormatException | ServiceException e) {
             LOGGER.log(Level.ERROR, "Exception: ", e);
             session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
-            return returnPage(session);
         }
-        request.setAttribute(PROFILE, PROFILE);
         return MAIN_PAGE;
     }
 

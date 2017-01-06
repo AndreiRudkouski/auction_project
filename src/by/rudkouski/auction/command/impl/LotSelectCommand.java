@@ -47,13 +47,12 @@ public class LotSelectCommand implements ICommand {
                     lotList = lotService.receiveUncheckedLotHistoryByUser(NULL_USER_ID);
                     request.setAttribute(LOT_LIST_UNCHECKED, lotList);
                 }
+                request.setAttribute(LOT_SELECT, LOT_SELECT);
             } catch (ServiceException e) {
                 LOGGER.log(Level.ERROR, "Exception: ", e);
                 HttpSession session = request.getSession();
                 session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
-                return returnPage(session);
             }
-            request.setAttribute(LOT_SELECT, LOT_SELECT);
         }
         return MAIN_PAGE;
     }

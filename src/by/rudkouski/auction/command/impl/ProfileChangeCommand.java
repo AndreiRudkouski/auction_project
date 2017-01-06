@@ -87,7 +87,7 @@ public class ProfileChangeCommand implements ICommand {
         } catch (ServiceException e) {
             LOGGER.log(Level.ERROR, "Exception: ", e);
             session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
-            return page;
+            return MAIN_PAGE;
         }
         return page;
     }

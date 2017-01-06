@@ -22,7 +22,6 @@ public class CategoryChoiceCommand implements ICommand {
             LOGGER.log(Level.ERROR, "Exception: ", e);
             HttpSession session = request.getSession();
             session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
-            return MAIN_PAGE;
         }
         return MAIN_PAGE;
     }

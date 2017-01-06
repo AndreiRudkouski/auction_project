@@ -34,13 +34,12 @@ public class UserSearchCommand implements ICommand {
             List<User> userList;
             try {
                 userList = userService.searchUserByLoginMail(search);
+                request.setAttribute(USER_LIST, userList);
             } catch (ServiceException e) {
                 LOGGER.log(Level.ERROR, "Exception: ", e);
                 HttpSession session = request.getSession();
                 session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
-                return returnPage(session);
             }
-            request.setAttribute(USER_LIST, userList);
         }
         return MAIN_PAGE;
     }
