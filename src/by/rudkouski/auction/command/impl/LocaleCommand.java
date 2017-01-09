@@ -5,10 +5,9 @@ import by.rudkouski.auction.command.ICommand;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class LocaleCommand implements ICommand {
-    private static final String LOCALE = "loc";
-    private static final String LOCALE_EN = "en";
-    private static final String LOCALE_BE = "be";
 
     @Override
     public String execute(HttpServletRequest request) {

@@ -12,12 +12,10 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class UserChoiceCommand implements ICommand {
     private static final Logger LOGGER = LogManager.getLogger(UserChoiceCommand.class);
-    private static final String USER_ID = "userId";
-    private static final String MAIN_PAGE = "main.jsp";
-    private static final String USER = "user";
-    private static final String ERROR_MESSAGE = "errorMessage";
 
     @Override
     public String execute(HttpServletRequest request) {

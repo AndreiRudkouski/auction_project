@@ -9,11 +9,10 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class PageNextCommand implements ICommand {
     private static final Logger LOGGER = LogManager.getLogger(PageNextCommand.class);
-    private static final String MAIN_PAGE = "main.jsp";
-    private static final String PAGE_LIST = "pageList";
-    private static final String ERROR_MESSAGE = "errorMessage";
 
     @Override
     public String execute(HttpServletRequest request) {

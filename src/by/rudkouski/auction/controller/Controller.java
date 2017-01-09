@@ -11,11 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 
+import static by.rudkouski.auction.constant.ConstantName.REGEX_SEND_REDIRECT;
+
 @WebServlet("/jsp/Controller")
 @MultipartConfig
 public class Controller extends HttpServlet {
     private static final CommandManager COM_MANAGER = new CommandManager();
-    private static final String REGEX_SEND_REDIRECT = ".*(Controller).*";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

@@ -1,14 +1,14 @@
 package by.rudkouski.auction.command.impl;
 
 import by.rudkouski.auction.command.ICommand;
-import by.rudkouski.auction.validation.Validator;
+import by.rudkouski.auction.command.validation.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class ProfileCommand implements ICommand {
-    private static final String PROFILE = "profile";
-    private static final String MAIN_PAGE = "main.jsp";
 
     @Override
     public String execute(HttpServletRequest request) {

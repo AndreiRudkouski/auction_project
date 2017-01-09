@@ -6,10 +6,10 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 @WebListener()
 public class InitAndCloseListener implements ServletContextListener {
-    private static final String EMPTY_LINE = "";
-    private static final String SAVE_DIRECTORY = "saveDirectory";
 
     public InitAndCloseListener() {
     }

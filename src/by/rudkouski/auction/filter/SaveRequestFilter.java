@@ -6,14 +6,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Map;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 @WebFilter(filterName = "SaveRequestFilter",
         dispatcherTypes = {DispatcherType.FORWARD},
         urlPatterns = {"/jsp/*"})
 public class SaveRequestFilter implements Filter {
-    private static final String URL = "../jsp/Controller?";
-    private static final String DIVIDER = "&";
-    private static final String EQUAL = "=";
-    private static final String SAVE_REQ = "saveReq";
 
     @Override
     public void destroy() {
@@ -26,7 +24,7 @@ public class SaveRequestFilter implements Filter {
         boolean divider = false;
         for (Map.Entry<String, String[]> m : map.entrySet()) {
             if (divider) {
-                saveReq.append(DIVIDER);
+                saveReq.append(PARAMETER_DIVIDER);
             }
             saveReq.append(m.getKey() + EQUAL + m.getValue()[0]);
             divider = true;

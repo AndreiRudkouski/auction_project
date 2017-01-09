@@ -16,6 +16,7 @@ import java.util.List;
 
 public class CategoryDao implements ICategoryDao<Category> {
     private ProxyConnection con;
+
     private static final String SQL_CATEGORY = "SELECT category_id, categoryBe, categoryEn FROM category";
     private static final String SQL_TERM = "SELECT term_id, term FROM term ORDER BY term";
     private static final String SQL_CONDITION = "SELECT condition_id, cond.condition FROM cond ORDER BY condition_id";

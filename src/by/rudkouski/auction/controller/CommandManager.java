@@ -1,7 +1,6 @@
 package by.rudkouski.auction.controller;
 
 import by.rudkouski.auction.command.ICommand;
-import by.rudkouski.auction.pool.ConnectionPool;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,10 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Locale;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class CommandManager {
     private static final Logger LOGGER = LogManager.getLogger(CommandManager.class);
-    private static final String COMMAND = "command";
-    private static final String SEND_TYPE = "sendType";
 
     public ICommand defineCommandRequest(HttpServletRequest request) {
         String action = request.getParameter(COMMAND);

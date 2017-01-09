@@ -15,13 +15,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class LotDao implements ILotDao<Lot> {
     private ProxyConnection con;
-    private static final int COUNT_VIEW = 3;
-    private static final long BLIND_AUCTION_TYPE_ID = 3;
-    private static final BigDecimal TEN_PERCENT = new BigDecimal(10 / 100);
-    private static final String FORMAT_DATE = "yyyy-MM-dd HH:mm:ss";
-    private static final String ANY_USER = "%";
 
     private static final String SQL_SETUP_LOT = "SELECT lot.lot_id, name, url, MAX(bet), priceStart, lot.type_id FROM lot " +
             "JOIN photo ON lot.lot_id = photo.lot_id " +
@@ -279,7 +276,7 @@ public class LotDao implements ILotDao<Lot> {
         if (userId != 0) {
             prSt.setLong(1, userId);
         } else {
-            prSt.setString(1, ANY_USER);
+            prSt.setString(1, ANY_SYMBOL_SQL);
         }
         ResultSet res = prSt.executeQuery();
         List<Lot> lotList = new ArrayList<>();

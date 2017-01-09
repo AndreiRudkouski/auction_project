@@ -5,12 +5,13 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
 import java.io.IOException;
 
+import static by.rudkouski.auction.constant.ConstantName.ENCODING;
+
 @WebFilter(filterName = "CharsetFilter",
         urlPatterns = {"/*"},
         initParams = {
                 @WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding Param")})
 public class CharsetFilter implements Filter {
-    private static final String ENCODING = "encoding";
     private String code;
 
     @Override

@@ -7,12 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static by.rudkouski.auction.constant.ConstantName.INDEX_PAGE;
+
 @WebFilter(filterName = "RedirectPageFilter",
         urlPatterns = {"/jsp/fragment/*"},
         initParams = {
                 @WebInitParam(name = "index_page", value = "/index.jsp")})
 public class RedirectPageFilter implements Filter {
-    private static final String INDEX_PAGE = "index_page";
     private String page;
 
     @Override

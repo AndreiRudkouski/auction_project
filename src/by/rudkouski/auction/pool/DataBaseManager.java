@@ -4,7 +4,6 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -12,15 +11,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class DataBaseManager {
     private static final Logger LOGGER = LogManager.getLogger(DataBaseManager.class);
     private static final Properties PROP = new Properties();
-    private static final String FILE_PROPERTIES = "/resource/db.properties";
-    private static final String DB_URL = "db.url";
-    private static final String DB_USER = "db.user";
-    private static final String DB_PASSWORD = "db.password";
-    private static final String DB_POOL_SIZE = "db.pool_size";
-    private static final int INIT_POOL_SIZE = 5;
 
     private DataBaseManager() {
     }

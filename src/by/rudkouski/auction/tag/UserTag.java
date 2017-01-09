@@ -5,9 +5,9 @@ import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 
-public class UserTag extends TagSupport {
-    private static final long ADMIN_ROLE_ID = 2;
+import static by.rudkouski.auction.constant.ConstantName.ADMIN_ROLE_ID;
 
+public class UserTag extends TagSupport {
     private String login;
     private String mail;
     private String balance;

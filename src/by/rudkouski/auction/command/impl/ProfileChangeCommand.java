@@ -5,7 +5,7 @@ import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.UserService;
-import by.rudkouski.auction.validation.Validator;
+import by.rudkouski.auction.command.validation.Validator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,19 +13,10 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class ProfileChangeCommand implements ICommand {
     private static final Logger LOGGER = LogManager.getLogger(ProfileChangeCommand.class);
-    private static final String LOGIN = "login";
-    private static final String OLD_LOGIN = "userOldLogin";
-    private static final String NEW_PWD = "newPwd";
-    private static final String OLD_PWD = "oldPwd";
-    private static final String USER = "user";
-    private static final String CHANGE_ACCEPT = "changeAccept";
-    private static final String ERROR_LOGIN = "errorLogin";
-    private static final String ERROR_PWD = "errorPwd";
-    private static final String ERROR_EXIST_LOGIN = "errorExistLogin";
-    private static final String ERROR_MESSAGE = "errorMessage";
-    private static final String MAIN_PAGE = "main.jsp";
 
     @Override
     public String execute(HttpServletRequest request) {

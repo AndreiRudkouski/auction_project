@@ -1,6 +1,9 @@
-package by.rudkouski.auction.validation;
+package by.rudkouski.auction.command.validation;
 
 import by.rudkouski.auction.bean.impl.*;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,34 +13,10 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class Validator {
-    private static final String MAIL_REGEX = "^[-\\w.]+@([A-z0-9][-A-z0-9]+\\.)+[A-z]{2,4}$";
-    private static final String PWD_REGEX = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*$";
-    private static final int PWD_LENGTH = 6;
-    private static final int LOGIN_LENGTH = 20;
-    private static final int CARD_NUMBER_LENGTH = 16;
-    private static final int TITLE_LENGTH = 90;
-    private static final BigDecimal ZERO_AMOUNT = new BigDecimal(0);
-    private static final BigDecimal MIN_AMOUNT = new BigDecimal(10);
-    private static final BigDecimal MAX_AMOUNT = new BigDecimal(9999.99);
-    private static final long BLITZ_AUCTION_TYPE_ID = 2;
-    private static final String TITLE = "title";
-    private static final String DESCRIPTION = "description";
-    private static final String CATEGORY = "category";
-    private static final String TYPE = "type";
-    private static final String TERM = "term";
-    private static final String CONDITION = "condition";
-    private static final String PRICE_START = "priceStart";
-    private static final String PRICE_STEP = "priceStep";
-    private static final String PRICE_BLITZ = "priceBlitz";
-    private static final String PHOTO = "photo";
-    private static final String OLD_PHOTO = "oldPhoto";
-    private static final String REGEX_IMG_FILE = ".+\\.(jpe?g)$";
-    private static final String CONTENT = "content-disposition";
-    private static final String FILE_NAME = "filename";
-    private static final String SEMICOLON_DIVIDE = ";";
-    private static final String EQUAL_DIVIDE = "=";
-    private static final String USER = "user";
+    private static final Logger LOGGER = LogManager.getLogger(Validator.class);
 
     public boolean userMailValidate(String mail) {
         if (mail == null || mail.isEmpty() || !mail.matches(MAIL_REGEX)) {
@@ -101,7 +80,7 @@ public class Validator {
             termId = Long.parseLong(request.getParameter(TERM));
             conditionId = Long.parseLong(request.getParameter(CONDITION));
         } catch (NumberFormatException e) {
-            //throw new CommandException("Wrong data parsing", e);
+            LOGGER.log(Level.ERROR, "Exception: ", e);
             return null;
         }
         priceStart = new BigDecimal(request.getParameter(PRICE_START));
@@ -132,7 +111,7 @@ public class Validator {
                 photo = extractFileName(part);
             }
         } catch (IOException | ServletException e) {
-            //throw new CommandException("Wrong data parsing", e);
+            LOGGER.log(Level.ERROR, "Exception: ", e);
             return null;
         }
         oldPhoto = request.getParameter(OLD_PHOTO);

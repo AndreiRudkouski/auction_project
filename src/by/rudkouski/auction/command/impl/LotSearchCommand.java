@@ -10,17 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class LotSearchCommand implements ICommand {
     private static final Logger LOGGER = LogManager.getLogger(LotSearchCommand.class);
-    private static final String MAIN_PAGE = "main.jsp";
-    private static final String FIELD_SEARCH = "fieldSearch";
-    private static final String ENCODING = "ISO-8859-1";
-    private static final String ERROR_MESSAGE = "errorMessage";
 
     @Override
     public String execute(HttpServletRequest request) {
         try {
-            String search = new String(request.getParameter(FIELD_SEARCH).getBytes(ENCODING), request.getCharacterEncoding());
+            String search = new String(request.getParameter(FIELD_SEARCH).getBytes(ENCODING_ISO), request.getCharacterEncoding());
             if (search != null && !search.isEmpty()) {
                 searchLot(request, search, 0);
             }

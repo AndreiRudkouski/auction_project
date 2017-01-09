@@ -12,26 +12,21 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class LotChoiceCommand implements ICommand {
     private static final Logger LOGGER = LogManager.getLogger(LotChoiceCommand.class);
-    private static final String MAIN_PAGE = "main.jsp";
-    private static final String LOT_ID = "lotId";
-    private static final String LOT = "lot";
-    private static final String ERROR_MESSAGE = "errorMessage";
 
     @Override
     public String execute(HttpServletRequest request) {
-        long lotId;
-        HttpSession session = request.getSession();
-        String page = returnPage(session);
-        Lot lot;
         try {
-            lotId = Long.parseLong(request.getParameter(LOT_ID));
+            long lotId = Long.parseLong(request.getParameter(LOT_ID));
             ServiceManager manager = ServiceManager.getInstance();
             LotService lotService = manager.getLotService();
-            lot = lotService.searchLotById(lotId);
+            Lot lot = lotService.searchLotById(lotId);
             request.setAttribute(LOT, lot);
         } catch (NumberFormatException | ServiceException e) {
+            HttpSession session = request.getSession();
             LOGGER.log(Level.ERROR, "Exception: ", e);
             session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
         }

@@ -14,6 +14,7 @@ import java.util.List;
 
 public class UserDao implements IUserDao<User> {
     private ProxyConnection con;
+
     private static final String SQL_USER = "SELECT user_id, login, email, balance, ban, role_id FROM user WHERE email = ? AND password = ?";
     private static final String SQL_ADD_USER = "INSERT INTO user (email, password) VALUES (?, ?)";
     private static final String SQL_MAIL = "SELECT email FROM user WHERE email = ?";

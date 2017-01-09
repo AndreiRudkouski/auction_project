@@ -5,7 +5,7 @@ import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.LotService;
-import by.rudkouski.auction.validation.Validator;
+import by.rudkouski.auction.command.validation.Validator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,14 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class LotSelectCommand implements ICommand {
     private static final Logger LOGGER = LogManager.getLogger(LotSelectCommand.class);
-    private static final String LOT_SELECT = "lotSelect";
-    private static final String LOT_LIST_FINISH = "lotListFinished";
-    private static final String LOT_LIST_UNFINISHED = "lotListUnfinished";
-    private static final String LOT_LIST_UNCHECKED = "lotListUnchecked";
-    private static final String ERROR_MESSAGE = "errorMessage";
-    private static final long NULL_USER_ID = 0;
 
     @Override
     public String execute(HttpServletRequest request) {

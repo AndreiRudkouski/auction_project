@@ -9,13 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public interface ICommand {
-    public static final String LOT_SEARCH = "lot_search";
-    public static final String LOT_LIST = "lotList";
-    public static final String PAGE_LIST = "pageList";
-    public static final String CATEGORY_ID = "categoryId";
-    public static final String SAVE_REQ = "saveReq";
-    public static final String MAIN_PAGE = "main.jsp";
 
     String execute(HttpServletRequest request);
 

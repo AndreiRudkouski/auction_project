@@ -15,10 +15,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class UserService implements IUserService<User> {
     private static final ConnectionPool POOL = ConnectionPool.getInstance();
-    private static final String ZERO = "0";
-    private static final String ALGORITHM = "MD5";
 
     @Override
     public User logInUser(String mail, String password) throws ServiceException {
@@ -233,7 +233,7 @@ public class UserService implements IUserService<User> {
         MessageDigest messageDigest;
         byte[] digest = new byte[0];
         try {
-            messageDigest = MessageDigest.getInstance(ALGORITHM);
+            messageDigest = MessageDigest.getInstance(MD5_ALGORITHM);
             messageDigest.reset();
             messageDigest.update(st.getBytes());
             digest = messageDigest.digest();

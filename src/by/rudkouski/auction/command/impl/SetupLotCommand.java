@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class SetupLotCommand implements ICommand {
     private static final Logger LOGGER = LogManager.getLogger(SetupLotCommand.class);
-    private static final String SAVE_REQ = "saveReq";
-    private static final String LOT_LIST = "lotList";
 
     @Override
     public String execute(HttpServletRequest request) {

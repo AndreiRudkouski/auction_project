@@ -9,7 +9,7 @@ import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.BetService;
 import by.rudkouski.auction.service.impl.LotService;
 import by.rudkouski.auction.service.impl.UserService;
-import by.rudkouski.auction.validation.Validator;
+import by.rudkouski.auction.command.validation.Validator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,16 +19,10 @@ import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class BetAddCommand implements ICommand {
     private static final Logger LOGGER = LogManager.getLogger(BetAddCommand.class);
-    private static final String LOT_ID = "lotId";
-    private static final String AMOUNT_BET = "amountBet";
-    private static final String ERROR_BET = "errorBet";
-    private static final String ERROR_BALANCE = "errorBalance";
-    private static final String ERROR_FINISH = "errorFinish";
-    private static final String ERROR_MESSAGE = "errorMessage";
-    private static final String BET_ACCEPT = "betAccept";
-    private static final String USER = "user";
 
     @Override
     public String execute(HttpServletRequest request) {

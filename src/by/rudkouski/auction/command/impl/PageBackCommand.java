@@ -9,12 +9,10 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class PageBackCommand implements ICommand {
     private static final Logger LOGGER = LogManager.getLogger(PageBackCommand.class);
-    private static final String MAIN_PAGE = "main.jsp";
-    private static final String PAGE_LIST = "pageList";
-    private static final String ERROR_MESSAGE = "errorMessage";
-    private static int PAGE_ZERO = 0;
 
     @Override
     public String execute(HttpServletRequest request) {

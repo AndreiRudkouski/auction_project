@@ -15,9 +15,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import static by.rudkouski.auction.constant.ConstantName.FORMAT_DATE;
+
 public class BetDao implements IBetDao<Bet> {
     private ProxyConnection con;
-    private static final String FORMAT_DATE = "yyyy-MM-dd HH:mm:ss";
+
     private static final String SQL_ADD_BET = "INSERT INTO bet (bet, timeBet, lot_id, user_id) VALUES (?, ?, ?, ?)";
     private static final String SQL_BLITZ_PRICE = "SELECT priceBlitz FROM lot WHERE lot_id = ?";
     private static final String SQL_LOT_BET = "SELECT bet_id, bet, timeBet, login, email FROM bet, user WHERE bet.user_id = user.user_id AND bet.lot_id = ? ORDER BY bet DESC";
@@ -59,7 +61,7 @@ public class BetDao implements IBetDao<Bet> {
     }
 
     @Override
-    public void writeNewBet(Bet bet)  throws DaoException {
+    public void writeNewBet(Bet bet) throws DaoException {
         try (PreparedStatement prSt = con.prepareStatement(SQL_ADD_BET)) {
             prSt.setBigDecimal(1, bet.getAmount());
             String timeBet = new SimpleDateFormat(FORMAT_DATE).format(bet.getTime());
@@ -73,7 +75,7 @@ public class BetDao implements IBetDao<Bet> {
     }
 
     @Override
-    public boolean checkReachBlitzPriceByLotId(long lotId, BigDecimal bet)  throws DaoException {
+    public boolean checkReachBlitzPriceByLotId(long lotId, BigDecimal bet) throws DaoException {
         try (PreparedStatement prSt = con.prepareStatement(SQL_BLITZ_PRICE)) {
             prSt.setLong(1, lotId);
             ResultSet res = prSt.executeQuery();
@@ -91,7 +93,7 @@ public class BetDao implements IBetDao<Bet> {
     }
 
     @Override
-    public List<Bet> receiveBetHistoryByUser(long userId)  throws DaoException {
+    public List<Bet> receiveBetHistoryByUser(long userId) throws DaoException {
         List<Bet> betList;
         try (PreparedStatement prSt = con.prepareStatement(SQL_BET_HISTORY)) {
             prSt.setLong(1, userId);

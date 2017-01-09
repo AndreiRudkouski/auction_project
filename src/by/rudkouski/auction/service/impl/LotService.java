@@ -20,13 +20,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class LotService implements ILotService<Lot> {
-    private static final long BLIND_TYPE_ID = 3;
     private static final ConnectionPool POOL = ConnectionPool.getInstance();
-    private static final String IMG_FOLDER = File.separator + "img" + File.separator + "lots" + File.separator;
-    private static final String POINT_DIVIDER = "\\.";
-    private static final String POINT = ".";
-    private static final String LOT = "lot";
 
     @Override
     public List<Lot> setupLot() throws ServiceException {
@@ -101,7 +98,7 @@ public class LotService implements ILotService<Lot> {
             boolean finishLot = lotDao.checkAndMarkFinishLot(lotId, null);
             lot = finishLot ? lotDao.searchFinishedLotById(lotId) : lotDao.searchUnfinishedLotById(lotId);
             boolean createBetList = false;
-            if ((finishLot && lot.getType().getId() == BLIND_TYPE_ID) || lot.getType().getId() != BLIND_TYPE_ID) {
+            if ((finishLot && lot.getType().getId() == BLIND_LOT_TYPE_ID) || lot.getType().getId() != BLIND_LOT_TYPE_ID) {
                 createBetList = true;
             }
             BetDao betDao = new BetDao(con);

@@ -14,18 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class LotHistoryCommand implements ICommand {
     private static final Logger LOGGER = LogManager.getLogger(LotHistoryCommand.class);
-    private static final String USER = "user";
-    private static final String PROFILE = "profile";
-    private static final String LOT_HISTORY = "lotHistory";
-    private static final String LOT_LIST_FINISH = "lotListFinished";
-    private static final String LOT_LIST_UNFINISHED = "lotListUnfinished";
-    private static final String LOT_LIST_UNCHECKED = "lotListUnchecked";
-    private static final String ERROR_MESSAGE = "errorMessage";
-    private static final String MAIN_PAGE = "main.jsp";
-    private static final String USER_ID = "userId";
-    private static final int RESULT_LIST_SIZE = 3;
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -46,7 +38,7 @@ public class LotHistoryCommand implements ICommand {
             ServiceManager manager = ServiceManager.getInstance();
             LotService lotService = manager.getLotService();
             List<List<Lot>> lotResult = lotService.receiveLotHistoryByUser(userId);
-            if (lotResult != null && lotResult.size() == RESULT_LIST_SIZE) {
+            if (lotResult != null && lotResult.size() == RESULT_LOT_LIST_SIZE) {
                 request.setAttribute(LOT_LIST_FINISH, lotResult.get(0));
                 request.setAttribute(LOT_LIST_UNFINISHED, lotResult.get(1));
                 request.setAttribute(LOT_LIST_UNCHECKED, lotResult.get(2));

@@ -14,9 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+import static by.rudkouski.auction.constant.ConstantName.CATEGORY_LIST;
+
 public class SetupCategoryCommand implements ICommand {
     private static final Logger LOGGER = LogManager.getLogger(SetupCategoryCommand.class);
-    private static final String CATEGORY_LIST = "categoryList";
 
     @Override
     public String execute(HttpServletRequest request) {

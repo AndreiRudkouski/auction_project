@@ -5,7 +5,7 @@ import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.UserService;
-import by.rudkouski.auction.validation.Validator;
+import by.rudkouski.auction.command.validation.Validator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,13 +13,10 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class RegisterCommand implements ICommand {
     private static final Logger LOGGER = LogManager.getLogger(RegisterCommand.class);
-    private static final String MAIL = "mail";
-    private static final String PWD = "pwd";
-    private static final String USER = "user";
-    private static final String ERROR_AUTH = "errorAuth";
-    private static final String ERROR_MESSAGE = "errorMessage";
 
     @Override
     public String execute(HttpServletRequest request) {

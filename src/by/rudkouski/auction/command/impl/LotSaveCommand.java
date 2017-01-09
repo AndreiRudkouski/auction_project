@@ -6,7 +6,7 @@ import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.LotService;
-import by.rudkouski.auction.validation.Validator;
+import by.rudkouski.auction.command.validation.Validator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,17 +14,10 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class LotSaveCommand implements ICommand {
     private static final Logger LOGGER = LogManager.getLogger(LotSaveCommand.class);
-    private static final String USER = "user";
-    private static final String NEW_LOT = "newLot";
-    private static final String EMPTY_LINE = "";
-    private static final String ERROR_LOT = "errorLot";
-    private static final String PROFILE = "profile";
-    private static final String CHANGE_ACCEPT = "changeAccept";
-    private static final String ERROR_MESSAGE = "errorMessage";
-    private static final String MAIN_PAGE = "main.jsp";
-    private static final String LOT_ID = "lotId";
 
     @Override
     public String execute(HttpServletRequest request) {

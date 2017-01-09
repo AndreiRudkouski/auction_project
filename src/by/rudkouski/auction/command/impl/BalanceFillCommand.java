@@ -2,11 +2,10 @@ package by.rudkouski.auction.command.impl;
 
 import by.rudkouski.auction.bean.impl.User;
 import by.rudkouski.auction.command.ICommand;
-import by.rudkouski.auction.pool.ConnectionPool;
 import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.UserService;
-import by.rudkouski.auction.validation.Validator;
+import by.rudkouski.auction.command.validation.Validator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,15 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 
+import static by.rudkouski.auction.constant.ConstantName.*;
+
 public class BalanceFillCommand implements ICommand {
     private static final Logger LOGGER = LogManager.getLogger(BalanceFillCommand.class);
-    private static final String CARD_NUM = "cardNum";
-    private static final String AMOUNT = "amount";
-    private static final String USER = "user";
-    private static final String ERROR_CARD = "errorCard";
-    private static final String ERROR_AMOUNT = "errorAmount";
-    private static final String CHANGE_ACCEPT = "changeAccept";
-    private static final String ERROR_MESSAGE = "errorMessage";
 
     @Override
     public String execute(HttpServletRequest request) {
