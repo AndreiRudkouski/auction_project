@@ -243,7 +243,7 @@ public class LotService implements ILotService<Lot> {
             if (!fileSaveDir.exists()) {
                 fileSaveDir.mkdir();
             }
-            String[] extension = lot.getPhoto().split(POINT_DIVIDER);
+            String[] extension = lot.getPhoto().split(REGEX_POINT_DIVIDER);
             String photoName = LOT + id + POINT + extension[extension.length - 1];
             lot.getPart().write(savePath + File.separator + photoName);
             lotDao.addPhotoByLotId(id, photoName);
@@ -284,7 +284,7 @@ public class LotService implements ILotService<Lot> {
                 if (!fileSaveDir.exists()) {
                     fileSaveDir.mkdir();
                 }
-                String[] extension = lot.getPhoto().split(POINT_DIVIDER);
+                String[] extension = lot.getPhoto().split(REGEX_POINT_DIVIDER);
                 String photoName = LOT + id + POINT + extension[extension.length - 1];
                 lot.getPart().write(savePath + File.separator + photoName);
             }

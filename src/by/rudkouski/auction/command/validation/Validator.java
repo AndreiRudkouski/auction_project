@@ -19,14 +19,14 @@ public class Validator {
     private static final Logger LOGGER = LogManager.getLogger(Validator.class);
 
     public boolean userMailValidate(String mail) {
-        if (mail == null || mail.isEmpty() || !mail.matches(MAIL_REGEX)) {
+        if (mail == null || mail.isEmpty() || !mail.matches(REGEX_MAIL)) {
             return false;
         }
         return true;
     }
 
     public boolean userPasswordValidate(String password) {
-        if (password == null || password.isEmpty() || password.length() < PWD_LENGTH || !password.matches(PWD_REGEX)) {
+        if (password == null || password.isEmpty() || password.length() < PWD_LENGTH || !password.matches(REGEX_PWD)) {
             return false;
         }
         return true;

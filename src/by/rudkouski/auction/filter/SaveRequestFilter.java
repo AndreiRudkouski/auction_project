@@ -26,7 +26,7 @@ public class SaveRequestFilter implements Filter {
             if (divider) {
                 saveReq.append(PARAMETER_DIVIDER);
             }
-            saveReq.append(m.getKey() + EQUAL + m.getValue()[0]);
+            saveReq.append(m.getKey() + EQUAL_DIVIDE + m.getValue()[0]);
             divider = true;
         }
         ((HttpServletRequest) req).getSession().setAttribute(SAVE_REQ, saveReq.toString());
