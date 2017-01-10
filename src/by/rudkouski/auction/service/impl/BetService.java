@@ -1,7 +1,7 @@
 package by.rudkouski.auction.service.impl;
 
-import by.rudkouski.auction.bean.impl.Bet;
-import by.rudkouski.auction.bean.impl.User;
+import by.rudkouski.auction.entity.impl.Bet;
+import by.rudkouski.auction.entity.impl.User;
 import by.rudkouski.auction.dao.exception.DaoException;
 import by.rudkouski.auction.dao.impl.BetDao;
 import by.rudkouski.auction.dao.impl.LotDao;

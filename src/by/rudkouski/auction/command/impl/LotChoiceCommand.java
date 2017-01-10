@@ -1,6 +1,6 @@
 package by.rudkouski.auction.command.impl;
 
-import by.rudkouski.auction.bean.impl.Lot;
+import by.rudkouski.auction.entity.impl.Lot;
 import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.exception.ServiceException;

@@ -1,11 +1,16 @@
 package by.rudkouski.auction.tag;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 
-public class CategoryListTag extends TagSupport {
+public class ListTag extends TagSupport {
+    private static final Logger LOGGER = LogManager.getLogger(ListTag.class);
     private int rows;
 
     public void setRows(Integer rows) {
@@ -19,7 +24,8 @@ public class CategoryListTag extends TagSupport {
             out.write("<ul>");
             out.write("<li>");
         } catch (IOException e) {
-            throw new JspTagException(e.getMessage());
+            LOGGER.log(Level.ERROR, "Exception: ", e);
+            throw new JspTagException(e);
         }
         return EVAL_BODY_INCLUDE;
     }
@@ -32,7 +38,8 @@ public class CategoryListTag extends TagSupport {
                 out.write("</li>");
                 out.write("<li>");
             } catch (IOException e) {
-                throw new JspTagException(e.getMessage());
+                LOGGER.log(Level.ERROR, "Exception: ", e);
+                throw new JspTagException(e);
             }
             return EVAL_BODY_AGAIN;
         } else {
@@ -45,7 +52,8 @@ public class CategoryListTag extends TagSupport {
         try {
             pageContext.getOut().write("</ul>");
         } catch (IOException e) {
-            throw new JspTagException(e.getMessage());
+            LOGGER.log(Level.ERROR, "Exception: ", e);
+            throw new JspTagException(e);
         }
         return EVAL_PAGE;
     }

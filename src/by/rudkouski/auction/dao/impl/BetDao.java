@@ -1,8 +1,8 @@
 package by.rudkouski.auction.dao.impl;
 
-import by.rudkouski.auction.bean.impl.Bet;
-import by.rudkouski.auction.bean.impl.Lot;
-import by.rudkouski.auction.bean.impl.User;
+import by.rudkouski.auction.entity.impl.Bet;
+import by.rudkouski.auction.entity.impl.Lot;
+import by.rudkouski.auction.entity.impl.User;
 import by.rudkouski.auction.dao.IBetDao;
 import by.rudkouski.auction.dao.exception.DaoException;
 import by.rudkouski.auction.pool.ProxyConnection;

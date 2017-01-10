@@ -1,9 +1,7 @@
 package by.rudkouski.auction.dao;
 
-import by.rudkouski.auction.bean.AbstractEntity;
-import by.rudkouski.auction.bean.impl.User;
+import by.rudkouski.auction.entity.AbstractEntity;
 import by.rudkouski.auction.dao.exception.DaoException;
-import by.rudkouski.auction.pool.ProxyConnection;
 
 import java.math.BigDecimal;
 import java.util.List;

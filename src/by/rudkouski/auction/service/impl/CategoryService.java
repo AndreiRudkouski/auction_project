@@ -1,9 +1,9 @@
 package by.rudkouski.auction.service.impl;
 
-import by.rudkouski.auction.bean.impl.Category;
-import by.rudkouski.auction.bean.impl.Condition;
-import by.rudkouski.auction.bean.impl.Term;
-import by.rudkouski.auction.bean.impl.Type;
+import by.rudkouski.auction.entity.impl.Category;
+import by.rudkouski.auction.entity.impl.Condition;
+import by.rudkouski.auction.entity.impl.Term;
+import by.rudkouski.auction.entity.impl.Type;
 import by.rudkouski.auction.dao.exception.DaoException;
 import by.rudkouski.auction.dao.impl.CategoryDao;
 import by.rudkouski.auction.pool.ConnectionPool;

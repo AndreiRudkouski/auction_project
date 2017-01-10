@@ -32,8 +32,8 @@
         </attribute>
     </tag>
     <tag>
-        <name>category</name>
-        <tag-class>by.rudkouski.auction.tag.CategoryListTag</tag-class>
+        <name>list</name>
+        <tag-class>by.rudkouski.auction.tag.ListTag</tag-class>
         <body-content>scriptless</body-content>
         <attribute>
             <name>rows</name>

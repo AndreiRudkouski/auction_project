@@ -1,7 +1,6 @@
 package by.rudkouski.auction.command.impl;
 
-import by.rudkouski.auction.bean.CategoryList;
-import by.rudkouski.auction.bean.impl.Category;
+import by.rudkouski.auction.entity.impl.Category;
 import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.exception.ServiceException;
@@ -23,17 +22,14 @@ public class SetupCategoryCommand implements ICommand {
     public String execute(HttpServletRequest request) {
         ServiceManager manager = ServiceManager.getInstance();
         CategoryService categoryService = manager.getCategoryService();
-        List<Category> categories;
         try {
-            categories = categoryService.setupCategory();
+            List<Category> categoryList = categoryService.setupCategory();
+            HttpSession session = request.getSession();
+            session.setAttribute(CATEGORY_LIST, categoryList);
         } catch (ServiceException e) {
             LOGGER.log(Level.FATAL, "Exception: ", e);
             throw new RuntimeException("Error of setup categories", e);
         }
-        CategoryList categoryList = new CategoryList(categories);
-
-        HttpSession session = request.getSession();
-        session.setAttribute(CATEGORY_LIST, categoryList);
         return null;
     }
 

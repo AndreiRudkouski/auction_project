@@ -1,6 +1,6 @@
 package by.rudkouski.auction.service;
 
-import by.rudkouski.auction.bean.AbstractEntity;
+import by.rudkouski.auction.entity.AbstractEntity;
 import by.rudkouski.auction.service.exception.ServiceException;
 
 import java.util.List;

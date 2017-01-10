@@ -1,8 +1,8 @@
-package by.rudkouski.auction.bean.impl;
+package by.rudkouski.auction.entity.impl;
 
-import by.rudkouski.auction.bean.AbstractEntity;
+import by.rudkouski.auction.entity.AbstractEntity;
 
-public class Condition extends AbstractEntity {
+public class Type extends AbstractEntity {
     private String name;
 
     public String getName() {

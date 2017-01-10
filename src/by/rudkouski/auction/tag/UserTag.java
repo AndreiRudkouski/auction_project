@@ -1,5 +1,9 @@
 package by.rudkouski.auction.tag;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -8,6 +12,7 @@ import java.io.IOException;
 import static by.rudkouski.auction.constant.ConstantName.ADMIN_ROLE_ID;
 
 public class UserTag extends TagSupport {
+    private static final Logger LOGGER = LogManager.getLogger(UserTag.class);
     private String login;
     private String mail;
     private String balance;
@@ -36,7 +41,8 @@ public class UserTag extends TagSupport {
             result = balance != null && (roleId == null || roleId != ADMIN_ROLE_ID)  ? result + " (" + balance + ")" : result;
             pageContext.getOut().write(result);
         } catch (IOException e) {
-            throw new JspTagException(e.getMessage());
+            LOGGER.log(Level.ERROR, "Exception: ", e);
+            throw new JspTagException(e);
         }
         return SKIP_BODY;
     }

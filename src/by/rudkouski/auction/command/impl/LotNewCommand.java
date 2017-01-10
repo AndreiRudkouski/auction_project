@@ -1,6 +1,6 @@
 package by.rudkouski.auction.command.impl;
 
-import by.rudkouski.auction.bean.impl.Lot;
+import by.rudkouski.auction.entity.impl.Lot;
 import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.exception.ServiceException;
@@ -31,7 +31,7 @@ public class LotNewCommand implements ICommand {
         List<List> setupList;
         try {
             setupList = categoryService.setupNewLotData();
-            if (setupList != null && setupList.size() == 3) {
+            if (setupList != null && setupList.size() == RESULT_LOT_LIST_SIZE) {
                 request.setAttribute(TYPE_LIST, setupList.get(0));
                 request.setAttribute(TERM_LIST, setupList.get(1));
                 request.setAttribute(CONDITION_LIST, setupList.get(2));
@@ -47,14 +47,14 @@ public class LotNewCommand implements ICommand {
                 LotService lotService = manager.getLotService();
                 Lot lot = lotService.searchLotById(lotId);
                 request.setAttribute(LOT, lot);
-                request.setAttribute(NEW_LOT, NEW_LOT);
-                request.setAttribute(PROFILE, PROFILE);
             }
         } catch (NumberFormatException | ServiceException e) {
             LOGGER.log(Level.ERROR, "Exception: ", e);
             HttpSession session = request.getSession();
             session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
         }
+        request.setAttribute(NEW_LOT, NEW_LOT);
+        request.setAttribute(PROFILE, PROFILE);
         return MAIN_PAGE;
     }
 

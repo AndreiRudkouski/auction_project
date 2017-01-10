@@ -1,7 +1,8 @@
 package by.rudkouski.auction.command.impl;
 
-import by.rudkouski.auction.bean.impl.Bet;
-import by.rudkouski.auction.bean.impl.User;
+import by.rudkouski.auction.entity.EntityListTag;
+import by.rudkouski.auction.entity.impl.Bet;
+import by.rudkouski.auction.entity.impl.User;
 import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.exception.ServiceException;
@@ -41,8 +42,10 @@ public class BetHistoryCommand implements ICommand {
             List<List<Bet>> betResult;
             betResult = betService.receiveBetHistoryByUser(userId);
             if (betResult != null && betResult.size() == RESULT_BET_LIST_SIZE) {
-                request.setAttribute(BET_LIST_WIN, betResult.get(0));
-                request.setAttribute(BET_LIST_DONE, betResult.get(1));
+                EntityListTag<Bet> resultList = new EntityListTag<>(betResult.get(0));
+                request.setAttribute(BET_LIST_WIN, resultList);
+                resultList = new EntityListTag<>(betResult.get(1));
+                request.setAttribute(BET_LIST_DONE, resultList);
                 request.setAttribute(BET_HISTORY, BET_HISTORY);
             }
             request.setAttribute(PROFILE, PROFILE);

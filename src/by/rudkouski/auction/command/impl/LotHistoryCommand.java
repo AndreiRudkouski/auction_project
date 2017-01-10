@@ -1,7 +1,8 @@
 package by.rudkouski.auction.command.impl;
 
-import by.rudkouski.auction.bean.impl.Lot;
-import by.rudkouski.auction.bean.impl.User;
+import by.rudkouski.auction.entity.EntityListTag;
+import by.rudkouski.auction.entity.impl.Lot;
+import by.rudkouski.auction.entity.impl.User;
 import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.exception.ServiceException;
@@ -39,9 +40,12 @@ public class LotHistoryCommand implements ICommand {
             LotService lotService = manager.getLotService();
             List<List<Lot>> lotResult = lotService.receiveLotHistoryByUser(userId);
             if (lotResult != null && lotResult.size() == RESULT_LOT_LIST_SIZE) {
-                request.setAttribute(LOT_LIST_FINISH, lotResult.get(0));
-                request.setAttribute(LOT_LIST_UNFINISHED, lotResult.get(1));
-                request.setAttribute(LOT_LIST_UNCHECKED, lotResult.get(2));
+                EntityListTag<Lot> resultList = new EntityListTag<>(lotResult.get(0));
+                request.setAttribute(LOT_LIST_FINISH, resultList);
+                resultList = new EntityListTag<>(lotResult.get(1));
+                request.setAttribute(LOT_LIST_UNFINISHED, resultList);
+                resultList = new EntityListTag<>(lotResult.get(2));
+                request.setAttribute(LOT_LIST_UNCHECKED, resultList);
                 request.setAttribute(LOT_HISTORY, LOT_HISTORY);
             }
             request.setAttribute(PROFILE, PROFILE);

@@ -1,6 +1,6 @@
 package by.rudkouski.auction.command;
 
-import by.rudkouski.auction.bean.impl.Lot;
+import by.rudkouski.auction.entity.impl.Lot;
 import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.exception.ServiceException;
 import by.rudkouski.auction.service.impl.LotService;
@@ -49,7 +49,6 @@ public interface ICommand {
             throw new ServiceException(e);
         }
         if (categoryId <= 0) {
-            //log
             return false;
         }
 

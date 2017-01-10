@@ -1,7 +1,7 @@
 package by.rudkouski.auction.dao;
 
-import by.rudkouski.auction.bean.AbstractEntity;
-import by.rudkouski.auction.bean.impl.Bet;
+import by.rudkouski.auction.entity.AbstractEntity;
+import by.rudkouski.auction.entity.impl.Bet;
 import by.rudkouski.auction.dao.exception.DaoException;
 
 import java.math.BigDecimal;

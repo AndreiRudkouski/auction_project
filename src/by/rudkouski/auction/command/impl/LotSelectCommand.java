@@ -1,6 +1,7 @@
 package by.rudkouski.auction.command.impl;
 
-import by.rudkouski.auction.bean.impl.Lot;
+import by.rudkouski.auction.entity.EntityListTag;
+import by.rudkouski.auction.entity.impl.Lot;
 import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
 import by.rudkouski.auction.service.exception.ServiceException;
@@ -30,18 +31,22 @@ public class LotSelectCommand implements ICommand {
             ServiceManager manager = ServiceManager.getInstance();
             LotService lotService = manager.getLotService();
             List<Lot> lotList;
+            EntityListTag<Lot> resultList;
             try {
                 if (select.equals(LOT_LIST_FINISH)) {
                     lotList = lotService.receiveFinishedLotHistoryByUser(NULL_USER_ID);
-                    request.setAttribute(LOT_LIST_FINISH, lotList);
+                    resultList = new EntityListTag<>(lotList);
+                    request.setAttribute(LOT_LIST_FINISH, resultList);
                 }
                 if (select.equals(LOT_LIST_UNFINISHED)) {
                     lotList = lotService.receiveUnfinishedLotHistoryByUser(NULL_USER_ID);
-                    request.setAttribute(LOT_LIST_UNFINISHED, lotList);
+                    resultList = new EntityListTag<>(lotList);
+                    request.setAttribute(LOT_LIST_UNFINISHED, resultList);
                 }
                 if (select.equals(LOT_LIST_UNCHECKED)) {
                     lotList = lotService.receiveUncheckedLotHistoryByUser(NULL_USER_ID);
-                    request.setAttribute(LOT_LIST_UNCHECKED, lotList);
+                    resultList = new EntityListTag<>(lotList);
+                    request.setAttribute(LOT_LIST_UNCHECKED, resultList);
                 }
                 request.setAttribute(LOT_SELECT, LOT_SELECT);
             } catch (ServiceException e) {

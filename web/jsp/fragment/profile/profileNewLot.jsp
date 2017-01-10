@@ -1,7 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@taglib uri="/WEB-INF/tld/taglib.tld" prefix="ctg" %>
 <fmt:bundle basename="resource.localization">
     <html>
     <head>
@@ -26,9 +25,7 @@
                 <span><fmt:message key="lot.category"/></span><br>
                 <select name="category" id="category">
                     <option selected disabled><fmt:message key="newLot.selectCat"/></option>
-                        ${sessionScope.categoryList.setupIterator()}
-                    <ctg:category rows="${sessionScope.categoryList.size}">
-                        <c:set var="cat" value="${sessionScope.categoryList.category}"/>
+                    <c:forEach items="${sessionScope.categoryList}" var="cat">
                         <option value="${cat.id}">
                             <c:if test="${loc == 'be' || loc == null}">
                                 <span>${cat.nameBe}</span>
@@ -37,7 +34,7 @@
                                 <span>${cat.nameEn}</span>
                             </c:if>
                         </option>
-                    </ctg:category>
+                    </c:forEach>
                 </select><br>
                 <div class="err" id="errCategory"><fmt:message key="newLot.errEmpty"/></div>
                 <span><fmt:message key="lot.priceStart"/></span><br>
@@ -53,10 +50,12 @@
                 </select><br>
                 <div class="err" id="errType"><fmt:message key="newLot.errEmpty"/></div>
                 <span><fmt:message key="newLot.priceStep"/></span><br>
-                <input type="number" class="priceLot" step="0.01" name="priceStep" id="priceStep" value="${lot.stepPrice}"> <fmt:message key="lot.rub"/><br>
+                <input type="number" class="priceLot" step="0.01" name="priceStep" id="priceStep"
+                       value="${lot.stepPrice}"> <fmt:message key="lot.rub"/><br>
                 <div class="err" id="errPriceStep"><fmt:message key="newLot.errPriceStep"/></div>
                 <span><fmt:message key="lot.priceBlitz"/></span><br>
-                <input type="number" class="priceLot" step="0.01" name="priceBlitz" id="priceBlitz" value="${lot.priceBlitz}"> <fmt:message key="lot.rub"/><br>
+                <input type="number" class="priceLot" step="0.01" name="priceBlitz" id="priceBlitz"
+                       value="${lot.priceBlitz}"> <fmt:message key="lot.rub"/><br>
                 <div class="err" id="errPriceBlitz"><fmt:message key="newLot.errPrice"/></div>
                 <span><fmt:message key="newLot.term"/></span><br>
                 <select name="term" id="term">

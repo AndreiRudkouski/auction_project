@@ -11,12 +11,16 @@
         <c:set value="${requestScope.lot}" var="lot"/>
         <div class="category"><fmt:message key="lot.category"/>
             <a class="section" href="javascript:onClick('cat${lot.categoryId}')">
-                <c:if test="${loc == 'be' || loc == null}">
-                    <span>${sessionScope.categoryList.getNameBe(lot.categoryId)}</span>
-                </c:if>
-                <c:if test="${loc == 'en'}">
-                    <span>${sessionScope.categoryList.getNameEn(lot.categoryId)}</span>
-                </c:if>
+                <c:forEach items="${sessionScope.categoryList}" var="cat">
+                    <c:if test="${cat.id == categoryId}">
+                        <c:if test="${loc == 'be' || loc == null}">
+                            <span>${cat.nameBe}</span>
+                        </c:if>
+                        <c:if test="${loc == 'en'}">
+                            <span>${cat.nameEn}</span>
+                        </c:if>
+                    </c:if>
+                </c:forEach>
             </a>
         </div>
         <div class="lot">

@@ -12,12 +12,16 @@
         <c:if test="${categoryId != null}">
             <div class="category"><fmt:message key="category"/>
                 <a class="section" href="javascript:onClick('cat${categoryId}')">
-                    <c:if test="${loc == 'be' || loc == null}">
-                        <span>${sessionScope.categoryList.getNameBe(categoryId)}</span>
-                    </c:if>
-                    <c:if test="${loc == 'en'}">
-                        <span>${sessionScope.categoryList.getNameEn(categoryId)}</span>
-                    </c:if>
+                    <c:forEach items="${sessionScope.categoryList}" var="cat">
+                        <c:if test="${cat.id == categoryId}">
+                            <c:if test="${loc == 'be' || loc == null}">
+                                <span>${cat.nameBe}</span>
+                            </c:if>
+                            <c:if test="${loc == 'en'}">
+                                <span>${cat.nameEn}</span>
+                            </c:if>
+                        </c:if>
+                    </c:forEach>
                 </a>
             </div>
         </c:if>

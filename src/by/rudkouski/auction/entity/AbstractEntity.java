@@ -1,4 +1,4 @@
-package by.rudkouski.auction.bean;
+package by.rudkouski.auction.entity;
 
 public abstract class AbstractEntity {
     private long id;

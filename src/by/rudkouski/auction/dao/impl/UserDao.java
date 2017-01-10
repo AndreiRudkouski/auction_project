@@ -1,6 +1,6 @@
 package by.rudkouski.auction.dao.impl;
 
-import by.rudkouski.auction.bean.impl.User;
+import by.rudkouski.auction.entity.impl.User;
 import by.rudkouski.auction.dao.IUserDao;
 import by.rudkouski.auction.dao.exception.DaoException;
 import by.rudkouski.auction.pool.ProxyConnection;
