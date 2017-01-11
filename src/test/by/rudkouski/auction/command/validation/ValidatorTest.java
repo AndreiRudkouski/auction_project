@@ -22,18 +22,10 @@ public class ValidatorTest {
 
     @Test
     public void userMailValidateTest() {
-        String nullMail = null;
-        String emptyMail = "";
-        String wrongMail = "qwerty.mail";
-        String correctMail = "qwerty@gmail.com";
-        boolean result = validator.userMailValidate(nullMail);
-        Assert.assertFalse(result);
-        result = validator.userMailValidate(emptyMail);
-        Assert.assertFalse(result);
-        result = validator.userMailValidate(wrongMail);
-        Assert.assertFalse(result);
-        result = validator.userMailValidate(correctMail);
-        Assert.assertTrue(result);
+        Assert.assertFalse(validator.userMailValidate(null));
+        Assert.assertFalse(validator.userMailValidate(""));
+        Assert.assertFalse(validator.userMailValidate("qwerty.mail"));
+        Assert.assertTrue(validator.userMailValidate("qwerty@gmail.com"));
     }
 
     @Test
@@ -42,10 +34,8 @@ public class ValidatorTest {
         HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute(USER)).thenReturn(new User());
-        boolean result = validator.userValidate(request);
-        Assert.assertTrue(result);
+        Assert.assertTrue(validator.userValidate(request));
         when(session.getAttribute(USER)).thenReturn(null);
-        result = validator.userValidate(request);
-        Assert.assertFalse(result);
+        Assert.assertFalse(validator.userValidate(request));
     }
 }
