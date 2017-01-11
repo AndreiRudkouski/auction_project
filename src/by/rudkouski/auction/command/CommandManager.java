@@ -1,6 +1,5 @@
-package by.rudkouski.auction.controller;
+package by.rudkouski.auction.command;
 
-import by.rudkouski.auction.command.ICommand;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

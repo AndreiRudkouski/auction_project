@@ -1,5 +1,6 @@
 package by.rudkouski.auction.controller;
 
+import by.rudkouski.auction.command.CommandManager;
 import by.rudkouski.auction.command.ICommand;
 
 import javax.servlet.ServletException;

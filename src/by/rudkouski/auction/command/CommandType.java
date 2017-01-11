@@ -1,4 +1,4 @@
-package by.rudkouski.auction.controller;
+package by.rudkouski.auction.command;
 
 import by.rudkouski.auction.command.*;
 import by.rudkouski.auction.command.impl.*;
