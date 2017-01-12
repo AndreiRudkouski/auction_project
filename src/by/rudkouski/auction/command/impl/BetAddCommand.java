@@ -62,18 +62,8 @@ public class BetAddCommand implements ICommand {
             }
 
             Date curTime = new Date(System.currentTimeMillis());
-            Bet bet = new Bet();
-            user = new User();
-            user.setId(userId);
-            bet.setUser(user);
-            Lot lot = new Lot();
-            lot.setId(lotId);
-            bet.setLot(lot);
-            bet.setAmount(curBet);
-            bet.setTime(curTime);
-
             BetService betService = manager.getBetService();
-            validBet = betService.addBet(bet, balance);
+            validBet = betService.addBet(userId, lotId, curBet, curTime, balance);
             if (validBet) {
                 userService = manager.getUserService();
                 user = userService.receiveUserById(userId);

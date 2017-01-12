@@ -15,33 +15,34 @@ import by.rudkouski.auction.service.exception.ServiceException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BetService implements IBetService<Bet> {
     private static final ConnectionPool POOL = ConnectionPool.getInstance();
 
     @Override
-    public boolean addBet(Bet bet, BigDecimal balance) throws ServiceException {
+    public boolean addBet(long userId, long lotId, BigDecimal curBet, Date curTime, BigDecimal balance) throws ServiceException {
         ProxyConnection con = null;
         try {
             con = POOL.takeConnection();
             BetDao betDao = new BetDao(con);
             LotDao lotDao = new LotDao(con);
             UserDao userDao = new UserDao(con);
-            boolean finishLot = lotDao.checkAndMarkFinishLot(bet.getLot().getId(), bet.getTime());
+            boolean finishLot = lotDao.checkAndMarkFinishLot(lotId, curTime);
             if (!finishLot) {
                 con.setAutoCommit(false);
-                User user = userDao.receivePrevMaxBetUser(bet.getLot().getId());
-                if (user.getId() == bet.getUser().getId()) {
-                    userDao.updateUserBalanceById(bet.getUser().getId(), user.getBalance().subtract(bet.getAmount()));
+                User user = userDao.receivePrevMaxBetUser(lotId);
+                if (user.getId() == userId) {
+                    userDao.updateUserBalanceById(userId, user.getBalance().subtract(curBet));
                 } else {
                     userDao.updateUserBalanceById(user.getId(), user.getBalance());
-                    userDao.updateUserBalanceById(bet.getUser().getId(), balance.subtract(bet.getAmount()));
+                    userDao.updateUserBalanceById(userId, balance.subtract(curBet));
                 }
-                betDao.writeNewBet(bet);
-                boolean reachPrice = betDao.checkReachBlitzPriceByLotId(bet.getLot().getId(), bet.getAmount());
+                betDao.writeNewBet(userId, lotId, curBet, curTime);
+                boolean reachPrice = betDao.checkReachBlitzPriceByLotId(lotId, curBet);
                 if (reachPrice) {
-                    lotDao.markFinishLot(bet.getLot().getId());
+                    lotDao.markFinishLot(lotId);
                 }
                 con.commit();
             } else {

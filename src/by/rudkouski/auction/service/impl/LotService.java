@@ -1,8 +1,6 @@
 package by.rudkouski.auction.service.impl;
 
-import by.rudkouski.auction.entity.impl.Bet;
-import by.rudkouski.auction.entity.impl.Lot;
-import by.rudkouski.auction.entity.impl.User;
+import by.rudkouski.auction.entity.impl.*;
 import by.rudkouski.auction.dao.exception.DaoException;
 import by.rudkouski.auction.dao.impl.BetDao;
 import by.rudkouski.auction.dao.impl.LotDao;
@@ -13,12 +11,15 @@ import by.rudkouski.auction.pool.ProxyConnection;
 import by.rudkouski.auction.service.ILotService;
 import by.rudkouski.auction.service.exception.ServiceException;
 
+import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import static by.rudkouski.auction.constant.ConstantName.*;
 
@@ -231,8 +232,9 @@ public class LotService implements ILotService<Lot> {
     }
 
     @Override
-    public boolean addLot(Lot lot, String appPath) throws ServiceException {
+    public boolean addLot(Map<String, String[]> paramMap, Part part, String appPath) throws ServiceException {
         ProxyConnection con = null;
+        Lot lot = createLot(paramMap);
         try {
             con = POOL.takeConnection();
             LotDao lotDao = new LotDao(con);
@@ -245,7 +247,7 @@ public class LotService implements ILotService<Lot> {
             }
             String[] extension = lot.getPhoto().split(REGEX_POINT_DIVIDER);
             String photoName = LOT + id + POINT + extension[extension.length - 1];
-            lot.getPart().write(savePath + File.separator + photoName);
+            part.write(savePath + File.separator + photoName);
             lotDao.addPhotoByLotId(id, photoName);
             con.commit();
         } catch (SQLException | IOException | DaoException | ConnectionPoolException e) {
@@ -266,8 +268,9 @@ public class LotService implements ILotService<Lot> {
     }
 
     @Override
-    public boolean editLot(Lot lot, String appPath) throws ServiceException {
+    public boolean editLot(Map<String, String[]> paramMap, Part part, String appPath) throws ServiceException {
         ProxyConnection con = null;
+        Lot lot = createLot(paramMap);
         try {
             con = POOL.takeConnection();
             LotDao lotDao = new LotDao(con);
@@ -286,7 +289,7 @@ public class LotService implements ILotService<Lot> {
                 }
                 String[] extension = lot.getPhoto().split(REGEX_POINT_DIVIDER);
                 String photoName = LOT + id + POINT + extension[extension.length - 1];
-                lot.getPart().write(savePath + File.separator + photoName);
+                part.write(savePath + File.separator + photoName);
             }
             con.commit();
         } catch (SQLException | IOException | DaoException | ConnectionPoolException e) {
@@ -328,5 +331,64 @@ public class LotService implements ILotService<Lot> {
         for (Lot lot : lotList) {
             lot.setPhoto(IMG_FOLDER + lot.getPhoto());
         }
+    }
+
+    private Lot createLot(Map<String, String[]> paramMap) {
+        Lot lot = new Lot();
+        lot.setTimeStart(new Date(System.currentTimeMillis()));
+        for (Map.Entry<String, String[]> param : paramMap.entrySet()) {
+            switch (param.getKey()) {
+                case TITLE:
+                    lot.setName(param.getValue()[0]);
+                    break;
+                case PRICE_START:
+                    if (param.getValue()[0] != null && !param.getValue()[0].isEmpty()) {
+                        lot.setPrice(new BigDecimal(param.getValue()[0]));
+                    }
+                    break;
+                case PRICE_STEP:
+                    if (param.getValue()[0] != null && !param.getValue()[0].isEmpty()) {
+                        lot.setStepPrice(new BigDecimal(param.getValue()[0]));
+                    }
+                    break;
+                case PRICE_BLITZ:
+                    if (param.getValue()[0] != null && !param.getValue()[0].isEmpty()) {
+                        lot.setPriceBlitz(new BigDecimal(param.getValue()[0]));
+                    }
+                    break;
+                case PHOTO:
+                    lot.setPhoto(param.getValue()[0]);
+                    break;
+                case DESCRIPTION:
+                    lot.setDescription(param.getValue()[0]);
+                    break;
+                case CATEGORY:
+                    lot.setCategoryId(Long.parseLong(param.getValue()[0]));
+                    break;
+                case TYPE:
+                    Type type = new Type();
+                    type.setId(Long.parseLong(param.getValue()[0]));
+                    lot.setType(type);
+                    break;
+                case TERM:
+                    Term term = new Term();
+                    term.setId(Long.parseLong(param.getValue()[0]));
+                    lot.setTerm(term);
+                    break;
+                case CONDITION:
+                    Condition cond = new Condition();
+                    cond.setId(Long.parseLong(param.getValue()[0]));
+                    lot.setCondition(cond);
+                    break;
+                case USER_ID:
+                    User user = new User();
+                    user.setId(Long.parseLong(param.getValue()[0]));
+                    lot.setUser(user);
+                    break;
+                case LOT_ID:
+                    lot.setId(Long.parseLong(param.getValue()[0]));
+            }
+        }
+        return lot;
     }
 }

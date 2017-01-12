@@ -12,6 +12,7 @@ import javax.servlet.http.Part;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Map;
 
 import static by.rudkouski.auction.constant.ConstantName.*;
 
@@ -55,90 +56,62 @@ public class Validator {
         return amount.compareTo(MIN_AMOUNT) < 0 || amount.compareTo(MAX_AMOUNT) > 0 ? false : true;
     }
 
-    public Lot newLotValidateAndCreate(HttpServletRequest request) {
-        String title;
-        long categoryId;
-        BigDecimal priceStart;
-        BigDecimal priceStep = null;
-        BigDecimal priceBlitz = null;
-        long typeId;
-        long termId;
-        long conditionId;
-        String description;
-        String oldPhoto;
-        String photo = null;
-        Part part;
-
-        title = request.getParameter(TITLE);
-        description = request.getParameter(DESCRIPTION);
+    public boolean lotDataValidate(Map<String, String[]> paramMap) {
+        String title = paramMap.get(TITLE) != null ? paramMap.get(TITLE)[0] : null;
+        String description = paramMap.get(DESCRIPTION) != null ? paramMap.get(DESCRIPTION)[0] : null;
         if (title == null || title.isEmpty() || title.length() > TITLE_LENGTH || description == null || description.isEmpty()) {
-            return null;
+            return false;
         }
+        long typeId;
         try {
-            categoryId = Long.parseLong(request.getParameter(CATEGORY));
-            typeId = Long.parseLong(request.getParameter(TYPE));
-            termId = Long.parseLong(request.getParameter(TERM));
-            conditionId = Long.parseLong(request.getParameter(CONDITION));
+            Long.parseLong(paramMap.get(CATEGORY) != null ? paramMap.get(CATEGORY)[0] : CATEGORY);
+            typeId = Long.parseLong(paramMap.get(TYPE) != null ? paramMap.get(TYPE)[0] : TYPE);
+            Long.parseLong(paramMap.get(TERM) != null ? paramMap.get(TERM)[0] : TERM);
+            Long.parseLong(paramMap.get(CONDITION)[0] != null ? paramMap.get(CONDITION)[0] : CONDITION);
         } catch (NumberFormatException e) {
             LOGGER.log(Level.ERROR, "Exception: ", e);
-            return null;
+            return false;
         }
-        priceStart = new BigDecimal(request.getParameter(PRICE_START));
+
+        String priceStartTmp = paramMap.get(PRICE_START) != null ? paramMap.get(PRICE_START)[0] : null;
+        BigDecimal priceStart = priceStartTmp != null && !priceStartTmp.isEmpty() ? new BigDecimal(paramMap.get(PRICE_START)[0]) : null;
         if (priceStart.compareTo(ZERO_AMOUNT) <= 0 || priceStart.compareTo(MAX_AMOUNT) > 0) {
-            return null;
+            return false;
         }
 
-        String priceStepTmp = request.getParameter(PRICE_STEP);
-        if (priceStepTmp != null && !priceStepTmp.isEmpty()) {
-            priceStep = new BigDecimal(request.getParameter(PRICE_STEP));
-        }
-
-        if (priceStep!= null && (priceStart.compareTo(ZERO_AMOUNT) <= 0 || priceStart.compareTo(MAX_AMOUNT) > 0)) {
-            return null;
+        String priceStepTmp = paramMap.get(PRICE_STEP) != null ? paramMap.get(PRICE_STEP)[0] : null;
+        BigDecimal priceStep = priceStepTmp != null && !priceStepTmp.isEmpty() ? new BigDecimal(paramMap.get(PRICE_STEP)[0]) : null;
+        if (priceStep != null && (priceStep.compareTo(ZERO_AMOUNT) <= 0 || priceStart.compareTo(MAX_AMOUNT) > 0)) {
+            return false;
         }
 
         if (typeId == BLITZ_AUCTION_TYPE_ID) {
-            priceBlitz = new BigDecimal(request.getParameter(PRICE_BLITZ));
+            String priceBlitzTmp = paramMap.get(PRICE_BLITZ) != null ? paramMap.get(PRICE_BLITZ)[0] : null;
+            BigDecimal priceBlitz = priceBlitzTmp != null && !priceBlitzTmp.isEmpty() ? new BigDecimal(paramMap.get(PRICE_BLITZ)[0]) : null;
             if (priceBlitz == null || priceStep.compareTo(ZERO_AMOUNT) <= 0 || priceStep.compareTo(MAX_AMOUNT) > 0 ||
                     priceBlitz.compareTo(ZERO_AMOUNT) <= 0 || priceBlitz.compareTo(MAX_AMOUNT) > 0) {
-                return null;
+                return false;
             }
         }
 
-        try {
-            part = request.getPart(PHOTO);
-            if (part != null) {
-                photo = extractFileName(part);
-            }
-        } catch (IOException | ServletException e) {
-            LOGGER.log(Level.ERROR, "Exception: ", e);
-            return null;
+        return true;
+    }
+
+    public boolean lotPhotoValidate(Map<String, String[]> paramMap, Part part) {
+        String photo = null;
+        if (part != null) {
+            photo = extractFileName(part);
         }
-        oldPhoto = request.getParameter(OLD_PHOTO);
+
+        String oldPhoto = paramMap.get(OLD_PHOTO) != null ? paramMap.get(OLD_PHOTO)[0] : null;
         if ((photo == null || photo.isEmpty() || !photo.matches(REGEX_IMG_FILE)) && (oldPhoto == null || oldPhoto.isEmpty())) {
-            return null;
+            return false;
         }
 
-        Lot lot = new Lot();
-        lot.setName(title);
-        lot.setPrice(priceStart);
-        lot.setStepPrice(priceStep);
-        lot.setPriceBlitz(priceBlitz);
-        lot.setPhoto(photo);
-        lot.setPart(part);
-        lot.setDescription(description);
-        lot.setCategoryId(categoryId);
-        Type type = new Type();
-        type.setId(typeId);
-        lot.setType(type);
-        Term term = new Term();
-        term.setId(termId);
-        lot.setTerm(term);
-        Condition cond = new Condition();
-        cond.setId(conditionId);
-        lot.setCondition(cond);
-        lot.setTimeStart(new Date(System.currentTimeMillis()));
-        return lot;
+        if (photo != null) {
+            paramMap.put(PHOTO, new String[]{photo});
+        }
+        return true;
     }
 
     private String extractFileName(Part part) {

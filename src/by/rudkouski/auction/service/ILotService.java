@@ -3,8 +3,10 @@ package by.rudkouski.auction.service;
 import by.rudkouski.auction.entity.impl.Lot;
 import by.rudkouski.auction.service.exception.ServiceException;
 
+import javax.servlet.http.Part;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public interface ILotService<T extends Lot> {
 
@@ -26,9 +28,9 @@ public interface ILotService<T extends Lot> {
 
     BigDecimal determineLotMinBet(long lotId) throws ServiceException;
 
-    boolean addLot(T lot, String appPath) throws ServiceException;
+    boolean addLot(Map<String, String[]> paramMap, Part part, String appPath) throws ServiceException;
 
-    boolean editLot(T lot, String appPath) throws ServiceException;
+    boolean editLot(Map<String, String[]> paramMap, Part part, String appPath) throws ServiceException;
 
     void checkLot(long lotId) throws ServiceException;
 }

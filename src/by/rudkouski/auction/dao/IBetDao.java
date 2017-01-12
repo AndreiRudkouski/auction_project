@@ -4,6 +4,7 @@ import by.rudkouski.auction.entity.impl.Bet;
 import by.rudkouski.auction.dao.exception.DaoException;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,10 +15,13 @@ public interface IBetDao<T extends Bet> {
     /**
      * Add Bet into database
      *
-     * @param bet new bet to add into database
+     * @param userId  unique id of user which has given bet to add into database
+     * @param lotId   unique id of lot for which bet to add into database
+     * @param curBet  amount of bet to add into database
+     * @param curTime time when user has given bet to add into database
      * @throws DaoException if SQLException is thrown
      */
-    void writeNewBet(Bet bet) throws DaoException;
+    void writeNewBet(long userId, long lotId, BigDecimal curBet, Date curTime) throws DaoException;
 
     /**
      * Checks reaching of blitz price for lot in database

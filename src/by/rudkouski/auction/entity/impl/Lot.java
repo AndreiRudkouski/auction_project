@@ -25,7 +25,6 @@ public class Lot extends AbstractEntity {
     private List<Bet> betList;
     private boolean finish;
     private boolean check;
-    private Part part;
 
     public User getUser() {
         return user;
@@ -161,13 +160,5 @@ public class Lot extends AbstractEntity {
 
     public void setCheck(boolean check) {
         this.check = check;
-    }
-
-    public Part getPart() {
-        return part;
-    }
-
-    public void setPart(Part part) {
-        this.part = part;
     }
 }

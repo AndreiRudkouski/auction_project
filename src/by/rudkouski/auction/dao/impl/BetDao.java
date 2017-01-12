@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static by.rudkouski.auction.constant.ConstantName.FORMAT_DATE;
@@ -61,13 +62,13 @@ public class BetDao implements IBetDao<Bet> {
     }
 
     @Override
-    public void writeNewBet(Bet bet) throws DaoException {
+    public void writeNewBet(long userId, long lotId, BigDecimal curBet, Date curTime) throws DaoException {
         try (PreparedStatement prSt = con.prepareStatement(SQL_ADD_BET)) {
-            prSt.setBigDecimal(1, bet.getAmount());
-            String timeBet = new SimpleDateFormat(FORMAT_DATE).format(bet.getTime());
+            prSt.setBigDecimal(1, curBet);
+            String timeBet = new SimpleDateFormat(FORMAT_DATE).format(curTime);
             prSt.setString(2, timeBet);
-            prSt.setLong(3, bet.getLot().getId());
-            prSt.setLong(4, bet.getUser().getId());
+            prSt.setLong(3, lotId);
+            prSt.setLong(4, userId);
             prSt.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException("SQLException", e);

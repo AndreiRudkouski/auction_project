@@ -11,8 +11,14 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static by.rudkouski.auction.constant.ConstantName.*;
 
@@ -30,32 +36,38 @@ public class LotSaveCommand implements ICommand {
             return MAIN_PAGE;
         }
 
-        Lot lot = new Validator().newLotValidateAndCreate(request);
-        if (lot == null) {
+        Map<String, String[]> paramMap = new HashMap<>(request.getParameterMap());
+        boolean validLot = new Validator().lotDataValidate(paramMap);
+        Part part;
+        try {
+            part = request.getPart(PHOTO);
+        } catch (IOException | ServletException e) {
+            LOGGER.log(Level.ERROR, "Exception: ", e);
+            session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
+            return MAIN_PAGE;
+        }
+        boolean validPhoto = new Validator().lotPhotoValidate(paramMap, part);
+        if (!validLot || !validPhoto) {
             request.setAttribute(NEW_LOT, NEW_LOT);
             request.setAttribute(ERROR_LOT, ERROR_LOT);
             request.setAttribute(PROFILE, PROFILE);
             return MAIN_PAGE;
         }
-        user = new User();
-        user.setId(userId);
-        lot.setUser(user);
+        paramMap.put(USER_ID, new String[] {String.valueOf(userId)});
 
         String page = returnPage(session);
         ServiceManager manager = ServiceManager.getInstance();
         LotService lotService = manager.getLotService();
         boolean resultEdit = false;
         boolean resultSave = false;
-        long lotId;
-        String id = request.getParameter(LOT_ID);
+        String lotId = request.getParameter(LOT_ID);
         String appPath = request.getServletContext().getRealPath(EMPTY_LINE);
         try {
-            if (id != null && !id.isEmpty()) {
-                lotId = Long.parseLong(id);
-                lot.setId(lotId);
-                resultEdit = lotService.editLot(lot, appPath);
+            if (lotId != null && !lotId.isEmpty()) {
+                paramMap.put(LOT_ID, new String[] {lotId});
+                resultEdit = lotService.editLot(paramMap, part, appPath);
             } else {
-                resultSave = lotService.addLot(lot, appPath);
+                resultSave = lotService.addLot(paramMap, part, appPath);
             }
         } catch (NumberFormatException | ServiceException e) {
             LOGGER.log(Level.ERROR, "Exception: ", e);
