@@ -1,5 +1,6 @@
 package by.rudkouski.auction.command.impl;
 
+import by.rudkouski.auction.entity.AbstractEntity;
 import by.rudkouski.auction.entity.impl.Lot;
 import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
@@ -28,7 +29,7 @@ public class LotNewCommand implements ICommand {
 
         ServiceManager manager = ServiceManager.getInstance();
         CategoryService categoryService = manager.getCategoryService();
-        List<List> setupList;
+        List<List<? extends AbstractEntity>> setupList;
         try {
             setupList = categoryService.setupNewLotData();
             if (setupList != null && setupList.size() == RESULT_LOT_LIST_SIZE) {

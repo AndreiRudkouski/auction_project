@@ -1,12 +1,12 @@
 package by.rudkouski.auction.service;
 
-import by.rudkouski.auction.entity.AbstractEntity;
+import by.rudkouski.auction.entity.impl.Lot;
 import by.rudkouski.auction.service.exception.ServiceException;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface ILotService<T extends AbstractEntity> {
+public interface ILotService<T extends Lot> {
 
     List<T> setupLot() throws ServiceException;
 

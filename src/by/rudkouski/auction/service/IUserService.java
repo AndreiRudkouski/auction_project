@@ -1,12 +1,12 @@
 package by.rudkouski.auction.service;
 
-import by.rudkouski.auction.entity.AbstractEntity;
+import by.rudkouski.auction.entity.impl.User;
 import by.rudkouski.auction.service.exception.ServiceException;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface IUserService<T extends AbstractEntity> {
+public interface IUserService<T extends User> {
 
     T logInUser(String mail, String password) throws ServiceException;
 

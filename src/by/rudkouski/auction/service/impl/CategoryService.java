@@ -1,5 +1,6 @@
 package by.rudkouski.auction.service.impl;
 
+import by.rudkouski.auction.entity.AbstractEntity;
 import by.rudkouski.auction.entity.impl.Category;
 import by.rudkouski.auction.entity.impl.Condition;
 import by.rudkouski.auction.entity.impl.Term;
@@ -15,7 +16,7 @@ import by.rudkouski.auction.service.exception.ServiceException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryService implements ICategoryService<Category> {
+public class CategoryService implements ICategoryService {
     private static final ConnectionPool POOL = ConnectionPool.getInstance();
 
     @Override
@@ -39,9 +40,9 @@ public class CategoryService implements ICategoryService<Category> {
     }
 
     @Override
-    public List<List> setupNewLotData() throws ServiceException {
+    public List<List<? extends AbstractEntity>> setupNewLotData() throws ServiceException {
         ProxyConnection con = null;
-        List<List> setupList;
+        List<List<? extends AbstractEntity>> setupList;
         try {
             con = POOL.takeConnection();
             CategoryDao catalogDao = new CategoryDao(con);

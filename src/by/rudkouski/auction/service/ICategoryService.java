@@ -5,9 +5,9 @@ import by.rudkouski.auction.service.exception.ServiceException;
 
 import java.util.List;
 
-public interface ICategoryService<T extends AbstractEntity> {
+public interface ICategoryService {
 
-    List<T> setupCategory() throws ServiceException;
+    List<? extends AbstractEntity> setupCategory() throws ServiceException;
 
-    List<List> setupNewLotData() throws ServiceException;
+    List<List<? extends AbstractEntity>> setupNewLotData() throws ServiceException;
 }

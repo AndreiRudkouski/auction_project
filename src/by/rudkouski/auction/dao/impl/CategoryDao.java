@@ -14,7 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDao implements ICategoryDao<Category> {
+public class CategoryDao implements ICategoryDao {
     private ProxyConnection con;
 
     private static final String SQL_CATEGORY = "SELECT category_id, categoryBe, categoryEn FROM category";
