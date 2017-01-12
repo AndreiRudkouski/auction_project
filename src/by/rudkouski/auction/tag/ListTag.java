@@ -9,6 +9,10 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 
+/**
+ * This class implements custom tag such as list of data
+ */
+
 public class ListTag extends TagSupport {
     private static final Logger LOGGER = LogManager.getLogger(ListTag.class);
     private int rows;

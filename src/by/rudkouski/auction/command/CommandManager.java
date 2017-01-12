@@ -10,6 +10,10 @@ import java.util.Locale;
 
 import static by.rudkouski.auction.constant.ConstantName.*;
 
+/**
+ * This class is for determination command type and saving them in session
+ */
+
 public class CommandManager {
     private static final Logger LOGGER = LogManager.getLogger(CommandManager.class);
 

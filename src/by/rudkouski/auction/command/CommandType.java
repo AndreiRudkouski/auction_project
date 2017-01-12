@@ -1,6 +1,5 @@
 package by.rudkouski.auction.command;
 
-import by.rudkouski.auction.command.*;
 import by.rudkouski.auction.command.impl.*;
 
 public enum CommandType {

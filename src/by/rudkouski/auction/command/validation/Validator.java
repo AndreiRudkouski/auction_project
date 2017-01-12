@@ -16,6 +16,10 @@ import java.util.Map;
 
 import static by.rudkouski.auction.constant.ConstantName.*;
 
+/**
+ * This class contains methods for data validation
+ */
+
 public class Validator {
     private static final Logger LOGGER = LogManager.getLogger(Validator.class);
 

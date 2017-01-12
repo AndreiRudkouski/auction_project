@@ -7,7 +7,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * This interface contains methods for working with entity "User"
+ * This interface contains methods for transferring data to database and for receiving data from it.
+ * All methods are associated with entity "User"
  */
 public interface IUserDao<T extends User> {
 
@@ -70,6 +71,7 @@ public interface IUserDao<T extends User> {
      * Returns user balance from database
      *
      * @param userId unique user id to search in database
+     * @return Balance of user from database
      * @throws DaoException if SQLException is thrown
      */
     BigDecimal receiveUserBalance(long userId) throws DaoException;

@@ -11,10 +11,24 @@ import java.util.List;
 
 import static by.rudkouski.auction.constant.ConstantName.*;
 
-public interface ICommand {
+/**
+ * This interface contains methods for implementing in Command
+ */
 
+public interface ICommand {
+    /**
+     * Main method which contains validation of information and receiving data in according of request
+     *
+     * @param request request for processing
+     * @return Page for returning after data processing
+     */
     String execute(HttpServletRequest request);
 
+    /**
+     * Resets session message which were added by implementation class
+     *
+     * @param session session for processing
+     */
     void resetSessionMessage(HttpSession session);
 
     default boolean searchLot(HttpServletRequest request, String search, int page) throws ServiceException {

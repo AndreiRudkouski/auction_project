@@ -6,7 +6,8 @@ import by.rudkouski.auction.dao.exception.DaoException;
 import java.util.List;
 
 /**
- * This interface contains methods for working with different entity
+ * This interface contains methods for transferring data to database and for receiving data from it.
+ * Methods are associated with different entities
  */
 public interface ICategoryDao {
 

@@ -3,6 +3,10 @@ package by.rudkouski.auction.constant;
 import java.io.File;
 import java.math.BigDecimal;
 
+/**
+ * This class contains all constant name of this application
+ */
+
 public final class ConstantName {
     public static final String AMOUNT = "amount";
     public static final String AMOUNT_BET = "amountBet";

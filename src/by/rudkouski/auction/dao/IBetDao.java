@@ -8,7 +8,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This interface contains methods for working with entity "Bet"
+ * This interface contains methods for transferring data to database and for receiving data from it.
+ * All methods are associated with entity "Bet"
  */
 public interface IBetDao<T extends Bet> {
 

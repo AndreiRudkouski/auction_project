@@ -11,6 +11,11 @@ import java.io.IOException;
 
 import static by.rudkouski.auction.constant.ConstantName.ADMIN_ROLE_ID;
 
+/**
+ * This class implements custom tag.
+ * Depending on what a given user information returns its data
+ */
+
 public class UserTag extends TagSupport {
     private static final Logger LOGGER = LogManager.getLogger(UserTag.class);
     private String login;
@@ -38,7 +43,7 @@ public class UserTag extends TagSupport {
     public int doStartTag() throws JspException {
         try {
             String result = login != null && !login.isEmpty() ? login : mail;
-            result = balance != null && (roleId == null || roleId != ADMIN_ROLE_ID)  ? result + " (" + balance + ")" : result;
+            result = balance != null && (roleId == null || roleId != ADMIN_ROLE_ID) ? result + " (" + balance + ")" : result;
             pageContext.getOut().write(result);
         } catch (IOException e) {
             LOGGER.log(Level.ERROR, "Exception: ", e);
