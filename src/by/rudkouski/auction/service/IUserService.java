@@ -102,4 +102,14 @@ public interface IUserService<T extends User> {
      * @throws ServiceException if DaoException or ConnectionPoolException is thrown
      */
     List<T> searchUserByLoginMail(String search) throws ServiceException;
+
+    /**
+     * Generates a new user password and sends it by user mail
+     * Converts password by MD5 algorithm for changing in base
+     *
+     * @param mail user mail
+     * @return <tt>true</tt> if the password is successfully changed and sent
+     * @throws ServiceException if SQLException, DaoException, ConnectionPoolException or MailSenderException is thrown
+     */
+    boolean forgotUserPassword(String mail) throws ServiceException;
 }

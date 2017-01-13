@@ -3,6 +3,8 @@ package by.rudkouski.auction.service.impl;
 import by.rudkouski.auction.entity.impl.User;
 import by.rudkouski.auction.dao.exception.DaoException;
 import by.rudkouski.auction.dao.impl.UserDao;
+import by.rudkouski.auction.mail.MailSender;
+import by.rudkouski.auction.mail.MailSenderException;
 import by.rudkouski.auction.pool.ConnectionPool;
 import by.rudkouski.auction.pool.ConnectionPoolException;
 import by.rudkouski.auction.pool.ProxyConnection;
@@ -13,7 +15,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
 
 import static by.rudkouski.auction.constant.ConstantName.*;
 
@@ -49,8 +53,8 @@ public class UserService implements IUserService<User> {
         try {
             con = POOL.takeConnection();
             UserDao userDao = new UserDao(con);
-            boolean check = userDao.checkUniqueUserMail(mail);
-            if (check) {
+            long check = userDao.checkUniqueUserMail(mail);
+            if (check == -1) {
                 userDao.registerUser(mail, md5Password);
                 user = userDao.logInUser(mail, md5Password);
             } else {
@@ -229,6 +233,39 @@ public class UserService implements IUserService<User> {
         return userList;
     }
 
+    @Override
+    public boolean forgotUserPassword(String mail) throws ServiceException {
+        ProxyConnection con = null;
+        try {
+            con = POOL.takeConnection();
+            UserDao userDao = new UserDao(con);
+            long checkId = userDao.checkUniqueUserMail(mail);
+            if (checkId == -1) {
+                return false;
+            }
+            String newPassword = generateNewPassword();
+            String md5NewPassword = md5Convert(newPassword);
+            con.setAutoCommit(false);
+            userDao.changeUserPassword(checkId, md5NewPassword);
+            MailSender.getInstance().send(MAIL_THEME, MAIL_CONTENT + newPassword, mail);
+            con.commit();
+        } catch (SQLException | DaoException | ConnectionPoolException | MailSenderException e) {
+            try {
+                con.rollback();
+            } catch (SQLException e1) {
+                throw new ServiceException("SQLException during rollback", e);
+            }
+            throw new ServiceException(e);
+        } finally {
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
+        }
+        return true;
+    }
+
     private String md5Convert(String st) {
         MessageDigest messageDigest;
         byte[] digest = new byte[0];
@@ -247,5 +284,16 @@ public class UserService implements IUserService<User> {
             md5Hex = ZERO + md5Hex;
         }
         return md5Hex;
+    }
+
+    private String generateNewPassword() {
+        StringBuilder newPwd = new StringBuilder();
+        for (int i = 0; i < QTY_PASSWORD_GENERATION; i++) {
+            Random random = new Random();
+            newPwd.append((char) (CHAR_START_NUMBER + random.nextInt(QTY_NUMBER)));
+            newPwd.append((char) (CHAR_START_SMALL_LETTER + random.nextInt(QTY_LETTER)));
+            newPwd.append((char) (CHAR_START_BIG_LETTER + random.nextInt(QTY_LETTER)));
+        }
+        return newPwd.toString();
     }
 }

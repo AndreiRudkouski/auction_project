@@ -3,6 +3,7 @@ $(document).ready(function () {
     PopUpHide(".betList");
     PopUpHide(".changeMessage");
     PopUpHide(".bankCard");
+    PopUpHide(".forgotPassword");
 });
 
 $(document).keydown(function (e) {
@@ -18,6 +19,9 @@ $(document).keydown(function (e) {
     if ($(".bankCard").is(":visible") && (e.which == 27 || e.keyCode == 27)) {
         PopUpHide(".bankCard");
     }
+    if ($(".forgotPassword").is(":visible") && (e.which == 27 || e.keyCode == 27)) {
+        PopUpHide(".forgotPassword");
+    }
 })
 
 $(document).mouseup(function (e) {
@@ -32,6 +36,9 @@ $(document).mouseup(function (e) {
     }
     if ($(".bankCard").has(e.target).length === 0) {
         PopUpHide(".bankCard");
+    }
+    if ($(".forgotPassword").has(e.target).length === 0) {
+        PopUpHide(".forgotPassword");
     }
 })
 
@@ -72,7 +79,7 @@ function onClick(id) {
 function registration() {
     document.getElementById('enterBlock').style.display = 'none';
     document.getElementById('authBlock').style.display = 'block';
-    document.getElementById('fogPwd').style.visibility = 'hidden';
+    document.getElementById('forgotPwd').style.visibility = 'hidden';
     document.getElementById('com').value = 'register';
     reset();
 }
@@ -80,7 +87,7 @@ function registration() {
 function enter() {
     document.getElementById('authBlock').style.display = 'none';
     document.getElementById('enterBlock').style.display = 'block';
-    document.getElementById('fogPwd').style.visibility = 'visible';
+    document.getElementById('forgotPwd').style.visibility = 'visible';
     document.getElementById('com').value = 'login';
     reset();
 }
@@ -614,4 +621,45 @@ function setLotCondition(cond) {
     $('select#condition').val(cond);
 }
 
+function forgotPwd() {
+    PopUpHide(".authorization");
+    PopUpShow(".forgotPassword");
+}
+
+function errorMail() {
+    PopUpShow('.forgotPassword');
+    document.getElementById('mailForgot').style.border = '1px solid red';
+    document.getElementById('errBadMailForgot').style.visibility = 'visible';
+
+}
+
+function validateMail() {
+    var result = true;
+    resetForgot();
+    var mail = document.forgotPwd.mail.value;
+
+    if (!mail) {
+        document.getElementById('errFillMailForgot').style.visibility = 'visible';
+        document.getElementById('mailForgot').style.border = '1px solid red';
+        result = false;
+    }
+
+    if (mail && mail.search(/^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/i) !== 0) {
+        document.getElementById('errBadMailForgot').style.visibility = 'visible';
+        document.getElementById('mailForgot').style.border = '1px solid red';
+        result = false;
+    }
+
+    if (result) {
+        PopUpShow('.changeMessage');
+    }
+
+    return result;
+}
+
+function resetForgot() {
+    document.getElementById('errFillMailForgot').style.visibility = 'hidden';
+    document.getElementById('errBadMailForgot').style.visibility = 'hidden';
+    document.getElementById('mailForgot').style.border = '1px solid #d9d9d9';
+}
 

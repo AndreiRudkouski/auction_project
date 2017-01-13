@@ -14,7 +14,7 @@
             <div class="err" id="errFillMail"><fmt:message key="errFill"/></div>
             <div class="err" id="errBadMail"><fmt:message key="errBadMail"/></div>
             <label for="pwd"><fmt:message key="password"/></label>
-            <a id="fogPwd" href="#"><fmt:message key="fogPwd"/></a>
+            <a id="forgotPwd" href="javascript:forgotPwd()"><fmt:message key="forgPwd"/></a>
             <input type="password" name="pwd" id="pwd">
             <div class="err" id="errFillPwd"><fmt:message key="errFill"/></div>
             <div class="err" id="errLenPwd"><fmt:message key="errLenPwd"/></div>

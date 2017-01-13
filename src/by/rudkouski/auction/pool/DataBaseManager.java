@@ -22,7 +22,7 @@ public class DataBaseManager {
 
     public static ProxyConnection getConnection() throws SQLException, IOException {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = loader.getResourceAsStream(FILE_PROPERTIES);
+        InputStream stream = loader.getResourceAsStream(BD_PROPERTIES);
         PROP.load(stream);
         String url = PROP.getProperty(DB_URL);
         String user = PROP.getProperty(DB_USER);

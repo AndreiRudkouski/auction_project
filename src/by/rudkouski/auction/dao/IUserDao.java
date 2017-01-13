@@ -90,10 +90,10 @@ public interface IUserDao<T extends User> {
      * Checks the uniqueness of user mail in database
      *
      * @param mail user mail to check
-     * @return <tt>true</tt> if the specified mail is unique and is not contained in database
+     * @return <tt>-1</tt> if the specified mail is unique and is not contained in database otherwise user id
      * @throws DaoException if SQLException is thrown
      */
-    boolean checkUniqueUserMail(String mail) throws DaoException;
+    long checkUniqueUserMail(String mail) throws DaoException;
 
     /**
      * Checks the uniqueness of user login in database

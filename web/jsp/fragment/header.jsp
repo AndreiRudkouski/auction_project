@@ -63,6 +63,7 @@
     </header>
     <div class="clearfix"></div>
     <jsp:include page="auth.jsp"/>
+    <jsp:include page="forgotPwd.jsp"/>
     </body>
     </html>
 </fmt:bundle>

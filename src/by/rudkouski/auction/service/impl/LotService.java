@@ -296,7 +296,7 @@ public class LotService implements ILotService<Lot> {
             try {
                 con.rollback();
             } catch (SQLException e1) {
-                throw new ServiceException("SQLException during rollback", e);
+                throw new ServiceException("SQLException during rollback", e1);
             }
             throw new ServiceException(e);
         } finally {

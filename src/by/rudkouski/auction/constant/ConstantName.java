@@ -39,6 +39,7 @@ public final class ConstantName {
     public static final String ERROR_FINISH = "errorFinish";
     public static final String ERROR_LOGIN = "errorLogin";
     public static final String ERROR_LOT = "errorLot";
+    public static final String ERROR_MAIL = "errorMail";
     public static final String ERROR_MESSAGE = "errorMessage";
     public static final String ERROR_PWD = "errorPwd";
     public static final String ERROR_USER = "errorUser";
@@ -61,6 +62,9 @@ public final class ConstantName {
     public static final String LOT_SEARCH = "lot_search";
     public static final String LOT_SELECT = "lotSelect";
     public static final String MAIL = "mail";
+    public static final String MAIL_CONTENT = "You have sent request for changing your password. Your new password is ";
+    public static final String MAIL_MESSAGE = "mailMessage";
+    public static final String MAIL_THEME = "Change password on auction.by";
     public static final String MAIN_PAGE = "main.jsp";
     public static final String MD5_ALGORITHM = "MD5";
     public static final String NEW_LOT = "newLot";
@@ -106,10 +110,16 @@ public final class ConstantName {
     public static final long NULL_USER_ID = 0;
 
     public static final int CARD_NUMBER_LENGTH = 16;
+    public static final int CHAR_START_NUMBER = 48;
+    public static final int CHAR_START_SMALL_LETTER = 65;
+    public static final int CHAR_START_BIG_LETTER = 97;
     public static final int COUNT_VIEW = 3;
     public static final int LOGIN_LENGTH = 20;
     public static final int PAGE_ZERO = 0;
     public static final int PWD_LENGTH = 6;
+    public static final int QTY_NUMBER = 9;
+    public static final int QTY_LETTER = 25;
+    public static final int QTY_PASSWORD_GENERATION = PWD_LENGTH / 2;
     public static final int RESULT_BET_LIST_SIZE = 2;
     public static final int RESULT_LOT_LIST_SIZE = 3;
     public static final int TITLE_LENGTH = 90;
@@ -124,8 +134,13 @@ public final class ConstantName {
     public static final String DB_POOL_SIZE = "db.pool_size";
     public static final String DB_URL = "db.url";
     public static final String DB_USER = "db.user";
-    public static final String FILE_PROPERTIES = "/resource/db.properties";
+    public static final String BD_PROPERTIES = "/resource/db.properties";
     public static final int INIT_POOL_SIZE = 5;
+
+    //Mail
+    public static final String MAIL_PROPERTIES = "/resource/mail.properties";
+    public static final String MAIL_PWD = "mail.user.pwd";
+    public static final String MAIL_USER = "mail.user.name";
 
     private ConstantName() {
     }

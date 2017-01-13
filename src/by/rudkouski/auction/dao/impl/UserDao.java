@@ -17,7 +17,7 @@ public class UserDao implements IUserDao<User> {
 
     private static final String SQL_USER = "SELECT user_id, login, email, balance, ban, role_id FROM user WHERE email = ? AND password = ?";
     private static final String SQL_ADD_USER = "INSERT INTO user (email, password) VALUES (?, ?)";
-    private static final String SQL_MAIL = "SELECT email FROM user WHERE email = ?";
+    private static final String SQL_MAIL = "SELECT user_id FROM user WHERE email = ?";
     private static final String SQL_CHANGE_BAN = "UPDATE user SET ban = ? WHERE user_id = ?";
     private static final String SQL_USER_ID = "SELECT user_id, login, email, balance, ban, role_id FROM user WHERE user_id = ?";
     private static final String SQL_LOGIN = "SELECT login FROM user WHERE login = ?";
@@ -146,25 +146,31 @@ public class UserDao implements IUserDao<User> {
     }
 
     @Override
-    public boolean checkUniqueUserMail(String mail) throws DaoException {
-        boolean result;
+    public long checkUniqueUserMail(String mail) throws DaoException {
         try (PreparedStatement prSt = con.prepareStatement(SQL_MAIL)) {
-            result = checkUniqueUserContent(mail, prSt);
+            prSt.setString(1, mail);
+            ResultSet res = prSt.executeQuery();
+            while (res.next()) {
+                return res.getLong(1);
+            }
         } catch (SQLException e) {
             throw new DaoException("SQLException", e);
         }
-        return result;
+        return -1;
     }
 
     @Override
     public boolean checkUniqueUserLogin(String login) throws DaoException {
-        boolean result;
         try (PreparedStatement prSt = con.prepareStatement(SQL_LOGIN)) {
-            result = checkUniqueUserContent(login, prSt);
+            prSt.setString(1, login);
+            ResultSet res = prSt.executeQuery();
+            while (res.next()) {
+                return false;
+            }
         } catch (SQLException e) {
             throw new DaoException("SQLException", e);
         }
-        return result;
+        return true;
     }
 
     @Override
@@ -224,14 +230,5 @@ public class UserDao implements IUserDao<User> {
         user.setBan(res.getBoolean(5));
         user.setRoleId(res.getLong(6));
         return user;
-    }
-
-    private boolean checkUniqueUserContent(String content, PreparedStatement prSt) throws SQLException {
-        prSt.setString(1, content);
-        ResultSet res = prSt.executeQuery();
-        while (res.next()) {
-            return false;
-        }
-        return true;
     }
 }

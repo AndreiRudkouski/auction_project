@@ -55,7 +55,7 @@
         </c:choose>
     </c:otherwise>
 </c:choose>
-<c:if test="${sessionScope.errorBalance != null || sessionScope.errorFinish != null || sessionScope.betAccept != null || sessionScope.changeAccept != null || sessionScope.errorMessage != null}">
+<c:if test="${sessionScope.errorBalance != null || sessionScope.errorFinish != null || sessionScope.betAccept != null || sessionScope.changeAccept != null || sessionScope.errorMessage != null || sessionScope.mailMessage != null}">
     <script type="text/javascript">
         window.onload = changeMessage;
     </script>
