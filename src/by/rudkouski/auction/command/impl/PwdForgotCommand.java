@@ -34,13 +34,13 @@ public class PwdForgotCommand implements ICommand {
         try {
             boolean result = userService.forgotUserPassword(mail);
             if (result) {
-                session.setAttribute(MAIL_MESSAGE, MAIL_MESSAGE);
+                session.setAttribute(USER_MESSAGE, MAIL_MESSAGE);
             } else {
                 session.setAttribute(ERROR_MAIL, ERROR_MAIL);
             }
         } catch (ServiceException e) {
             LOGGER.log(Level.ERROR, "Exception: ", e);
-            session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
+            session.setAttribute(USER_MESSAGE, ERROR_MESSAGE);
             return MAIN_PAGE;
         }
         return page;
@@ -49,7 +49,6 @@ public class PwdForgotCommand implements ICommand {
     @Override
     public void resetSessionMessage(HttpSession session) {
         session.removeAttribute(ERROR_MAIL);
-        session.removeAttribute(MAIL_MESSAGE);
-        session.removeAttribute(ERROR_MESSAGE);
+        session.removeAttribute(USER_MESSAGE);
     }
 }

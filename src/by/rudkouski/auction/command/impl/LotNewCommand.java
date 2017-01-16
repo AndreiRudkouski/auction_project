@@ -52,7 +52,7 @@ public class LotNewCommand implements ICommand {
         } catch (NumberFormatException | ServiceException e) {
             LOGGER.log(Level.ERROR, "Exception: ", e);
             HttpSession session = request.getSession();
-            session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
+            session.setAttribute(USER_MESSAGE, ERROR_MESSAGE);
         }
         request.setAttribute(NEW_LOT, NEW_LOT);
         request.setAttribute(PROFILE, PROFILE);
@@ -61,6 +61,6 @@ public class LotNewCommand implements ICommand {
 
     @Override
     public void resetSessionMessage(HttpSession session) {
-        session.removeAttribute(ERROR_MESSAGE);
+        session.removeAttribute(USER_MESSAGE);
     }
 }

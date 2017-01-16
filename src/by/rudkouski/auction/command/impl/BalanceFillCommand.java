@@ -54,12 +54,12 @@ public class BalanceFillCommand implements ICommand {
             user = userService.fillUserBalanceById(userId, amount);
         } catch (NumberFormatException | ServiceException e) {
             LOGGER.log(Level.ERROR, "Exception: ", e);
-            session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
+            session.setAttribute(USER_MESSAGE, ERROR_MESSAGE);
             return MAIN_PAGE;
         }
         if (user != null) {
             session.setAttribute(USER, user);
-            session.setAttribute(CHANGE_ACCEPT, CHANGE_ACCEPT);
+            session.setAttribute(USER_MESSAGE, CHANGE_ACCEPT);
         }
         return page;
     }
@@ -68,7 +68,6 @@ public class BalanceFillCommand implements ICommand {
     public void resetSessionMessage(HttpSession session) {
         session.removeAttribute(ERROR_CARD);
         session.removeAttribute(ERROR_AMOUNT);
-        session.removeAttribute(CHANGE_ACCEPT);
-        session.removeAttribute(ERROR_MESSAGE);
+        session.removeAttribute(USER_MESSAGE);
     }
 }

@@ -57,7 +57,7 @@ public class BetAddCommand implements ICommand {
 
             BigDecimal balance = userService.receiveUserBalance(userId);
             if (balance.compareTo(curBet) < 0) {
-                session.setAttribute(ERROR_BALANCE, ERROR_BALANCE);
+                session.setAttribute(USER_MESSAGE, ERROR_BALANCE);
                 return page;
             }
 
@@ -68,13 +68,13 @@ public class BetAddCommand implements ICommand {
                 userService = manager.getUserService();
                 user = userService.receiveUserById(userId);
                 session.setAttribute(USER, user);
-                session.setAttribute(BET_ACCEPT, BET_ACCEPT);
+                session.setAttribute(USER_MESSAGE, BET_ACCEPT);
             } else {
-                session.setAttribute(ERROR_FINISH, ERROR_FINISH);
+                session.setAttribute(USER_MESSAGE, ERROR_FINISH);
             }
         } catch (NumberFormatException | ServiceException e) {
             LOGGER.log(Level.ERROR, "Exception: ", e);
-            session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
+            session.setAttribute(USER_MESSAGE, ERROR_MESSAGE);
             return MAIN_PAGE;
         }
         return page;
@@ -83,9 +83,6 @@ public class BetAddCommand implements ICommand {
     @Override
     public void resetSessionMessage(HttpSession session) {
         session.removeAttribute(ERROR_BET);
-        session.removeAttribute(ERROR_BALANCE);
-        session.removeAttribute(ERROR_FINISH);
-        session.removeAttribute(BET_ACCEPT);
-        session.removeAttribute(ERROR_MESSAGE);
+        session.removeAttribute(USER_MESSAGE);
     }
 }

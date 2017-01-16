@@ -1,7 +1,7 @@
 $(document).ready(function () {
     PopUpHide(".authorization");
     PopUpHide(".betList");
-    PopUpHide(".changeMessage");
+    PopUpHide(".userMessage");
     PopUpHide(".bankCard");
     PopUpHide(".forgotPassword");
 });
@@ -13,8 +13,8 @@ $(document).keydown(function (e) {
     if ($(".betList").is(":visible") && (e.which == 27 || e.keyCode == 27)) {
         PopUpHide(".betList");
     }
-    if ($(".changeMessage").is(":visible") && (e.which == 27 || e.keyCode == 27)) {
-        PopUpHide(".changeMessage");
+    if ($(".userMessage").is(":visible") && (e.which == 27 || e.keyCode == 27)) {
+        PopUpHide(".userMessage");
     }
     if ($(".bankCard").is(":visible") && (e.which == 27 || e.keyCode == 27)) {
         PopUpHide(".bankCard");
@@ -31,8 +31,8 @@ $(document).mouseup(function (e) {
     if ($(".betList").has(e.target).length === 0) {
         PopUpHide(".betList");
     }
-    if ($(".changeMessage").has(e.target).length === 0) {
-        PopUpHide(".changeMessage");
+    if ($(".userMessage").has(e.target).length === 0) {
+        PopUpHide(".userMessage");
     }
     if ($(".bankCard").has(e.target).length === 0) {
         PopUpHide(".bankCard");
@@ -96,8 +96,8 @@ function betZero() {
     document.getElementById('betButton').disabled = 'true';
 }
 
-function changeMessage() {
-    PopUpShow('.changeMessage');
+function userMessage() {
+    PopUpShow('.userMessage');
 }
 
 function betValue(f) {
@@ -651,7 +651,7 @@ function validateMail() {
     }
 
     if (result) {
-        PopUpShow('.changeMessage');
+        PopUpShow('.userMessage');
     }
 
     return result;

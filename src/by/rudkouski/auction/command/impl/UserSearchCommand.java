@@ -36,7 +36,7 @@ public class UserSearchCommand implements ICommand {
             } catch (ServiceException e) {
                 LOGGER.log(Level.ERROR, "Exception: ", e);
                 HttpSession session = request.getSession();
-                session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
+                session.setAttribute(USER_MESSAGE, ERROR_MESSAGE);
             }
         }
         return MAIN_PAGE;
@@ -44,6 +44,6 @@ public class UserSearchCommand implements ICommand {
 
     @Override
     public void resetSessionMessage(HttpSession session) {
-        session.removeAttribute(ERROR_MESSAGE);
+        session.removeAttribute(USER_MESSAGE);
     }
 }

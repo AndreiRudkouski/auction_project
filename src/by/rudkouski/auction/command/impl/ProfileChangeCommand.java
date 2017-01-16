@@ -61,7 +61,7 @@ public class ProfileChangeCommand implements ICommand {
                 user = userService.changeUserLogin(userId, newLogin);
                 if (user != null) {
                     session.setAttribute(USER, user);
-                    session.setAttribute(CHANGE_ACCEPT, CHANGE_ACCEPT);
+                    session.setAttribute(USER_MESSAGE, CHANGE_ACCEPT);
                 } else {
                     session.setAttribute(ERROR_EXIST_LOGIN, ERROR_EXIST_LOGIN);
                 }
@@ -70,14 +70,14 @@ public class ProfileChangeCommand implements ICommand {
                 user = userService.changeUserPassword(userId, oldPassword, newPassword);
                 if (user != null) {
                     session.setAttribute(USER, user);
-                    session.setAttribute(CHANGE_ACCEPT, CHANGE_ACCEPT);
+                    session.setAttribute(USER_MESSAGE, CHANGE_ACCEPT);
                 } else {
                     session.setAttribute(ERROR_PWD, ERROR_PWD);
                 }
             }
         } catch (ServiceException e) {
             LOGGER.log(Level.ERROR, "Exception: ", e);
-            session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
+            session.setAttribute(USER_MESSAGE, ERROR_MESSAGE);
             return MAIN_PAGE;
         }
         return page;
@@ -88,7 +88,6 @@ public class ProfileChangeCommand implements ICommand {
         session.removeAttribute(ERROR_LOGIN);
         session.removeAttribute(ERROR_PWD);
         session.removeAttribute(ERROR_EXIST_LOGIN);
-        session.removeAttribute(CHANGE_ACCEPT);
-        session.removeAttribute(ERROR_MESSAGE);
+        session.removeAttribute(USER_MESSAGE);
     }
 }

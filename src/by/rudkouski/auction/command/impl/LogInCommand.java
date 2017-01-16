@@ -39,7 +39,7 @@ public class LogInCommand implements ICommand {
             user = userService.logInUser(mail, password);
         } catch (ServiceException e) {
             LOGGER.log(Level.ERROR, "Exception: ", e);
-            session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
+            session.setAttribute(USER_MESSAGE, ERROR_MESSAGE);
             return MAIN_PAGE;
         }
 
@@ -62,6 +62,6 @@ public class LogInCommand implements ICommand {
     public void resetSessionMessage(HttpSession session) {
         session.removeAttribute(ERROR_USER);
         session.removeAttribute(ERROR_BAN);
-        session.removeAttribute(ERROR_MESSAGE);
+        session.removeAttribute(USER_MESSAGE);
     }
 }

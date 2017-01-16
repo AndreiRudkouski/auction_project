@@ -43,7 +43,7 @@ public class LotSaveCommand implements ICommand {
             part = request.getPart(PHOTO);
         } catch (IOException | ServletException e) {
             LOGGER.log(Level.ERROR, "Exception: ", e);
-            session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
+            session.setAttribute(USER_MESSAGE, ERROR_MESSAGE);
             return MAIN_PAGE;
         }
         boolean validPhoto = new Validator().lotPhotoValidate(paramMap, part);
@@ -71,12 +71,12 @@ public class LotSaveCommand implements ICommand {
             }
         } catch (NumberFormatException | ServiceException e) {
             LOGGER.log(Level.ERROR, "Exception: ", e);
-            session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
+            session.setAttribute(USER_MESSAGE, ERROR_MESSAGE);
             return MAIN_PAGE;
         }
 
         if (resultEdit || resultSave) {
-            session.setAttribute(CHANGE_ACCEPT, CHANGE_ACCEPT);
+            session.setAttribute(USER_MESSAGE, CHANGE_ACCEPT);
         } else {
             request.setAttribute(NEW_LOT, NEW_LOT);
             request.setAttribute(ERROR_LOT, ERROR_LOT);
@@ -88,7 +88,6 @@ public class LotSaveCommand implements ICommand {
 
     @Override
     public void resetSessionMessage(HttpSession session) {
-        session.removeAttribute(CHANGE_ACCEPT);
-        session.removeAttribute(ERROR_MESSAGE);
+        session.removeAttribute(USER_MESSAGE);
     }
 }

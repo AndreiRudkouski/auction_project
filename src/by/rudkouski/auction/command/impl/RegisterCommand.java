@@ -28,7 +28,7 @@ public class RegisterCommand implements ICommand {
         boolean validMail = new Validator().userMailValidate(mail);
         boolean validPassword = new Validator().userPasswordValidate(password);
         if (!validMail || !validPassword) {
-            session.setAttribute(ERROR_AUTH, USER);
+            session.setAttribute(ERROR_AUTH, ERROR_AUTH);
             return page;
         }
 
@@ -39,13 +39,13 @@ public class RegisterCommand implements ICommand {
             user = userService.registerUser(mail, password);
         } catch (ServiceException e) {
             LOGGER.log(Level.ERROR, "Exception: ", e);
-            session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
+            session.setAttribute(USER_MESSAGE, ERROR_MESSAGE);
             return MAIN_PAGE;
         }
         if (user != null) {
             session.setAttribute(USER, user);
         } else {
-            session.setAttribute(ERROR_AUTH, USER);
+            session.setAttribute(ERROR_AUTH, ERROR_AUTH);
         }
         return page;
     }

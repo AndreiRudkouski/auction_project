@@ -100,6 +100,7 @@ public final class ConstantName {
     public static final String USER = "user";
     public static final String USER_ID = "userId";
     public static final String USER_LIST = "userList";
+    public static final String USER_MESSAGE = "userMessage";
     public static final String USER_SEARCH = "userSearch";
     public static final String ZERO = "0";
 

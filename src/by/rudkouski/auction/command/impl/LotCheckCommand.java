@@ -33,16 +33,15 @@ public class LotCheckCommand implements ICommand {
             lotService.checkLot(lotId);
         } catch (NumberFormatException | ServiceException e) {
             LOGGER.log(Level.ERROR, "Exception: ", e);
-            session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
+            session.setAttribute(USER_MESSAGE, ERROR_MESSAGE);
             return MAIN_PAGE;
         }
-        session.setAttribute(CHANGE_ACCEPT, CHANGE_ACCEPT);
+        session.setAttribute(USER_MESSAGE, CHANGE_ACCEPT);
         return page;
     }
 
     @Override
     public void resetSessionMessage(HttpSession session) {
-        session.removeAttribute(CHANGE_ACCEPT);
-        session.removeAttribute(ERROR_MESSAGE);
+        session.removeAttribute(USER_MESSAGE);
     }
 }

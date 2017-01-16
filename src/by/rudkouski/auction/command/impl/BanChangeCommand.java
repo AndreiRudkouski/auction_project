@@ -33,18 +33,17 @@ public class BanChangeCommand implements ICommand {
                 request.setAttribute(USER, user);
             }
             HttpSession session = request.getSession();
-            session.setAttribute(CHANGE_ACCEPT, CHANGE_ACCEPT);
+            session.setAttribute(USER_MESSAGE, CHANGE_ACCEPT);
         } catch (NumberFormatException | ServiceException e) {
             LOGGER.log(Level.ERROR, "Exception: ", e);
             HttpSession session = request.getSession();
-            session.setAttribute(ERROR_MESSAGE, ERROR_MESSAGE);
+            session.setAttribute(USER_MESSAGE, ERROR_MESSAGE);
         }
         return MAIN_PAGE;
     }
 
     @Override
     public void resetSessionMessage(HttpSession session) {
-        session.removeAttribute(ERROR_MESSAGE);
-        session.removeAttribute(CHANGE_ACCEPT);
+        session.removeAttribute(USER_MESSAGE);
     }
 }

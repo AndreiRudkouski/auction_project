@@ -55,9 +55,9 @@
         </c:choose>
     </c:otherwise>
 </c:choose>
-<c:if test="${sessionScope.errorBalance != null || sessionScope.errorFinish != null || sessionScope.betAccept != null || sessionScope.changeAccept != null || sessionScope.errorMessage != null || sessionScope.mailMessage != null}">
+<c:if test="${sessionScope.userMessage != null}">
     <script type="text/javascript">
-        window.onload = changeMessage;
+        window.onload = userMessage;
     </script>
 </c:if>
 <jsp:include page="fragment/message.jsp"/>
