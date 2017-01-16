@@ -43,7 +43,7 @@ public final class ConstantName {
     public static final String ERROR_MESSAGE = "errorMessage";
     public static final String ERROR_PWD = "errorPwd";
     public static final String ERROR_USER = "errorUser";
-    public static final String IMG_FOLDER = File.separator + "img" + File.separator + "lots" + File.separator;
+    public static final String IMG_FOLDER = ".." + File.separator + "img" + File.separator + "lots" + File.separator;
     public static final String INDEX_PAGE = "index_page";
     public static final String FIELD_SEARCH = "fieldSearch";
     public static final String FILE_NAME = "filename";

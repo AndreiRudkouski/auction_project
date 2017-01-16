@@ -6,7 +6,7 @@ import by.rudkouski.auction.service.impl.LotService;
 import by.rudkouski.auction.service.impl.UserService;
 
 /**
- * This class for getting instances of service classes
+ * This class is for getting instances of service classes
  */
 public class ServiceManager {
     private static final ServiceManager INSTANCE = new ServiceManager();

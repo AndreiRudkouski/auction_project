@@ -12,7 +12,7 @@
 </c:choose>
 <html>
 <head>
-    <link rel="icon" type="image/x-icon" href="/img/site/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../img/site/favicon.ico">
     <style><c:import url="/css/style.css"/></style>
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script><c:import url="/js/script.js"/></script>

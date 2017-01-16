@@ -22,7 +22,7 @@
             <div class="err" id="errAmount"><fmt:message key="card.errAmount"/></div>
             <input type="submit" value="<fmt:message key="card.accept"/>">
             <div class="lower">
-                <img src="/img/site/card.png">
+                <img src="../img/site/card.png">
             </div>
         </form>
     </div>

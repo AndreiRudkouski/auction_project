@@ -11,12 +11,12 @@
     <header>
         <div class="logo">
             <div class="logo-inner">
-                <a href="/auction/jsp/main.jsp" title="<fmt:message key="main"/>"><img src="/img/site/logo.png" alt="logo"></a>
+                <a href="main.jsp" title="<fmt:message key="main"/>"><img src="../img/site/logo.png" alt="logo"></a>
             </div>
         </div>
         <div class="image">
             <div class="image-inner">
-                <img src="/img/site/img-head.png" alt="auction">
+                <img src="../img/site/img-head.png" alt="auction">
             </div>
         </div>
         <div class="find">
@@ -26,7 +26,7 @@
                     <c:choose>
                         <c:when test="${user == null}">
                             <a href="javascript:PopUpShow('.authorization')" title="<fmt:message key="enter"/>">
-                                <img src="/img/site/auth.png">
+                                <img src="../img/site/auth.png">
                                 <span><fmt:message key="enter"/></span>
                             </a>
                         </c:when>
@@ -34,7 +34,7 @@
                             <form id="profile" action="Controller" method="post">
                                 <input type="hidden" name="command" value="profile"/>
                                 <a href="javascript:onClick('profile')">
-                                    <img src="/img/site/auth.png">
+                                    <img src="../img/site/auth.png">
                                     <span>
                                         <ctg:user login="${user.login}" mail="${user.mail}" balance="${user.balance}" roleId="${user.roleId}"/>
                                     </span>
