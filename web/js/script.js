@@ -170,7 +170,7 @@ function validateAuth() {
         result = false;
     }
 
-    if (pwd && pwd.length >= 6 && pwd.search(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/i) !== 0) {
+    if (pwd && pwd.length >= 6 && !pwd.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/)) {
         document.getElementById('errBadPwd').style.visibility = 'visible';
         document.getElementById('pwd').style.border = '1px solid red';
         document.auth.pwd.value = "";

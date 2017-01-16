@@ -118,6 +118,7 @@ public interface IUserDao<T extends User> {
      *
      * @param lotId unique lot id to search in database
      * @return User from database or null if bets have not been done on the specified lot
+     * (user balance will be equal current balance plus the max previous bet)
      * @throws DaoException if SQLException is thrown
      */
     T receivePrevMaxBetUser(long lotId) throws DaoException;

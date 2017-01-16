@@ -28,7 +28,7 @@ public class RegisterCommand implements ICommand {
         boolean validMail = new Validator().userMailValidate(mail);
         boolean validPassword = new Validator().userPasswordValidate(password);
         if (!validMail || !validPassword) {
-            session.setAttribute(ERROR_AUTH, ERROR_AUTH);
+            session.setAttribute(ERROR_USER, ERROR_USER);
             return page;
         }
 
@@ -52,6 +52,7 @@ public class RegisterCommand implements ICommand {
 
     @Override
     public void resetSessionMessage(HttpSession session) {
+        session.removeAttribute(ERROR_USER);
         session.removeAttribute(ERROR_AUTH);
         session.removeAttribute(ERROR_MESSAGE);
     }

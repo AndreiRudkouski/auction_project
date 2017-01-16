@@ -33,10 +33,14 @@ public class BetService implements IBetService<Bet> {
             if (!finishLot) {
                 con.setAutoCommit(false);
                 User user = userDao.receivePrevMaxBetUser(lotId);
-                if (user.getId() == userId) {
-                    userDao.updateUserBalanceById(userId, user.getBalance().subtract(curBet));
+                if (user != null) {
+                    if (user.getId() == userId) {
+                        userDao.updateUserBalanceById(userId, user.getBalance().subtract(curBet));
+                    } else {
+                        userDao.updateUserBalanceById(user.getId(), user.getBalance());
+                        userDao.updateUserBalanceById(userId, balance.subtract(curBet));
+                    }
                 } else {
-                    userDao.updateUserBalanceById(user.getId(), user.getBalance());
                     userDao.updateUserBalanceById(userId, balance.subtract(curBet));
                 }
                 betDao.writeNewBet(userId, lotId, curBet, curTime);
@@ -84,18 +88,12 @@ public class BetService implements IBetService<Bet> {
             }
         }
         if (betList != null) {
-            List<Bet> betListWin = null;
-            List<Bet> betListDone = null;
+            List<Bet> betListWin = new ArrayList<>();
+            List<Bet> betListDone = new ArrayList<>();
             for (Bet bet : betList) {
                 if (bet.isWin()) {
-                    if (betListWin == null) {
-                        betListWin = new ArrayList<>();
-                    }
                     betListWin.add(bet);
                 } else {
-                    if (betListDone == null) {
-                        betListDone = new ArrayList<>();
-                    }
                     betListDone.add(bet);
                 }
             }

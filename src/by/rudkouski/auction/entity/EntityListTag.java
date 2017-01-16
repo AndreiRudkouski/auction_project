@@ -9,7 +9,9 @@ public class EntityListTag<T extends AbstractEntity> {
 
     public EntityListTag(List<T> listTag) {
         this.listTag = listTag;
-        iterator = listTag.iterator();
+        if (listTag != null) {
+            iterator = listTag.iterator();
+        }
     }
 
     public int getSize() {
