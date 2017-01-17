@@ -23,21 +23,21 @@ import static by.rudkouski.auction.constant.ConstantName.*;
 public class Validator {
     private static final Logger LOGGER = LogManager.getLogger(Validator.class);
 
-    public boolean userMailValidate(String mail) {
+    public static boolean userMailValidate(String mail) {
         if (mail == null || mail.isEmpty() || !mail.matches(REGEX_MAIL)) {
             return false;
         }
         return true;
     }
 
-    public boolean userPasswordValidate(String password) {
+    public static boolean userPasswordValidate(String password) {
         if (password == null || password.isEmpty() || password.length() < PWD_LENGTH || !password.matches(REGEX_PWD)) {
             return false;
         }
         return true;
     }
 
-    public boolean betDataValidate(BigDecimal bet, BigDecimal minBet) {
+    public static boolean betDataValidate(BigDecimal bet, BigDecimal minBet) {
         if (bet == null || minBet == null) {
             return false;
         } else {
@@ -48,19 +48,19 @@ public class Validator {
         return true;
     }
 
-    public boolean userLoginChangeValidate(String newLogin, String oldLogin) {
+    public static boolean userLoginChangeValidate(String newLogin, String oldLogin) {
         return newLogin == null || newLogin.equals(oldLogin) || newLogin.length() > LOGIN_LENGTH ? false : true;
     }
 
-    public boolean cardNumberValidate(String cardNum) {
+    public static boolean cardNumberValidate(String cardNum) {
         return cardNum == null || cardNum.isEmpty() || cardNum.length() != CARD_NUMBER_LENGTH ? false : true;
     }
 
-    public boolean amountValidate(BigDecimal amount) {
+    public static boolean amountValidate(BigDecimal amount) {
         return amount.compareTo(MIN_AMOUNT) < 0 || amount.compareTo(MAX_AMOUNT) > 0 ? false : true;
     }
 
-    public boolean lotDataValidate(Map<String, String[]> paramMap) {
+    public static boolean lotDataValidate(Map<String, String[]> paramMap) {
         String title = paramMap.get(TITLE) != null ? paramMap.get(TITLE)[0] : null;
         String description = paramMap.get(DESCRIPTION) != null ? paramMap.get(DESCRIPTION)[0] : null;
         if (title == null || title.isEmpty() || title.length() > TITLE_LENGTH || description == null || description.isEmpty()) {
@@ -101,7 +101,7 @@ public class Validator {
         return true;
     }
 
-    public boolean lotPhotoValidate(Map<String, String[]> paramMap, Part part) {
+    public static boolean lotPhotoValidate(Map<String, String[]> paramMap, Part part) {
         String photo = null;
         if (part != null) {
             photo = extractFileName(part);
@@ -118,7 +118,7 @@ public class Validator {
         return true;
     }
 
-    private String extractFileName(Part part) {
+    private static String extractFileName(Part part) {
         String content = part.getHeader(CONTENT);
         String[] items = content.split(SEMICOLON_DIVIDE);
         for (String str : items) {
@@ -129,7 +129,7 @@ public class Validator {
         return null;
     }
 
-    public boolean userValidate(HttpServletRequest request) {
+    public static boolean userValidate(HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(USER);
         return user != null ? true : false;

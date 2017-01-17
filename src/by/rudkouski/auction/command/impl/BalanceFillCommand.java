@@ -37,8 +37,8 @@ public class BalanceFillCommand implements ICommand {
         try {
             cardNum = request.getParameter(CARD_NUM);
             amount = new BigDecimal(request.getParameter(AMOUNT));
-            boolean validCard = new Validator().cardNumberValidate(cardNum);
-            boolean validAmount = new Validator().amountValidate(amount);
+            boolean validCard = Validator.cardNumberValidate(cardNum);
+            boolean validAmount = Validator.amountValidate(amount);
             if (!validCard || !validAmount) {
                 if (!validCard) {
                     session.setAttribute(ERROR_CARD, ERROR_CARD);

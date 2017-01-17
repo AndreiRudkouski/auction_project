@@ -1,10 +1,10 @@
-$(document).ready(function () {
+document.onreadystatechange = function () {
     PopUpHide(".authorization");
     PopUpHide(".betList");
     PopUpHide(".userMessage");
     PopUpHide(".bankCard");
     PopUpHide(".forgotPassword");
-});
+};
 
 $(document).keydown(function (e) {
     if ($(".authorization").is(":visible") && (e.which == 27 || e.keyCode == 27)) {

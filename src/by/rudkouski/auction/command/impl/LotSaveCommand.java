@@ -1,6 +1,5 @@
 package by.rudkouski.auction.command.impl;
 
-import by.rudkouski.auction.entity.impl.Lot;
 import by.rudkouski.auction.entity.impl.User;
 import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
@@ -37,7 +36,7 @@ public class LotSaveCommand implements ICommand {
         }
 
         Map<String, String[]> paramMap = new HashMap<>(request.getParameterMap());
-        boolean validLot = new Validator().lotDataValidate(paramMap);
+        boolean validLot = Validator.lotDataValidate(paramMap);
         Part part;
         try {
             part = request.getPart(PHOTO);
@@ -46,7 +45,7 @@ public class LotSaveCommand implements ICommand {
             session.setAttribute(USER_MESSAGE, ERROR_MESSAGE);
             return MAIN_PAGE;
         }
-        boolean validPhoto = new Validator().lotPhotoValidate(paramMap, part);
+        boolean validPhoto = Validator.lotPhotoValidate(paramMap, part);
         if (!validLot || !validPhoto) {
             request.setAttribute(NEW_LOT, NEW_LOT);
             request.setAttribute(ERROR_LOT, ERROR_LOT);

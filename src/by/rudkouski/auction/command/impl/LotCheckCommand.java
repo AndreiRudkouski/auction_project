@@ -20,7 +20,7 @@ public class LotCheckCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if (!new Validator().userValidate(request)) {
+        if (!Validator.userValidate(request)) {
             return MAIN_PAGE;
         }
 

@@ -12,7 +12,7 @@ public class ProfileCommand implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request) {
-        if (!new Validator().userValidate(request)) {
+        if (!Validator.userValidate(request)) {
             return MAIN_PAGE;
         }
         request.setAttribute(PROFILE, PROFILE);

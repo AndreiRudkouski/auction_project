@@ -23,7 +23,7 @@ public class PwdForgotCommand implements ICommand {
 
         HttpSession session = request.getSession();
         String page = returnPage(session);
-        boolean validMail = new Validator().userMailValidate(mail);
+        boolean validMail = Validator.userMailValidate(mail);
         if (!validMail) {
             session.setAttribute(ERROR_MAIL, ERROR_MAIL);
             return page;

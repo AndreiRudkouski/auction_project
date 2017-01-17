@@ -35,9 +35,9 @@ public class ProfileChangeCommand implements ICommand {
         String oldPassword = request.getParameter(OLD_PWD);
 
         String page = returnPage(session);
-        boolean validLogin = new Validator().userLoginChangeValidate(newLogin, oldLogin);
-        boolean validOldPassword = new Validator().userPasswordValidate(oldPassword);
-        boolean validNewPassword = new Validator().userPasswordValidate(newPassword);
+        boolean validLogin = Validator.userLoginChangeValidate(newLogin, oldLogin);
+        boolean validOldPassword = Validator.userPasswordValidate(oldPassword);
+        boolean validNewPassword = Validator.userPasswordValidate(newPassword);
         if (!validLogin && ((oldPassword == null || oldPassword.isEmpty()) &&
                 (newPassword == null || newPassword.isEmpty()))) {
             session.setAttribute(ERROR_LOGIN, ERROR_LOGIN);

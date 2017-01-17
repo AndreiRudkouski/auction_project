@@ -25,8 +25,8 @@ public class LogInCommand implements ICommand {
 
         HttpSession session = request.getSession();
         String page = returnPage(session);
-        boolean validMail = new Validator().userMailValidate(mail);
-        boolean validPassword = new Validator().userPasswordValidate(password);
+        boolean validMail = Validator.userMailValidate(mail);
+        boolean validPassword = Validator.userPasswordValidate(password);
         if (!validMail || !validPassword) {
             session.setAttribute(ERROR_USER, ERROR_USER);
             return page;

@@ -1,7 +1,5 @@
 package by.rudkouski.auction.command.impl;
 
-import by.rudkouski.auction.entity.impl.Bet;
-import by.rudkouski.auction.entity.impl.Lot;
 import by.rudkouski.auction.entity.impl.User;
 import by.rudkouski.auction.command.ICommand;
 import by.rudkouski.auction.service.ServiceManager;
@@ -49,7 +47,7 @@ public class BetAddCommand implements ICommand {
             LotService lotService = manager.getLotService();
             BigDecimal minBet;
             minBet = lotService.determineLotMinBet(lotId);
-            validBet = new Validator().betDataValidate(curBet, minBet);
+            validBet = Validator.betDataValidate(curBet, minBet);
             if (!validBet) {
                 session.setAttribute(ERROR_BET, ERROR_BET);
                 return page;
