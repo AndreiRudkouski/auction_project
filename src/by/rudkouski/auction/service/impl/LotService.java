@@ -119,7 +119,7 @@ public class LotService implements ILotService<Lot> {
                 throw new ServiceException(e);
             }
         }
-        lot.setPhoto(IMG_FOLDER + lot.getPhoto());
+        lot.setPhoto(IMG_FOLDER_LOAD + lot.getPhoto());
         return lot;
     }
 
@@ -240,7 +240,7 @@ public class LotService implements ILotService<Lot> {
             LotDao lotDao = new LotDao(con);
             con.setAutoCommit(false);
             long id = lotDao.addLot(lot);
-            String savePath = appPath + IMG_FOLDER;
+            String savePath = appPath + IMG_FOLDER_SAVE;
             File fileSaveDir = new File(savePath);
             if (!fileSaveDir.exists()) {
                 fileSaveDir.mkdir();
@@ -282,7 +282,7 @@ public class LotService implements ILotService<Lot> {
             con.setAutoCommit(false);
             lotDao.editLot(lot);
             if (lot.getPhoto() != null) {
-                String savePath = appPath + IMG_FOLDER;
+                String savePath = appPath + IMG_FOLDER_SAVE;
                 File fileSaveDir = new File(savePath);
                 if (!fileSaveDir.exists()) {
                     fileSaveDir.mkdir();
@@ -329,7 +329,7 @@ public class LotService implements ILotService<Lot> {
 
     private void createPhotoPath(List<Lot> lotList) {
         for (Lot lot : lotList) {
-            lot.setPhoto(IMG_FOLDER + lot.getPhoto());
+            lot.setPhoto(IMG_FOLDER_LOAD + lot.getPhoto());
         }
     }
 

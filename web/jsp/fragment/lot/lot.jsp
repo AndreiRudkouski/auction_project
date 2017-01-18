@@ -12,7 +12,7 @@
         <div class="category"><fmt:message key="lot.category"/>
             <a class="section" href="javascript:onClick('cat${lot.categoryId}')">
                 <c:forEach items="${sessionScope.categoryList}" var="cat">
-                    <c:if test="${cat.id == categoryId}">
+                    <c:if test="${cat.id == lot.categoryId}">
                         <c:if test="${loc == 'be' || loc == null}">
                             <span>${cat.nameBe}</span>
                         </c:if>

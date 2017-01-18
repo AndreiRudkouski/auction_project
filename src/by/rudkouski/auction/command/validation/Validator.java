@@ -92,8 +92,7 @@ public class Validator {
         if (typeId == BLITZ_AUCTION_TYPE_ID) {
             String priceBlitzTmp = paramMap.get(PRICE_BLITZ) != null ? paramMap.get(PRICE_BLITZ)[0] : null;
             BigDecimal priceBlitz = priceBlitzTmp != null && !priceBlitzTmp.isEmpty() ? new BigDecimal(paramMap.get(PRICE_BLITZ)[0]) : null;
-            if (priceBlitz == null || priceStep.compareTo(ZERO_AMOUNT) <= 0 || priceStep.compareTo(MAX_AMOUNT) > 0 ||
-                    priceBlitz.compareTo(ZERO_AMOUNT) <= 0 || priceBlitz.compareTo(MAX_AMOUNT) > 0) {
+            if (priceBlitz == null || priceBlitz.compareTo(ZERO_AMOUNT) <= 0 || priceBlitz.compareTo(MAX_AMOUNT) > 0) {
                 return false;
             }
         }
@@ -132,6 +131,6 @@ public class Validator {
     public static boolean userValidate(HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(USER);
-        return user != null ? true : false;
+        return user != null;
     }
 }
