@@ -71,7 +71,7 @@ public interface IUserService<T extends User> {
      *
      * @param userId   unique user id
      * @param amount amount for filling of user balance
-     * @return User with new balance
+     * @return User with new balance or null if balance is overflowing
      * @throws ServiceException if DaoException or ConnectionPoolException is thrown
      */
     T fillUserBalanceById(long userId, BigDecimal amount) throws ServiceException;

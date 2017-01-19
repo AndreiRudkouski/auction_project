@@ -32,6 +32,7 @@ public final class ConstantName {
     public static final String ERROR_AMOUNT = "errorAmount";
     public static final String ERROR_AUTH = "errorAuth";
     public static final String ERROR_BALANCE = "errorBalance";
+    public static final String ERROR_BALANCE_FILL = "errorBalanceFill";
     public static final String ERROR_BAN = "errorBan";
     public static final String ERROR_BET = "errorBet";
     public static final String ERROR_CARD = "errorCard";
@@ -129,9 +130,9 @@ public final class ConstantName {
     public static final int RESULT_LOT_LIST_SIZE = 3;
     public static final int TITLE_LENGTH = 90;
 
-    public static final BigDecimal MAX_AMOUNT = new BigDecimal(9999.99);
+    public static final BigDecimal MAX_AMOUNT = new BigDecimal("9999.99");
     public static final BigDecimal MIN_AMOUNT = new BigDecimal(10);
-    public static final BigDecimal TEN_PERCENT = new BigDecimal(10 / 100);
+    public static final BigDecimal TEN_PERCENT = new BigDecimal("0.1");
     public static final BigDecimal ZERO_AMOUNT = new BigDecimal(0);
 
     //Connection Pool

@@ -60,6 +60,8 @@ public class BalanceFillCommand implements ICommand {
         if (user != null) {
             session.setAttribute(USER, user);
             session.setAttribute(USER_MESSAGE, CHANGE_ACCEPT);
+        } else {
+            session.setAttribute(USER_MESSAGE, ERROR_BALANCE_FILL);
         }
         return page;
     }

@@ -6,10 +6,6 @@
     <head>
     </head>
     <body>
-    <html>
-    <head>
-    </head>
-    <body>
     <div class="bankCard">
         <form onsubmit="return validateCard()" name="card" action="Controller" method="post">
             <input type="hidden" id="com" name="command" value="balance_fill"/>

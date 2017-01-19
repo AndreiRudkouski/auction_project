@@ -174,13 +174,16 @@ public class UserService implements IUserService<User> {
     @Override
     public User fillUserBalanceById(long userId, BigDecimal amount) throws ServiceException {
         ProxyConnection con = null;
-        User user;
+        User user = null;
         try {
             con = POOL.takeConnection();
             UserDao userDao = new UserDao(con);
             BigDecimal balance = userDao.receiveUserBalance(userId);
-            userDao.updateUserBalanceById(userId, balance.add(amount));
-            user = userDao.receiveUserById(userId);
+            BigDecimal newBalance = balance.add(amount);
+            if (newBalance.compareTo(MAX_AMOUNT) <= 0) {
+                userDao.updateUserBalanceById(userId, newBalance);
+                user = userDao.receiveUserById(userId);
+            }
         } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
