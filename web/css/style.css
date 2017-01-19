@@ -385,6 +385,15 @@ table .price {
     margin-top: 11px;
     margin-bottom: -1px;
 }
+
+#lotTypeSelect {
+    float: right;
+    margin-top: -5px;
+    margin-right: 45px;
+    width: 200px;
+    height: 1.5em;
+}
+
 /*------FOOTER------*/
 
 footer {

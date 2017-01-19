@@ -48,13 +48,21 @@ public class LotService implements ILotService<Lot> {
     }
 
     @Override
-    public List<Lot> searchLotByCategory(long categoryId, int page) throws ServiceException {
+    public List<Lot> searchLotByCategory(long categoryId, int page, String lotChoiceType) throws ServiceException {
         ProxyConnection con = null;
         List<Lot> lotList;
         try {
             con = POOL.takeConnection();
             LotDao lotDao = new LotDao(con);
-            lotList = lotDao.searchLotByCategory(categoryId, page);
+            if (UNFINISHED.equals(lotChoiceType)) {
+                lotList = lotDao.searchLotByCategory(categoryId, page, false);
+            } else {
+                if (FINISHED.equals(lotChoiceType)) {
+                    lotList = lotDao.searchLotByCategory(categoryId, page, true);
+                } else {
+                    lotList = lotDao.searchLotByCategory(categoryId, page, null);
+                }
+            }
         } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
@@ -69,13 +77,21 @@ public class LotService implements ILotService<Lot> {
     }
 
     @Override
-    public List<Lot> searchLotByName(String search, int page) throws ServiceException {
+    public List<Lot> searchLotByName(String search, int page, String lotChoiceType) throws ServiceException {
         ProxyConnection con = null;
         List<Lot> lotList;
         try {
             con = POOL.takeConnection();
             LotDao lotDao = new LotDao(con);
-            lotList = lotDao.searchLotByName(search, page);
+            if (UNFINISHED.equals(lotChoiceType)) {
+                lotList = lotDao.searchLotByName(search, page, false);
+            } else {
+                if (FINISHED.equals(lotChoiceType)) {
+                    lotList = lotDao.searchLotByName(search, page, true);
+                } else {
+                    lotList = lotDao.searchLotByName(search, page, null);
+                }
+            }
         } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {

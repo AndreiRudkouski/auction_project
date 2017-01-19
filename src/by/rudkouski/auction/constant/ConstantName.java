@@ -48,6 +48,7 @@ public final class ConstantName {
     public static final String INDEX_PAGE = "index_page";
     public static final String FIELD_SEARCH = "fieldSearch";
     public static final String FILE_NAME = "filename";
+    public static final String FINISHED = "finished";
     public static final String FORMAT_DATE = "yyyy-MM-dd HH:mm:ss";
     public static final String LOCALE = "loc";
     public static final String LOCALE_BE = "be";
@@ -55,8 +56,9 @@ public final class ConstantName {
     public static final String LOGIN = "login";
     public static final String LOT = "lot";
     public static final String LOT_ID = "lotId";
-    public static final String LOT_LIST = "lotList";
+    public static final String LOT_CHOICE_TYPE = "lotChoiceType";
     public static final String LOT_HISTORY = "lotHistory";
+    public static final String LOT_LIST = "lotList";
     public static final String LOT_LIST_FINISH = "lotListFinished";
     public static final String LOT_LIST_UNFINISHED = "lotListUnfinished";
     public static final String LOT_LIST_UNCHECKED = "lotListUnchecked";
@@ -97,6 +99,7 @@ public final class ConstantName {
     public static final String TITLE = "title";
     public static final String TYPE = "type";
     public static final String TYPE_LIST = "typeList";
+    public static final String UNFINISHED = "unfinished";
     public static final String URL = "../jsp/Controller?";
     public static final String USER = "user";
     public static final String USER_ID = "userId";

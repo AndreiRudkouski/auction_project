@@ -17,7 +17,7 @@ import java.util.Map;
 public interface ILotService<T extends Lot> {
 
     /**
-     * Returns list of Lots
+     * Returns list of checked Lots
      *
      * @return list containing Lots
      * @throws ServiceException if DaoException or ConnectionPoolException is thrown
@@ -25,24 +25,26 @@ public interface ILotService<T extends Lot> {
     List<T> setupLot() throws ServiceException;
 
     /**
-     * Returns list of Lots which refer to a certain category
+     * Returns list of checked Lots which refer to a certain category
      *
      * @param categoryId unique category id
      * @param page       number of page to determining of position to search
+     * @param lotChoiceType    lot type (unfinished - not finished lots, finished - finished lots, otherwise - all lots)
      * @return list containing Lots for the specified category
      * @throws ServiceException if DaoException or ConnectionPoolException is thrown
      */
-    List<T> searchLotByCategory(long categoryId, int page) throws ServiceException;
+    List<T> searchLotByCategory(long categoryId, int page, String lotChoiceType) throws ServiceException;
 
     /**
-     * Returns list of Lots with partial coincidence of name
+     * Returns list of checked Lots with partial coincidence of name
      *
      * @param search the parameter to be compared for partial coincidence with lot name
      * @param page   number of page to determining of position to search
+     * @param lotChoiceType    lot type (unfinished - not finished lots, finished - finished lots, otherwise - all lots)
      * @return list containing Lots with partial coincidence of name with the specified search
      * @throws ServiceException if DaoException or ConnectionPoolException is thrown
      */
-    List<T> searchLotByName(String search, int page) throws ServiceException;
+    List<T> searchLotByName(String search, int page, String lotChoiceType) throws ServiceException;
 
     /**
      * Returns Lot

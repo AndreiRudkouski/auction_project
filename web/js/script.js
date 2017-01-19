@@ -663,3 +663,18 @@ function resetForgot() {
     document.getElementById('mailForgot').style.border = '1px solid #d9d9d9';
 }
 
+function selectType(id) {
+    var select = document.getElementById('lotTypeSelect').value;
+    var div = document.createElement('div');
+    div.innerHTML = '<input type="hidden" name="lotChoiceType" value=' + select + '>';
+    document.getElementById(id).appendChild(div);
+    document.getElementById(id).submit();
+}
+
+function setChoiceType(type) {
+    if (!type) {
+        type = 'all';
+    }
+    $('select#lotTypeSelect').val(type);
+}
+

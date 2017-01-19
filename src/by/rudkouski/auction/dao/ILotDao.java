@@ -14,7 +14,7 @@ import java.util.List;
 public interface ILotDao<T extends Lot> {
 
     /**
-     * Returns list of Lots from database
+     * Returns list of checked Lots from database
      *
      * @return list containing Lots which are in database
      * @throws DaoException if SQLException is thrown
@@ -22,24 +22,26 @@ public interface ILotDao<T extends Lot> {
     List<T> setupLot() throws DaoException;
 
     /**
-     * Returns list of Lots which refer to a certain category from database
+     * Returns list of checked Lots which refer to a certain category from database
      *
      * @param categoryId unique category id to search in database
      * @param page       number of page to determining of position to search in database
+     * @param isFinish   lot type (false - not finished lots, true - finished lots, null - all lots)
      * @return list containing Lots for the specified category
      * @throws DaoException if SQLException is thrown
      */
-    List<T> searchLotByCategory(long categoryId, int page) throws DaoException;
+    List<T> searchLotByCategory(long categoryId, int page, Boolean isFinish) throws DaoException;
 
     /**
-     * Returns list of Lots with partial coincidence of name from database
+     * Returns list of checked Lots with partial coincidence of name from database
      *
-     * @param search the parameter to be compared for partial coincidence with lot name in database
-     * @param page   number of page to determining of position to search in database
+     * @param search   the parameter to be compared for partial coincidence with lot name in database
+     * @param page     number of page to determining of position to search in database
+     * @param isFinish lot type (false - not finished lots, true - finished lots, null - all lots)
      * @return list containing Lots with partial coincidence of name with the specified search
      * @throws DaoException if SQLException is thrown
      */
-    List<T> searchLotByName(String search, int page) throws DaoException;
+    List<T> searchLotByName(String search, int page, Boolean isFinish) throws DaoException;
 
     /**
      * Returns finished Lot from database

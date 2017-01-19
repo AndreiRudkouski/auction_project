@@ -25,7 +25,7 @@ public class LotDao implements ILotDao<Lot> {
             "LEFT JOIN bet ON lot.lot_id = bet.lot_id WHERE lot.check = 1 GROUP BY lot.lot_id ORDER BY lot.timeStart DESC LIMIT " + COUNT_VIEW;
     private static final String SQL_SEARCH_LOT_CATEGORY = "SELECT lot.lot_id, name, url, MAX(bet), priceStart, lot.type_id, lot.category_id FROM lot " +
             "JOIN photo ON lot.lot_id = photo.lot_id " +
-            "LEFT JOIN bet ON lot.lot_id = bet.lot_id WHERE lot.category_id = ? AND lot.check = 1 GROUP BY lot.lot_id ORDER BY lot.timeStart DESC LIMIT ?, ?";
+            "LEFT JOIN bet ON lot.lot_id = bet.lot_id WHERE lot.category_id = ? AND lot.check = 1 AND (lot.finish = ? OR lot.finish = ?) GROUP BY lot.lot_id ORDER BY lot.timeStart DESC LIMIT ?, ?";
     private static final String SQL_SEARCH_LOT_FINISHED = "SELECT lot.lot_id, name, url, MAX(bet), priceStart, lot.type_id, description, lot.category_id, lot.user_id, lot.check FROM lot " +
             "JOIN photo ON lot.lot_id = photo.lot_id " +
             "LEFT JOIN bet ON lot.lot_id = bet.lot_id WHERE lot.lot_id = ? GROUP BY lot.lot_id";
@@ -38,7 +38,7 @@ public class LotDao implements ILotDao<Lot> {
             "LEFT JOIN bet ON lot.lot_id = bet.lot_id WHERE lot.lot_id = ? GROUP BY lot.lot_id";
     private static final String SQL_SEARCH_LOT_NAME = "SELECT lot.lot_id, name, url, MAX(bet), priceStart, lot.type_id, lot.category_id FROM lot " +
             "JOIN photo ON lot.lot_id = photo.lot_id " +
-            "LEFT JOIN bet ON lot.lot_id = bet.lot_id WHERE name LIKE ? AND lot.check = 1 GROUP BY lot.lot_id ORDER BY lot.timeStart DESC LIMIT ?, ?";
+            "LEFT JOIN bet ON lot.lot_id = bet.lot_id WHERE name LIKE ? AND lot.check = 1 AND (lot.finish = ? OR lot.finish = ?) GROUP BY lot.lot_id ORDER BY lot.timeStart DESC LIMIT ?, ?";
     private static final String SQL_MIN_BET = "SELECT MAX(bet), priceStart, step, lot.type_id FROM lot " +
             "LEFT JOIN bet ON lot.lot_id = bet.lot_id WHERE lot.lot_id = ? GROUP BY lot.lot_id";
     private static final String SQL_CHECK_FINISH_LOT = "SELECT finish, ADDDATE(timeStart, term), lot.check FROM lot " +
@@ -77,14 +77,15 @@ public class LotDao implements ILotDao<Lot> {
     }
 
     @Override
-    public List<Lot> searchLotByCategory(long categoryId, int page) throws DaoException {
+    public List<Lot> searchLotByCategory(long categoryId, int page, Boolean isFinish) throws DaoException {
         List<Lot> lotList;
         try (PreparedStatement prSt = con.prepareStatement(SQL_SEARCH_LOT_CATEGORY)) {
             prSt.setLong(1, categoryId);
+            addFinishLotParameterInStatement(prSt, isFinish);
             int lineStart = page * COUNT_VIEW;
             int lineQty = lineStart + COUNT_VIEW + 1;
-            prSt.setInt(2, lineStart);
-            prSt.setInt(3, lineQty);
+            prSt.setInt(4, lineStart);
+            prSt.setInt(5, lineQty);
             ResultSet res = prSt.executeQuery();
             lotList = convertResult(res);
         } catch (SQLException e) {
@@ -94,20 +95,31 @@ public class LotDao implements ILotDao<Lot> {
     }
 
     @Override
-    public List<Lot> searchLotByName(String search, int page) throws DaoException {
+    public List<Lot> searchLotByName(String search, int page, Boolean isFinish) throws DaoException {
         List<Lot> lotList;
         try (PreparedStatement prSt = con.prepareStatement(SQL_SEARCH_LOT_NAME)) {
             prSt.setString(1, "%" + search + "%");
+            addFinishLotParameterInStatement(prSt, isFinish);
             int lineStart = page * COUNT_VIEW;
             int lineQty = lineStart + COUNT_VIEW + 1;
-            prSt.setInt(2, lineStart);
-            prSt.setInt(3, lineQty);
+            prSt.setInt(4, lineStart);
+            prSt.setInt(5, lineQty);
             ResultSet res = prSt.executeQuery();
             lotList = convertResult(res);
         } catch (SQLException e) {
             throw new DaoException("SQLException", e);
         }
         return lotList;
+    }
+
+    private void addFinishLotParameterInStatement(PreparedStatement prSt, Boolean isFinish) throws SQLException {
+        if (isFinish != null) {
+            prSt.setBoolean(2, isFinish);
+            prSt.setBoolean(3, isFinish);
+        } else {
+            prSt.setBoolean(2, false);
+            prSt.setBoolean(3, true);
+        }
     }
 
     @Override

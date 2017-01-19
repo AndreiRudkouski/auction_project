@@ -32,13 +32,15 @@ public interface ICommand {
     void resetSessionMessage(HttpSession session);
 
     default boolean searchLot(HttpServletRequest request, String search, int page) throws ServiceException {
+        String lotChoiceType = request.getParameter(LOT_CHOICE_TYPE);
         ServiceManager factory = ServiceManager.getInstance();
         LotService lotService = factory.getLotService();
-        List<Lot> lotList = lotService.searchLotByName(search, page);
+        List<Lot> lotList = lotService.searchLotByName(search, page, lotChoiceType);
 
         request.setAttribute(LOT_SEARCH, search);
         request.setAttribute(LOT_LIST, lotList);
         request.setAttribute(PAGE_LIST, page);
+        request.setAttribute(LOT_CHOICE_TYPE, lotChoiceType);
 
         return true;
     }
@@ -62,17 +64,20 @@ public interface ICommand {
         } catch (NumberFormatException e) {
             throw new ServiceException(e);
         }
+
         if (categoryId <= 0) {
             return false;
         }
 
+        String lotChoiceType = request.getParameter(LOT_CHOICE_TYPE);
         ServiceManager factory = ServiceManager.getInstance();
         LotService lotService = factory.getLotService();
-        List<Lot> lotList = lotService.searchLotByCategory(categoryId, page);
+        List<Lot> lotList = lotService.searchLotByCategory(categoryId, page, lotChoiceType);
 
         request.setAttribute(CATEGORY_ID, categoryId);
         request.setAttribute(LOT_LIST, lotList);
         request.setAttribute(PAGE_LIST, page);
+        request.setAttribute(LOT_CHOICE_TYPE, lotChoiceType);
 
         return true;
     }
