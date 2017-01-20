@@ -6,7 +6,7 @@
     <head>
     </head>
     <body>
-    <div class="forgotPassword">
+    <div id="forgotPassword">
         <form onsubmit="return validateMail()" name="forgotPwd" action="Controller" method="post">
             <input type="hidden" id="com" name="command" value="pwd_forgot"/>
             <label for="mailForgot"><fmt:message key="mail"/></label>

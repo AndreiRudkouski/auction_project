@@ -53,7 +53,7 @@
                 window.onload = betZero;
             </script>
         </c:if>
-        <input type="button" id="betButton" onclick="PopUpShow('.betList')"
+        <input type="button" id="betButton" onclick="PopUpShow('betList')"
                value="<fmt:message key="lot.betQty"/> ${size}"/>
     </div>
     <c:if test="${lot.finish == false}">
@@ -77,7 +77,7 @@
                     <c:set var="user" value="${sessionScope.user}"/>
                     <c:choose>
                         <c:when test="${user == null}">
-                            <input type="button" onclick="PopUpShow('.authorization')"
+                            <input type="button" onclick="PopUpShow('authorization')"
                                    value="<fmt:message key="lot.bet"/>"/>
                         </c:when>
                         <c:otherwise>

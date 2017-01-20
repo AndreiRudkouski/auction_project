@@ -311,19 +311,16 @@ public class LotDao implements ILotDao<Lot> {
             prSt.setLong(1, lotId);
             ResultSet res = prSt.executeQuery();
             while (res.next()) {
-                if (res.getLong(4) == BLIND_AUCTION_TYPE_ID) {
-                    minBet = new BigDecimal(res.getString(2));
-                } else {
+                minBet = new BigDecimal(res.getString(2));
+                if (res.getLong(4) != BLIND_AUCTION_TYPE_ID) {
                     if (res.getString(1) != null) {
                         minBet = new BigDecimal(res.getString(1));
                         if (res.getString(3) != null) {
                             BigDecimal step = new BigDecimal(res.getString(3));
                             minBet = minBet.add(step);
                         } else {
-                            minBet = minBet.add(res.getBigDecimal(2).multiply(TEN_PERCENT));
+                            minBet = minBet.add(res.getBigDecimal(2).multiply(TEN_PERCENT)).setScale(2, BigDecimal.ROUND_CEILING);
                         }
-                    } else {
-                        minBet = new BigDecimal(res.getString(2));
                     }
                 }
             }

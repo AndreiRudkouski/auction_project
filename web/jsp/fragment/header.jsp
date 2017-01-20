@@ -25,7 +25,7 @@
                     <c:set var="user" value="${sessionScope.user}"/>
                     <c:choose>
                         <c:when test="${user == null}">
-                            <a href="javascript:PopUpShow('.authorization')" title="<fmt:message key="enter"/>">
+                            <a href="javascript:PopUpShow('authorization')" title="<fmt:message key="enter"/>">
                                 <img src="../img/site/auth.png">
                                 <span><fmt:message key="enter"/></span>
                             </a>
@@ -63,7 +63,6 @@
     </header>
     <div class="clearfix"></div>
     <jsp:include page="auth.jsp"/>
-    <jsp:include page="forgotPwd.jsp"/>
     </body>
     </html>
 </fmt:bundle>

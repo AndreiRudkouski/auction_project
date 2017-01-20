@@ -55,12 +55,12 @@
         </c:choose>
     </c:otherwise>
 </c:choose>
+<c:import url="fragment/footer.jsp"/>
+<jsp:include page="fragment/message.jsp"/>
 <c:if test="${sessionScope.userMessage != null}">
     <script type="text/javascript">
-        window.onload = userMessage;
+        window.onload = PopUpShow('userMessage');
     </script>
 </c:if>
-<jsp:include page="fragment/message.jsp"/>
-<c:import url="fragment/footer.jsp"/>
 </body>
 </html>

@@ -22,7 +22,7 @@
                 <label for="balance"><fmt:message key="profile.balance"/></label><br>
                 <input type="text" name="balance" id="balance"
                        value="${sessionScope.user.balance} <fmt:message key="lot.rub"/>" disabled>
-                <input type="submit" onclick="javascript:PopUpShow('.bankCard')" value="<fmt:message key="profile.fill"/>">
+                <input type="submit" onclick="javascript:PopUpShow('bankCard')" value="<fmt:message key="profile.fill"/>">
             </div>
             <div class="dataRight">
                 <label for="oldPwd"><fmt:message key="profile.oldPassword"/></label><br>

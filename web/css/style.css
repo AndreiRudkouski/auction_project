@@ -438,17 +438,17 @@ footer {
 
 /*------AUTHORIZATION------*/
 
-.authorization {
+#authorization {
+    display: none;
     width: 100%;
     min-height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     overflow: hidden;
     position: fixed;
     top: 0px;
-    z-index: 99;
 }
 
-.authorization form {
+#authorization form {
     position: fixed;
     width: 360px;
     height: 240px;
@@ -462,7 +462,7 @@ footer {
     box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
 }
 
-.authorization label {
+#authorization label {
     color: #555;
     display: inline-block;
     margin-left: 20px;
@@ -481,15 +481,15 @@ footer {
     color: #555;
 }
 
-.authorization p #forgotPwd:hover {
+#authorization p #forgotPwd:hover {
     color: #555;
 }
 
-.authorization input {
+#authorization input {
     outline: none;
 }
 
-.authorization input[type=text], input[type=password] {
+#authorization input[type=text], input[type=password] {
     color: #777;
     padding-left: 10px;
     margin-top: 12px;
@@ -501,12 +501,12 @@ footer {
     box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8;
 }
 
-.authorization input[type=text]:hover, input[type=password]:hover {
+#authorization input[type=text]:hover, input[type=password]:hover {
     border: 1px solid #b6bfc0;
     box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .7), 0 0 0 5px #f5f7f8;
 }
 
-.authorization input[type=text]:focus, input[type=password]:focus {
+#authorization input[type=text]:focus, input[type=password]:focus {
     border: 1px solid #a8c9e4;
     box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #e6f2f9;
 }
@@ -583,17 +583,17 @@ footer {
 
 /*------FORGOT PASSWORD------*/
 
-.forgotPassword {
+#forgotPassword {
+    display: none;
     width: 100%;
     min-height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     overflow: hidden;
     position: fixed;
     top: 0px;
-    z-index: 99;
 }
 
-.forgotPassword form {
+#forgotPassword form {
     position: fixed;
     width: 360px;
     height: 160px;
@@ -607,18 +607,18 @@ footer {
     box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
 }
 
-.forgotPassword label {
+#forgotPassword label {
     color: #555;
     display: inline-block;
     margin-left: 20px;
     padding-top: 25px;
 }
 
-.forgotPassword input {
+#forgotPassword input {
     outline: none;
 }
 
-.forgotPassword input[type=text] {
+#forgotPassword input[type=text] {
     color: #777;
     padding-left: 10px;
     margin-top: 12px;
@@ -630,12 +630,12 @@ footer {
     box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8;
 }
 
-.forgotPassword input[type=text]:hover {
+#forgotPassword input[type=text]:hover {
     border: 1px solid #b6bfc0;
     box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .7), 0 0 0 5px #f5f7f8;
 }
 
-.forgotPassword input[type=text]:focus {
+#forgotPassword input[type=text]:focus {
     border: 1px solid #a8c9e4;
     box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #e6f2f9;
 }
@@ -675,17 +675,17 @@ footer {
 
 /*------BET LIST------*/
 
-.betList {
+#betList {
+    display: none;
     width: 100%;
     min-height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     overflow: hidden;
     position: fixed;
     top: 0px;
-    z-index: 99;
 }
 
-.betList div {
+#betList div {
     position: fixed;
     overflow-y: auto;
     width: 750px;
@@ -698,12 +698,12 @@ footer {
     box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
 }
 
-.betList caption {
+#betList caption {
     font-weight: bold;
     margin: 20px 0;
 }
 
-.betList hr {
+#betList hr {
     position: fixed;
     margin-top: 55px;
     margin-left: 10px;
@@ -734,17 +734,17 @@ footer {
 
 /*------CHANGE MESSAGE------*/
 
-.userMessage {
+#userMessage {
+    display: none;
     width: 100%;
     min-height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     overflow: hidden;
     position: fixed;
     top: 0px;
-    z-index: 99;
 }
 
-.userMessage div {
+#userMessage div {
     position: fixed;
     width: 350px;
     height: 100px;
@@ -758,7 +758,7 @@ footer {
     box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
 }
 
-.userMessage span {
+#userMessage span {
     position: absolute;
     width: 350px;
     margin-top: 38px;
@@ -1026,17 +1026,17 @@ footer {
 
 /*------BANK CARD------*/
 
-.bankCard {
+#bankCard {
+    display: none;
     width: 100%;
     min-height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     overflow: hidden;
     position: fixed;
     top: 0px;
-    z-index: 99;
 }
 
-.bankCard form {
+#bankCard form {
     position: fixed;
     width: 300px;
     height: 240px;
@@ -1050,22 +1050,22 @@ footer {
     box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
 }
 
-.bankCard label {
+#bankCard label {
     color: #555;
     display: inline-block;
     margin-left: 20px;
     padding-top: 25px;
 }
 
-.bankCard span {
+#bankCard span {
     color: #555;
 }
 
-.bankCard input {
+#bankCard input {
     outline: none;
 }
 
-.bankCard input[type=number] {
+#bankCard input[type=number] {
     color: #777;
     text-align: center;
     padding-left: 10px;
@@ -1078,21 +1078,21 @@ footer {
     box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8;
 }
 
-.bankCard input[type=number]:hover {
+#bankCard input[type=number]:hover {
     border: 1px solid #b6bfc0;
     box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .7), 0 0 0 5px #f5f7f8;
 }
 
-.bankCard input[type=number]:focus {
+#bankCard input[type=number]:focus {
     border: 1px solid #a8c9e4;
     box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #e6f2f9;
 }
 
-#amount {
+#bankCard #amount {
     width: 100px;
 }
 
-.bankCard input[type=submit] {
+#bankCard input[type=submit] {
     font-weight: bold;
     float: right;
     width: 80px;
@@ -1107,15 +1107,15 @@ footer {
     border-radius: 2px;
 }
 
-.bankCard input[type=submit]:hover {
+#bankCard input[type=submit]:hover {
     box-shadow: inset 0 0 40px 10px rgba(54, 169, 225, 0.2);
 }
 
-.bankCard input[type=submit]:active {
+#bankCard input[type=submit]:active {
     margin-top: 10px;
 }
 
-.bankCard .lower {
+#bankCard .lower {
     background: #ecf2f5;
     width: 100%;
     height: 23%;
@@ -1126,10 +1126,10 @@ footer {
     border-bottom-left-radius: 3px;
 }
 
-.bankCard img {
+#bankCard img {
     width: 260px;
     margin-top: 18px;
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
 /*------ADMIN------*/

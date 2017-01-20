@@ -7,7 +7,7 @@
 <head>
 </head>
 <body>
-<div class="betList">
+<div id="betList">
     <div>
         <table class="tableBet">
             <caption><fmt:message key="bet.history"/></caption>

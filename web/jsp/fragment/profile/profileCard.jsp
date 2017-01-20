@@ -6,7 +6,7 @@
     <head>
     </head>
     <body>
-    <div class="bankCard">
+    <div id="bankCard">
         <form onsubmit="return validateCard()" name="card" action="Controller" method="post">
             <input type="hidden" id="com" name="command" value="balance_fill"/>
             <label for="cardNum"><fmt:message key="card.number"/></label><br>
@@ -39,7 +39,8 @@
                     window.onload = errAmount;
                 </script>
             </c:if>
-        </c:otherwise></c:choose>
+        </c:otherwise>
+    </c:choose>
     </body>
     </html>
 </fmt:bundle>

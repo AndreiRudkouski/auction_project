@@ -6,7 +6,7 @@
     <head>
     </head>
     <body>
-    <div class="userMessage">
+    <div id="userMessage">
         <div>
             <c:set value="${sessionScope.userMessage}" var="userMessage"/>
             <c:choose>
@@ -35,7 +35,7 @@
                     </c:if>
                 </c:when>
                 <c:otherwise>
-                    <span><fmt:message key="wait"/></span>
+                    <span><fmt:message key="message.wait"/></span>
                 </c:otherwise>
             </c:choose>
         </div>

@@ -6,7 +6,7 @@
     <head>
     </head>
     <body>
-    <div class="authorization">
+    <div id="authorization">
         <form onsubmit="return validateAuth()" name="auth" action="Controller" method="post">
             <input type="hidden" id="com" name="command" value="login"/>
             <label for="mail"><fmt:message key="mail"/></label>
@@ -53,6 +53,7 @@
             </c:if>
         </c:otherwise>
     </c:choose>
+    <jsp:include page="forgotPwd.jsp"/>
     </body>
     </html>
 </fmt:bundle>
