@@ -30,7 +30,8 @@ public enum CommandType {
     ADMIN_PWD(new AdminPasswordCommand()),
     BAN_CHANGE(new BanChangeCommand()),
     LOT_CHECK(new LotCheckCommand()),
-    PWD_FORGOT(new PwdForgotCommand());
+    PWD_FORGOT(new PwdForgotCommand()),
+    LOT_REMOVE(new LotRemoveCommand());
 
     ICommand command;
 

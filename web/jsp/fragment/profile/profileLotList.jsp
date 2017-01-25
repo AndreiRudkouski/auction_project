@@ -8,7 +8,7 @@
     </head>
     <body>
     <c:choose>
-        <c:when test="${requestScope.lotListFinished.size == 0 && requestScope.lotListUnfinished.size == 0 && requestScope.lotListUnchecked.size == 0}">
+        <c:when test="${requestScope.lotListFinished.size == 0 && requestScope.lotListUnfinished.size == 0 && requestScope.lotListUnchecked.size == 0 && requestScope.lotListRemoved.size == 0}">
             <span><fmt:message key="profileLot.none"/></span>
         </c:when>
         <c:otherwise>
@@ -49,6 +49,22 @@
                 <div class="lotList">
                     <ctg:list rows="${requestScope.lotListUnchecked.size}">
                         <c:set var="lot" value="${requestScope.lotListUnchecked.element}"/>
+                        <form id="lot${lot.id}" action="Controller" method="post">
+                            <input type="hidden" name="command" value="lot_choice"/>
+                            <input type="hidden" name="lotId" value="${lot.id}">
+                            <a href="javascript:onClick('lot${lot.id}')">
+                                <fmt:formatDate value="${lot.timeStart}" pattern="dd-MM-yyyy, HH:mm:ss"/> -
+                                <c:out value="${lot.name}"/>
+                            </a>
+                        </form>
+                    </ctg:list>
+                </div>
+            </c:if>
+            <c:if test="${requestScope.lotListRemoved.size > 0}">
+                <span><strong><fmt:message key="profileLot.removed"/></strong></span>
+                <div class="lotList">
+                    <ctg:list rows="${requestScope.lotListRemoved.size}">
+                        <c:set var="lot" value="${requestScope.lotListRemoved.element}"/>
                         <form id="lot${lot.id}" action="Controller" method="post">
                             <input type="hidden" name="command" value="lot_choice"/>
                             <input type="hidden" name="lotId" value="${lot.id}">

@@ -59,7 +59,7 @@ public interface ILotService<T extends Lot> {
      * Returns list of lot lists with different status for a certain user
      *
      * @param userId unique user id to search in database
-     * @return list containing three lists: the first list contains finished lots, the second list contains unfinished lots and the third list - unchecked lots
+     * @return list containing three lists: the first list contains finished lots, the second list contains unfinished lots, the third list contains unchecked lots and the fourth - removed lots
      * @throws ServiceException if DaoException or ConnectionPoolException is thrown
      */
     List<List<T>> receiveLotHistoryByUser(long userId) throws ServiceException;
@@ -90,6 +90,15 @@ public interface ILotService<T extends Lot> {
      * @throws ServiceException if DaoException or ConnectionPoolException is thrown
      */
     List<T> receiveUncheckedLotHistoryByUser(long userId) throws ServiceException;
+
+    /**
+     * Returns list of removed Lots for a certain user
+     *
+     * @param userId unique user id
+     * @return list containing removed Lots for the specified user
+     * @throws ServiceException if DaoException or ConnectionPoolException is thrown
+     */
+    List<T> receiveRemovedLotHistoryByUser(long userId) throws ServiceException;
 
     /**
      * Returns min bet for a certain lot
@@ -125,10 +134,18 @@ public interface ILotService<T extends Lot> {
     boolean editLot(Map<String, String[]> paramMap, Part part, String appPath) throws ServiceException;
 
     /**
-     * Changes mark of checked by admin for lot
+     * Changes mark of checked for lot by admin
      *
      * @param lotId unique lot id
      * @throws ServiceException if DaoException or ConnectionPoolException is thrown
      */
     void checkLot(long lotId) throws ServiceException;
+
+    /**
+     * Changes mark of removed for lot by admin and returns max bet to user
+     *
+     * @param lotId unique lot id
+     * @throws ServiceException if DaoException or ConnectionPoolException is thrown
+     */
+    void removeLot(long lotId) throws ServiceException;
 }

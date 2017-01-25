@@ -8,19 +8,21 @@
     <head>
     </head>
     <body>
-    <form action="Controller" method="post">
-        <input type="hidden" name="lotId" value="${lot.id}"/>
-        <c:choose>
-            <c:when test="${sessionScope.user.roleId == 2}">
-                <input type="hidden" name="command" value="lot_check"/>
-                <input id="lotEdit" type="submit" value="<fmt:message key="lot.check"/>"/>
-            </c:when>
-            <c:otherwise>
-                <input type="hidden" name="command" value="lot_new"/>
-                <input id="lotEdit" type="submit" value="<fmt:message key="admin.change"/>"/>
-            </c:otherwise>
-        </c:choose>
-    </form>
+    <c:if test="${lot.remove == false}">
+        <form action="Controller" method="post">
+            <input type="hidden" name="lotId" value="${lot.id}"/>
+            <c:choose>
+                <c:when test="${sessionScope.user.roleId == 2}">
+                    <input type="hidden" name="command" value="lot_check"/>
+                    <input id="lotEdit" type="submit" value="<fmt:message key="lot.check"/>"/>
+                </c:when>
+                <c:otherwise>
+                    <input type="hidden" name="command" value="lot_new"/>
+                    <input id="lotEdit" type="submit" value="<fmt:message key="admin.change"/>"/>
+                </c:otherwise>
+            </c:choose>
+        </form>
+    </c:if>
     <c:if test="${sessionScope.user.roleId == 2}">
         <form id="user${lot.user.id}" action="Controller" method="post">
             <input type="hidden" name="command" value="user_choice"/>

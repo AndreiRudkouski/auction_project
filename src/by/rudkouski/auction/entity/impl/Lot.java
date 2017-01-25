@@ -25,6 +25,7 @@ public class Lot extends AbstractEntity {
     private List<Bet> betList;
     private boolean finish;
     private boolean check;
+    private boolean remove;
 
     public User getUser() {
         return user;
@@ -160,5 +161,13 @@ public class Lot extends AbstractEntity {
 
     public void setCheck(boolean check) {
         this.check = check;
+    }
+
+    public boolean isRemove() {
+        return remove;
+    }
+
+    public void setRemove(boolean remove) {
+        this.remove = remove;
     }
 }

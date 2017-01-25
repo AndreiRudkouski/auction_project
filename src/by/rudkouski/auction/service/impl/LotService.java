@@ -145,12 +145,14 @@ public class LotService implements ILotService<Lot> {
         List<Lot> lotListFinished;
         List<Lot> lotListUnfinished;
         List<Lot> lotListUnchecked;
+        List<Lot> lotListRemoved;
         try {
             con = POOL.takeConnection();
             LotDao lotDao = new LotDao(con);
             lotListFinished = lotDao.receiveFinishedLotHistoryByUser(userId);
             lotListUnfinished = lotDao.receiveUnfinishedLotHistoryByUser(userId);
             lotListUnchecked = lotDao.receiveUncheckedLotHistoryByUser(userId);
+            lotListRemoved = lotDao.receiveRemovedLotHistoryByUser(userId);
         } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
@@ -164,6 +166,7 @@ public class LotService implements ILotService<Lot> {
         lotResult.add(lotListFinished);
         lotResult.add(lotListUnfinished);
         lotResult.add(lotListUnchecked);
+        lotResult.add(lotListRemoved);
         return lotResult;
     }
 
@@ -215,6 +218,26 @@ public class LotService implements ILotService<Lot> {
             con = POOL.takeConnection();
             LotDao lotDao = new LotDao(con);
             lotList = lotDao.receiveUncheckedLotHistoryByUser(userId);
+        } catch (DaoException | ConnectionPoolException e) {
+            throw new ServiceException(e);
+        } finally {
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
+        }
+        return lotList;
+    }
+
+    @Override
+    public List<Lot> receiveRemovedLotHistoryByUser(long userId) throws ServiceException {
+        ProxyConnection con = null;
+        List<Lot> lotList;
+        try {
+            con = POOL.takeConnection();
+            LotDao lotDao = new LotDao(con);
+            lotList = lotDao.receiveRemovedLotHistoryByUser(userId);
         } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {
@@ -333,6 +356,36 @@ public class LotService implements ILotService<Lot> {
             LotDao lotDao = new LotDao(con);
             lotDao.checkLot(lotId);
         } catch (DaoException | ConnectionPoolException e) {
+            throw new ServiceException(e);
+        } finally {
+            try {
+                POOL.returnConnection(con);
+            } catch (ConnectionPoolException e) {
+                throw new ServiceException(e);
+            }
+        }
+    }
+
+    @Override
+    public void removeLot(long lotId) throws ServiceException {
+        ProxyConnection con = null;
+        try {
+            con = POOL.takeConnection();
+            UserDao userDao = new UserDao(con);
+            User user = userDao.receivePrevMaxBetUser(lotId);
+            con.setAutoCommit(false);
+            if (user != null) {
+                userDao.updateUserBalanceById(user.getId(), user.getBalance());
+            }
+            LotDao lotDao = new LotDao(con);
+            lotDao.removeLot(lotId);
+            con.commit();
+        } catch (SQLException | DaoException | ConnectionPoolException e) {
+            try {
+                con.rollback();
+            } catch (SQLException e1) {
+                throw new ServiceException("SQLException during rollback", e1);
+            }
             throw new ServiceException(e);
         } finally {
             try {

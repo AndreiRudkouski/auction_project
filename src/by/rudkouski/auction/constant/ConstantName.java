@@ -61,6 +61,7 @@ public final class ConstantName {
     public static final String LOT_HISTORY = "lotHistory";
     public static final String LOT_LIST = "lotList";
     public static final String LOT_LIST_FINISH = "lotListFinished";
+    public static final String LOT_LIST_REMOVED = "lotListRemoved";
     public static final String LOT_LIST_UNFINISHED = "lotListUnfinished";
     public static final String LOT_LIST_UNCHECKED = "lotListUnchecked";
     public static final String LOT_SEARCH = "lot_search";
@@ -122,12 +123,13 @@ public final class ConstantName {
     public static final int COUNT_VIEW = 3;
     public static final int LOGIN_LENGTH = 20;
     public static final int PAGE_ZERO = 0;
+    public static final int RARAMETER_LIST_SIZE = 3;
     public static final int PWD_LENGTH = 6;
     public static final int QTY_NUMBER = 9;
     public static final int QTY_LETTER = 25;
     public static final int QTY_PASSWORD_GENERATION = PWD_LENGTH / 2;
     public static final int RESULT_BET_LIST_SIZE = 2;
-    public static final int RESULT_LOT_LIST_SIZE = 3;
+    public static final int RESULT_LOT_LIST_SIZE = 4;
     public static final int TITLE_LENGTH = 90;
 
     public static final BigDecimal MAX_AMOUNT = new BigDecimal("9999.99");

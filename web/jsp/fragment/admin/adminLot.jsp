@@ -18,6 +18,7 @@
                         <option value="lotListFinished"><fmt:message key="admin.completed"/></option>
                         <option value="lotListUnfinished"><fmt:message key="admin.notCompleted"/></option>
                         <option value="lotListUnchecked"><fmt:message key="admin.new"/></option>
+                        <option value="lotListRemoved"><fmt:message key="admin.removed"/></option>
                     </select>
                 </form>
             </div>

@@ -48,6 +48,11 @@ public class LotSelectCommand implements ICommand {
                     resultList = new EntityListTag<>(lotList);
                     request.setAttribute(LOT_LIST_UNCHECKED, resultList);
                 }
+                if (select.equals(LOT_LIST_REMOVED)) {
+                    lotList = lotService.receiveRemovedLotHistoryByUser(NULL_USER_ID);
+                    resultList = new EntityListTag<>(lotList);
+                    request.setAttribute(LOT_LIST_REMOVED, resultList);
+                }
                 request.setAttribute(LOT_SELECT, LOT_SELECT);
             } catch (ServiceException e) {
                 LOGGER.log(Level.ERROR, "Exception: ", e);

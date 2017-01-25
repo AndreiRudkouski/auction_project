@@ -107,6 +107,15 @@ public interface ILotDao<T extends Lot> {
     List<T> receiveUncheckedLotHistoryByUser(long userId) throws DaoException;
 
     /**
+     * Returns list of removed by admin Lots for a certain user from database
+     *
+     * @param userId unique user id to search in database
+     * @return list containing removed by admin Lots for the specified user
+     * @throws DaoException if SQLException is thrown
+     */
+    List<T> receiveRemovedLotHistoryByUser(long userId) throws DaoException;
+
+    /**
      * Returns min bet for a certain lot from database
      *
      * @param lotId unique lot id to search in database
@@ -148,4 +157,12 @@ public interface ILotDao<T extends Lot> {
      * @throws DaoException if SQLException is thrown
      */
     void checkLot(long lotId) throws DaoException;
+
+    /**
+     * Changes mark of removed by admin for lot in database
+     *
+     * @param lotId unique lot id to search in database
+     * @throws DaoException if SQLException is thrown
+     */
+    void removeLot(long lotId) throws DaoException;
 }

@@ -29,6 +29,21 @@
                 <span class="title"><strong>${lot.name}</strong></span>
                 <hr/>
                 <c:choose>
+                    <c:when test="${lot.remove == true}">
+                        <div class="price"><u><strong><fmt:message key="lot.removed"/></strong></u></div>
+                    </c:when>
+                    <c:otherwise>
+                        <c:if test="${sessionScope.user.roleId == 2}">
+                            <form action="Controller" method="post">
+                                <input type="hidden" name="lotId" value="${lot.id}"/>
+                                <input type="hidden" name="command" value="lot_remove"/>
+                                <input id="lotRemove" type="submit" value="<fmt:message key="admin.remove"/>"/>
+                            </form>
+                        </c:if>
+                    </c:otherwise>
+                </c:choose>
+
+                <c:choose>
                     <c:when test="${lot.check == false}">
                         <jsp:include page="lotUncheck.jsp"/>
                     </c:when>
