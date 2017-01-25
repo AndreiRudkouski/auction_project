@@ -42,15 +42,16 @@
                         </c:if>
                     </c:otherwise>
                 </c:choose>
-
-                <c:choose>
-                    <c:when test="${lot.check == false}">
-                        <jsp:include page="lotUncheck.jsp"/>
-                    </c:when>
-                    <c:otherwise>
-                        <jsp:include page="lotCheck.jsp"/>
-                    </c:otherwise>
-                </c:choose>
+                <c:if test="${sessionScope.user.roleId == 2 || lot.remove == false}">
+                    <c:choose>
+                        <c:when test="${lot.check == false}">
+                            <jsp:include page="lotUncheck.jsp"/>
+                        </c:when>
+                        <c:otherwise>
+                            <jsp:include page="lotCheck.jsp"/>
+                        </c:otherwise>
+                    </c:choose>
+                </c:if>
             </div>
         </div>
         <c:if test="${sessionScope.errorBet != null}">

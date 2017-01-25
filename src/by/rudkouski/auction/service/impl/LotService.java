@@ -121,11 +121,9 @@ public class LotService implements ILotService<Lot> {
             BetDao betDao = new BetDao(con);
             List<Bet> betList = betDao.receiveBetListByLotId(lotId, createBetList);
             lot.setBetList(betList);
-            if (!lot.isCheck()) {
-                UserDao userDao = new UserDao(con);
-                User user = userDao.receiveUserById(lot.getUser().getId());
-                lot.setUser(user);
-            }
+            UserDao userDao = new UserDao(con);
+            User user = userDao.receiveUserById(lot.getUser().getId());
+            lot.setUser(user);
         } catch (DaoException | ConnectionPoolException e) {
             throw new ServiceException(e);
         } finally {

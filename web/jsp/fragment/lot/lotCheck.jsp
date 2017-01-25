@@ -1,12 +1,24 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib uri="/WEB-INF/tld/taglib.tld" prefix="ctg" %>
 <fmt:bundle basename="resource.localization">
     <c:set var="BLIND_TYPE_ID" value="3"/>
     <html>
     <head>
     </head>
     <body>
+    <c:if test="${sessionScope.user.roleId == 2}">
+        <form id="user${lot.user.id}" action="Controller" method="post">
+            <input type="hidden" name="command" value="user_choice"/>
+            <input type="hidden" name="userId" value="${lot.user.id}">
+            <div class="price"><strong><fmt:message key="lot.seller"/></strong>
+                <a href="javascript:onClick('user${lot.user.id}')">
+                    <ctg:user login="${lot.user.login}" mail="${lot.user.mail}"/><br>
+                </a>
+            </div>
+        </form>
+    </c:if>
     <c:choose>
         <c:when test="${lot.finish == false}">
             <div class="price"><strong><fmt:message key="lot.finish"/>
