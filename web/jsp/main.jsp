@@ -2,6 +2,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="loc" value="${sessionScope.loc}"/>
+<c:set var="ADMIN_ROLE" value="2"/>
 <c:choose>
     <c:when test="${loc == null}">
         <fmt:setLocale value="be" scope="session"/>
@@ -23,7 +24,7 @@
     <c:import url="/jsp/Controller?command=setup_category"/>
 </c:if>
 <c:choose>
-    <c:when test="${sessionScope.user != null && sessionScope.user.roleId == 2}">
+    <c:when test="${sessionScope.user != null && sessionScope.user.roleId == ADMIN_ROLE}">
         <c:choose>
             <c:when test="${requestScope.lot == null}">
                 <c:import url="fragment/admin.jsp"/>

@@ -4,6 +4,7 @@
 <%@taglib uri="/WEB-INF/tld/taglib.tld" prefix="ctg" %>
 <fmt:bundle basename="resource.localization">
     <c:set var="BLIND_TYPE_ID" value="3"/>
+    <c:set var="ADMIN_ROLE" value="2"/>
     <html>
     <head>
     </head>
@@ -12,7 +13,7 @@
         <form action="Controller" method="post">
             <input type="hidden" name="lotId" value="${lot.id}"/>
             <c:choose>
-                <c:when test="${sessionScope.user.roleId == 2}">
+                <c:when test="${sessionScope.user.roleId == ADMIN_ROLE}">
                     <input type="hidden" name="command" value="lot_check"/>
                     <input id="lotEdit" type="submit" value="<fmt:message key="lot.check"/>"/>
                 </c:when>
@@ -23,7 +24,7 @@
             </c:choose>
         </form>
     </c:if>
-    <c:if test="${sessionScope.user.roleId == 2}">
+    <c:if test="${sessionScope.user.roleId == ADMIN_ROLE}">
         <form id="user${lot.user.id}" action="Controller" method="post">
             <input type="hidden" name="command" value="user_choice"/>
             <input type="hidden" name="userId" value="${lot.user.id}">

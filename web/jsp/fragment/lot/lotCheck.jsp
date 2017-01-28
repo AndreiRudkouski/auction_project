@@ -4,11 +4,12 @@
 <%@taglib uri="/WEB-INF/tld/taglib.tld" prefix="ctg" %>
 <fmt:bundle basename="resource.localization">
     <c:set var="BLIND_TYPE_ID" value="3"/>
+    <c:set var="ADMIN_ROLE" value="2"/>
     <html>
     <head>
     </head>
     <body>
-    <c:if test="${sessionScope.user.roleId == 2}">
+    <c:if test="${sessionScope.user.roleId == ADMIN_ROLE}">
         <form id="user${lot.user.id}" action="Controller" method="post">
             <input type="hidden" name="command" value="user_choice"/>
             <input type="hidden" name="userId" value="${lot.user.id}">
@@ -94,7 +95,7 @@
                         </c:when>
                         <c:otherwise>
                             <c:choose>
-                                <c:when test="${sessionScope.user.id != lot.user.id && sessionScope.user.roleId != 2}">
+                                <c:when test="${sessionScope.user.id != lot.user.id && sessionScope.user.roleId != ADMIN_ROLE}">
                                     <input type="submit" value="<fmt:message key="lot.bet"/>"/>
                                 </c:when>
                                 <c:otherwise>

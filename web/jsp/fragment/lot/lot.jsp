@@ -3,6 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:bundle basename="resource.localization">
     <c:set var="BLIND_TYPE_ID" value="3"/>
+    <c:set var="ADMIN_ROLE" value="2"/>
     <html>
     <head>
     </head>
@@ -33,7 +34,7 @@
                         <div class="price"><u><strong><fmt:message key="lot.removed"/></strong></u></div>
                     </c:when>
                     <c:otherwise>
-                        <c:if test="${sessionScope.user.roleId == 2}">
+                        <c:if test="${sessionScope.user.roleId == ADMIN_ROLE}">
                             <form action="Controller" method="post">
                                 <input type="hidden" name="lotId" value="${lot.id}"/>
                                 <input type="hidden" name="command" value="lot_remove"/>
@@ -42,7 +43,7 @@
                         </c:if>
                     </c:otherwise>
                 </c:choose>
-                <c:if test="${sessionScope.user.roleId == 2 || lot.remove == false}">
+                <c:if test="${sessionScope.user.roleId == ADMIN_ROLE || lot.remove == false}">
                     <c:choose>
                         <c:when test="${lot.check == false}">
                             <jsp:include page="lotUncheck.jsp"/>
