@@ -54,7 +54,7 @@
                         <span><fmt:message key="admin.ban"/> ${user.ban}</span> <input id="saveBan" type="submit" value="<fmt:message key="admin.change"/>">
                     </form>
                     <div class="userLot">
-                        <form class="section" id="lotHistory" action="Controller" method="get">
+                        <form class="section" id="lotHistory" action="Controller" method="post">
                             <input type="hidden" name="command" value="lot_history"/>
                             <input type="hidden" name="userId" value="${user.id}">
                             <a href="javascript:onClick('lotHistory')">
@@ -63,7 +63,7 @@
                         </form>
                     </div>
                     <div class="userBet">
-                        <form class="section" id="betHistory" action="Controller" method="get">
+                        <form class="section" id="betHistory" action="Controller" method="post">
                             <input type="hidden" name="command" value="bet_history"/>
                             <input type="hidden" name="userId" value="${user.id}">
                             <a href="javascript:onClick('betHistory')">

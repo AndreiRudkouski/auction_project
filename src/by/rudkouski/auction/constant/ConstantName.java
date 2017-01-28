@@ -123,7 +123,7 @@ public final class ConstantName {
     public static final int COUNT_VIEW = 3;
     public static final int LOGIN_LENGTH = 20;
     public static final int PAGE_ZERO = 0;
-    public static final int RARAMETER_LIST_SIZE = 3;
+    public static final int PARAMETER_LIST_SIZE = 3;
     public static final int PWD_LENGTH = 6;
     public static final int QTY_NUMBER = 9;
     public static final int QTY_LETTER = 25;

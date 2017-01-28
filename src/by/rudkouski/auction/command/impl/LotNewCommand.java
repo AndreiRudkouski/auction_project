@@ -32,7 +32,7 @@ public class LotNewCommand implements ICommand {
         List<List<? extends AbstractEntity>> setupList;
         try {
             setupList = categoryService.setupNewLotData();
-            if (setupList != null && setupList.size() == RARAMETER_LIST_SIZE) {
+            if (setupList != null && setupList.size() == PARAMETER_LIST_SIZE) {
                 request.setAttribute(TYPE_LIST, setupList.get(0));
                 request.setAttribute(TERM_LIST, setupList.get(1));
                 request.setAttribute(CONDITION_LIST, setupList.get(2));

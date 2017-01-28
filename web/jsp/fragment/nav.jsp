@@ -11,7 +11,7 @@
         <ul>
             <c:forEach var="category" items="${sessionScope.categoryList}">
                 <li>
-                    <form class="section" id="cat${category.id}" action="Controller" method="get">
+                    <form class="section" id="cat${category.id}" action="Controller" method="post">
                         <input type="hidden" name="command" value="category_choice"/>
                         <input type="hidden" name="categoryId" value="${category.id}">
                         <a href="javascript:onClick('cat${category.id}')">

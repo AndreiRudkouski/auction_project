@@ -46,9 +46,6 @@ public class LogInCommand implements ICommand {
         if (user != null) {
             if (!user.isBan()) {
                 session.setAttribute(USER, user);
-                if (user.getRoleId() == ADMIN_ROLE_ID) {
-                    page = MAIN_PAGE;
-                }
             } else {
                 session.setAttribute(ERROR_BAN, USER);
             }

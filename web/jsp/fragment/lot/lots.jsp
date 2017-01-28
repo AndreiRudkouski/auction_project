@@ -85,7 +85,7 @@
                     <tr>
                         <c:forEach items="${lotList}" var="lot" begin="${begin}" end="${end}">
                             <td>
-                                <form id="lot${lot.id}" action="Controller" method="get">
+                                <form id="lot${lot.id}" action="Controller" method="post">
                                     <input type="hidden" name="command" value="lot_choice"/>
                                     <input type="hidden" name="lotId" value="${lot.id}">
                                     <a href="javascript:onClick('lot${lot.id}')">

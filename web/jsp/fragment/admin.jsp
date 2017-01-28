@@ -10,7 +10,7 @@
         <div class="choice">
             <ul>
                 <li>
-                    <form class="section" id="adminUser" action="Controller" method="get">
+                    <form class="section" id="adminUser" action="Controller" method="post">
                         <input type="hidden" name="command" value="admin_user"/>
                         <a href="javascript:onClick('adminUser')">
                             <span><fmt:message key="admin.user"/></span>
@@ -18,7 +18,7 @@
                     </form>
                 </li>
                 <li>
-                    <form class="section" id="adminLot" action="Controller" method="get">
+                    <form class="section" id="adminLot" action="Controller" method="post">
                         <input type="hidden" name="command" value="admin_lot"/>
                         <a href="javascript:onClick('adminLot')">
                             <span><fmt:message key="profile.lot"/></span>

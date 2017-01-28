@@ -11,7 +11,7 @@
             <div class="choice">
                 <ul>
                     <li>
-                        <form class="section" id="profile" action="Controller" method="get">
+                        <form class="section" id="profile" action="Controller" method="post">
                             <input type="hidden" name="command" value="profile"/>
                             <a href="javascript:onClick('profile')">
                                 <span><fmt:message key="profile.profile"/></span>
@@ -19,7 +19,7 @@
                         </form>
                     </li>
                     <li>
-                        <form class="section" id="lotHistory" action="Controller" method="get">
+                        <form class="section" id="lotHistory" action="Controller" method="post">
                             <input type="hidden" name="command" value="lot_history"/>
                             <a href="javascript:onClick('lotHistory')">
                                 <span><fmt:message key="profile.lot"/></span>
@@ -27,7 +27,7 @@
                         </form>
                     </li>
                     <li>
-                        <form class="section" id="betHistory" action="Controller" method="get">
+                        <form class="section" id="betHistory" action="Controller" method="post">
                             <input type="hidden" name="command" value="bet_history"/>
                             <a href="javascript:onClick('betHistory')">
                                 <span><fmt:message key="profile.bet"/></span>
@@ -35,7 +35,7 @@
                         </form>
                     </li>
                     <li>
-                        <form class="section" id="logOut" action="Controller" method="get">
+                        <form class="section" id="logOut" action="Controller" method="post">
                             <input type="hidden" name="command" value="logOut"/>
                             <a href="javascript:onClick('logOut')">
                                 <span><fmt:message key="profile.logOut"/></span>
