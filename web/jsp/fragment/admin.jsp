@@ -26,7 +26,7 @@
                     </form>
                 </li>
                 <li>
-                    <form class="section" id="adminPwd" action="Controller" method="get">
+                    <form class="section" id="adminPwd" action="Controller" method="post">
                         <input type="hidden" name="command" value="admin_pwd"/>
                         <a href="javascript:onClick('adminPwd')">
                             <span><fmt:message key="admin.password"/></span>
@@ -34,7 +34,7 @@
                     </form>
                 </li>
                 <li>
-                    <form class="section" id="logOut" action="Controller" method="get">
+                    <form class="section" id="logOut" action="Controller" method="post">
                         <input type="hidden" name="command" value="logOut"/>
                         <a href="javascript:onClick('logOut')">
                             <span><fmt:message key="profile.logOut"/></span>
