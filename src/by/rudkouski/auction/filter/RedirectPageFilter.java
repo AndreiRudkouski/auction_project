@@ -12,7 +12,7 @@ import static by.rudkouski.auction.constant.ConstantName.INDEX_PAGE;
 @WebFilter(filterName = "RedirectPageFilter",
         urlPatterns = {"/jsp/fragment/*"},
         initParams = {
-                @WebInitParam(name = "index_page", value = "/index.jsp")})
+                @WebInitParam(name = INDEX_PAGE, value = "/index.jsp")})
 public class RedirectPageFilter implements Filter {
     private String page;
 
