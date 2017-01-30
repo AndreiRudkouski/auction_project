@@ -49,15 +49,15 @@ public class Validator {
     }
 
     public static boolean userLoginChangeValidate(String newLogin, String oldLogin) {
-        return newLogin == null || newLogin.equals(oldLogin) || newLogin.length() > LOGIN_LENGTH ? false : true;
+        return newLogin == null || newLogin.equals(oldLogin) || newLogin.length() > LOGIN_LENGTH;
     }
 
     public static boolean cardNumberValidate(String cardNum) {
-        return cardNum == null || cardNum.isEmpty() || cardNum.length() != CARD_NUMBER_LENGTH ? false : true;
+        return cardNum == null || cardNum.isEmpty() || cardNum.length() != CARD_NUMBER_LENGTH;
     }
 
     public static boolean amountValidate(BigDecimal amount) {
-        return amount.compareTo(MIN_AMOUNT) < 0 || amount.compareTo(MAX_AMOUNT) > 0 ? false : true;
+        return amount.compareTo(MIN_AMOUNT) < 0 || amount.compareTo(MAX_AMOUNT) > 0;
     }
 
     public static boolean lotDataValidate(Map<String, String[]> paramMap) {
@@ -79,7 +79,7 @@ public class Validator {
 
         String priceStartTmp = paramMap.get(PRICE_START) != null ? paramMap.get(PRICE_START)[0] : null;
         BigDecimal priceStart = priceStartTmp != null && !priceStartTmp.isEmpty() ? new BigDecimal(paramMap.get(PRICE_START)[0]) : null;
-        if (priceStart.compareTo(ZERO_AMOUNT) <= 0 || priceStart.compareTo(MAX_AMOUNT) > 0) {
+        if (priceStart == null || priceStart.compareTo(ZERO_AMOUNT) <= 0 || priceStart.compareTo(MAX_AMOUNT) > 0) {
             return false;
         }
 
