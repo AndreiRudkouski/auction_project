@@ -39,7 +39,9 @@ public class BanChangeCommand implements ICommand {
             HttpSession session = request.getSession();
             session.setAttribute(USER_MESSAGE, ERROR_MESSAGE);
         }
-        return MAIN_PAGE;
+        HttpSession session = request.getSession();
+        String page = returnPage(session);
+        return page;
     }
 
     @Override

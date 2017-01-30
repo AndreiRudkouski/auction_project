@@ -25,10 +25,8 @@ public class LotRemoveCommand implements ICommand {
             return MAIN_PAGE;
         }
 
-        long lotId;
-        String page = returnPage(session);
         try {
-            lotId = Long.parseLong(request.getParameter(LOT_ID));
+            long lotId = Long.parseLong(request.getParameter(LOT_ID));
             ServiceManager manager = ServiceManager.getInstance();
             LotService lotService = manager.getLotService();
             lotService.removeLot(lotId);
@@ -38,6 +36,7 @@ public class LotRemoveCommand implements ICommand {
             return MAIN_PAGE;
         }
         session.setAttribute(USER_MESSAGE, CHANGE_ACCEPT);
+        String page = returnPage(session);
         return page;
     }
 
