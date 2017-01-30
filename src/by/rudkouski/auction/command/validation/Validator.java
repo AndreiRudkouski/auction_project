@@ -49,15 +49,15 @@ public class Validator {
     }
 
     public static boolean userLoginChangeValidate(String newLogin, String oldLogin) {
-        return newLogin == null || newLogin.equals(oldLogin) || newLogin.length() > LOGIN_LENGTH;
+        return !(newLogin == null || newLogin.equals(oldLogin) || newLogin.length() > LOGIN_LENGTH);
     }
 
     public static boolean cardNumberValidate(String cardNum) {
-        return cardNum == null || cardNum.isEmpty() || cardNum.length() != CARD_NUMBER_LENGTH;
+        return !(cardNum == null || cardNum.isEmpty() || cardNum.length() != CARD_NUMBER_LENGTH);
     }
 
     public static boolean amountValidate(BigDecimal amount) {
-        return amount.compareTo(MIN_AMOUNT) < 0 || amount.compareTo(MAX_AMOUNT) > 0;
+        return !(amount.compareTo(MIN_AMOUNT) < 0 || amount.compareTo(MAX_AMOUNT) > 0);
     }
 
     public static boolean lotDataValidate(Map<String, String[]> paramMap) {
