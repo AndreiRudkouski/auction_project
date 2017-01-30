@@ -1,6 +1,5 @@
 package by.rudkouski.auction.pool;
 
-import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.concurrent.ArrayBlockingQueue;
