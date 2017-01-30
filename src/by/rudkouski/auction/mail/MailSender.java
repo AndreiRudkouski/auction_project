@@ -28,12 +28,11 @@ public class MailSender {
 
     private MailSender() {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = loader.getResourceAsStream(MAIL_PROPERTIES);
-        try {
+        try (InputStream stream = loader.getResourceAsStream(MAIL_PROPERTIES)) {
             PROP.load(stream);
         } catch (IOException e) {
-            LOGGER.log(Level.FATAL, "Wrong initialization mail sender", e);
-            throw new RuntimeException("Error of mail sender initialization", e);
+            LOGGER.log(Level.FATAL, "Wrong reading of mail sender properties", e);
+            throw new RuntimeException("Error reading mail sender properties", e);
         }
         username = PROP.getProperty(MAIL_USER);
         password = PROP.getProperty(MAIL_PWD);
@@ -47,7 +46,7 @@ public class MailSender {
     /**
      * Sends mail to any post box
      *
-     * @param theme theme of mail
+     * @param theme   theme of mail
      * @param text    content of mail
      * @param toEmail email for sending
      * @throws MailSenderException if MessagingException is thrown

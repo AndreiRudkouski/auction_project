@@ -20,10 +20,14 @@ public class DataBaseManager {
     private DataBaseManager() {
     }
 
-    public static ProxyConnection getConnection() throws SQLException, IOException {
+    public static ProxyConnection getConnection() throws SQLException {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = loader.getResourceAsStream(BD_PROPERTIES);
-        PROP.load(stream);
+        try (InputStream stream = loader.getResourceAsStream(BD_PROPERTIES)) {
+            PROP.load(stream);
+        } catch (IOException e) {
+            LOGGER.log(Level.FATAL, "Wrong reading of data base manager properties", e);
+            throw new RuntimeException("Error reading data base manager", e);
+        }
         String url = PROP.getProperty(DB_URL);
         String user = PROP.getProperty(DB_USER);
         String pass = PROP.getProperty(DB_PASSWORD);

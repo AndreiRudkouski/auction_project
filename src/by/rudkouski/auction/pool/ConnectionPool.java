@@ -30,7 +30,7 @@ public class ConnectionPool {
             try {
                 ProxyConnection connection = DataBaseManager.getConnection();
                 connectionQueue.put(connection);
-            } catch (SQLException | InterruptedException | IOException e) {
+            } catch (SQLException | InterruptedException e) {
                 //if throw exception try create and put additional connection
                 LOGGER.log(Level.ERROR, "Error during creating a new connection", e);
                 tryNum++;
